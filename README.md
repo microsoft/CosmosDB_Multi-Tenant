@@ -1,34 +1,33 @@
-## Workshop Template
+# Project
 
-Welcome to the Next Generation Team's design template for [building workshops](presentation.pptx), a system designed to help Microsoft Student Ambassadors and their partners to create and deliver excellent technical workshops.
+> This repo has been populated by an initial template to help get you started. Please
+> make sure to update the content to build a great experience for community-building.
 
-## Types of Workshops
+As the maintainer of this project, please make a few updates:
 
-In this template you will find two types of workshops that you can build:
+- Improving this README.MD file to provide a great experience
+- Updating SUPPORT.MD with content about this project's support experience
+- Understanding the security reporting process in SECURITY.MD
+- Remove this section from the README
 
-* **[Workshops](./workshop/README.md)** - a workshop that is designed to be completed within 30-90 minutes with content derived from [Microsoft Learn](https://learn.microsoft.com).
-* **[Short Workshops](./short-workshop/README.md)** - a workshop that is designed to be completed within 15-30 minutes with content derived from [Microsoft Learn](https://learn.microsoft.com). 
+## Contributing
 
-## Style Guide
+This project welcomes contributions and suggestions.  Most contributions require you to agree to a
+Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
+the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
 
-To present a unified voice, please use [this style guide](https://github.com/jlooper/curriculum-template/wiki/Voice) to shape your writing.
+When you submit a pull request, a CLA bot will automatically determine whether you need to provide
+a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
+provided by the bot. You will only need to do this once across all repos using our CLA.
 
-## Building a Workshop
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
+contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-- [ ] Decide what kind of workshop you want to design and sync with project lead Jen Looper to work out details.
-- [ ] Discuss your plan with your lead and add it to our DevOps board.
-- [ ] Design your workshop following these steps.
-    - [ ] Fork this template repo to your local machine.
-    - [ ] In the folder of your chosen type of workshop, fill out the [workshop-designer](./workshop/workshop-designer.md) document to design the experience.
-    - [ ] Build slides for the workshop using the appropriate template, depending on which type of workshop you are building. 
-        - For Workshops, use our Particle tool to generate slides. Contact Chris Noring or Jen Looper for help.
-        - For Short-form workshops, slides are optional.
-    - [ ] Write instructions for your workshop based on the README.md file in your folder's template. Your README.md work is minimal, and mostly links back to the source Learn module. Make sure to include a Call to Action with an instrumented link leading back to Docs and/or Learn to learn more.
-    - [ ] If your workshop needs to diverge significantly from the Learn module, write out the steps as milestones, adding images and screenshots as needed.
-    - [ ] Give your folder a descriptive name and PR the folder to the Next Generation Team's workshop library using [the library's PR template](https://github.com/microsoft/workshop-library)
-- [ ] Trainers: Contact Chris Noring or Jen Looper to present your workshop to Microsoft Student Ambassadors to generate a Train the Trainer video for inclusion in the library.
-- [ ] Ambassadors: present workshops to your communities sourced from [the workshop library](https://github.com/microsoft/workshop-library). You can edit and use a [copy of this poster](https://www.canva.com/design/DAEuDXXR9us/share/preview?token=Je0_213uqxmYaXnNYz1v-Q&role=EDITOR&utm_content=DAEuDXXR9us&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton) to publicize it.
+## Trademarks
 
-## Slides about this project
-
-- [Explanatory slide deck](https://github.com/microsoft/workshop-template/blob/main/presentation.pptx?raw=true)
+This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
+trademarks or logos is subject to and must follow 
+[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
+Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
+Any use of third-party trademarks or logos are subject to those third-party's policies.
