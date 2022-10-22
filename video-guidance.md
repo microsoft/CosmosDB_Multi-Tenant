@@ -1,7 +1,7 @@
 
 ### Video Best Practice 
 
-Authors: Chloe Condon and April Speight
+Authors: Chloe Condon and April Speight 
 
 #### Set the Scene 
 Consider a neutral background for your streams. Remember, you want the viewer to focus on you and a noisy or distracting background can detract from your presentation! Here are some things to consider while setting the scene for your recording: 
