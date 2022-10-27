@@ -48,10 +48,10 @@
   "variables": {
     "azureCosmosLinkedServiceName": "AzureCosmosLinkedService",
     "azureStorageLinkedServiceName":"AzureStorageLinkedSerivce",
-    "containerAllTenants":"[concat(parameters('cosmosDbContainerName'), '_AllTenants')]",
+    "containerByTenants":"[concat(parameters('cosmosDbContainerName'), '_by_Tenants')]",
     "containerByBusinessLine": "[concat(parameters('cosmosDbContainerName'), '_by_BusinessLine')]",
-    "containerbyBusinessTenant":"[concat(parameters('cosmosDbContainerName'), '_by_BusinessTenant')]",
-    "containerbySyntheticKey":"[concat(parameters('cosmosDbContainerName'), '_by_SyntheticKey')]"
+    "containerByByBizLocation":"[concat(parameters('cosmosDbContainerName'), '_by_BizLocation')]",
+    "containerBySyntheticKey":"[concat(parameters('cosmosDbContainerName'), '_by_SyntheticKey')]"
   },
   "resources": [
     {
