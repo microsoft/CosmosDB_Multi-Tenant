@@ -16,8 +16,8 @@
     "cosmosAccountName": "[toLower( concat('smartbookinginc-', uniqueString(resourceGroup().id)))]",
     "cosmosDatabase":"bookingsdb",
     "containerAllTenants":"strategy_by_Tenants",
-    "containerByBusinessLine": "strategy_by_BizLocation",
-    "containerbyBusinessTenant":"strategy_by_BusinessTenant",
+    "containerByBusinessLine": "strategy_by_BusinessLine",
+    "containerbyBusinessTenant":"strategy_by_BizLocation",
     "containerbySyntheticKey":"strategy_by_SyntheticKey",
     "dataFactoryName":"[toLower( concat('loadsmartbookingdata', uniqueString(resourceGroup().id)))]"
   },
