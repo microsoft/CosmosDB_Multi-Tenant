@@ -1,0 +1,440 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.5.6.12127",
+      "templateHash": "3973803974471500583"
+    }
+  },
+  "parameters": {
+    "cosmosDbAccountName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Cosmos DB account name. Must be between 3 and 44 characters long. Can only contain lowercase letters, numbers and hyphens. Can not start or end with hyphens."
+      }
+    },
+     "cosmosDbDatabaseName": {
+      "type": "string",
+      "defaultValue":"",
+      "metadata": {
+        "description": "CosmosDB Database name."
+      }
+    },
+    "cosmosDbContainerName": {
+      "type": "string",
+      "defaultValue":"",
+      "metadata": {
+        "description": "CosmosDb container name. "
+      }
+    },
+    "storageAccountName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "The name of the Storage Account. Name can contain only lowercase characters and numbers between 3 and 24 characters."
+      }
+    },
+    "dataFactoryName": {
+      "type": "string",
+      "defaultValue":"",
+      "metadata": {
+        "description": "The name of the Data Factory. Can only contain letters, numbers and hyphens. Can not start or end with hyphens or spaces."
+      }
+    }
+  },
+  "variables": {
+    "azureCosmosLinkedServiceName": "AzureCosmosLinkedService",
+    "azureStorageLinkedServiceName":"AzureStorageLinkedSerivce",
+    "containerAllTenants":"[concat(parameters('cosmosDbContainerName'), '_AllTenants')]",
+    "containerByBusinessLine": "[concat(parameters('cosmosDbContainerName'), '_by_BusinessLine')]",
+    "containerbyBusinessTenant":"[concat(parameters('cosmosDbContainerName'), '_by_BusinessTenant')]",
+    "containerbySyntheticKey":"[concat(parameters('cosmosDbContainerName'), '_by_SyntheticKey')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2021-06-01",
+      "name": "[parameters('storageAccountName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2021-06-01",
+      "name": "[format('{0}/default/{1}', parameters('storageAccountName'), 'hoteldata')]",
+      "properties":{
+          "publicAccess": "Container"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+      "apiVersion": "2021-06-01",
+      "name": "[format('{0}/default/{1}', parameters('storageAccountName'), 'rentdata')]",
+      "properties":{
+          "publicAccess": "Container"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "apiVersion": "2022-05-15",
+      "name": "[parameters('cosmosDbAccountName')]",
+      "kind": "GlobalDocumentDB",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "databaseAccountOfferType": "Standard",
+        "consistencyPolicy": {
+          "defaultConsistencyLevel": "Session"
+        },
+        "locations": [
+          {
+            "locationName": "[resourceGroup().location]"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}', toLower(parameters('cosmosDbAccountName')), parameters('cosmosDbDatabaseName'))]",
+      "properties": {
+        "resource": {
+          "id": "[parameters('cosmosDbDatabaseName')]"
+        },
+        "options": {
+          "throughput": 1000
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', toLower(parameters('cosmosDbAccountName')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}/{2}', toLower(parameters('cosmosDbAccountName')), parameters('cosmosDbDatabaseName'), variables('containerAllTenants'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('containerAllTenants')]",
+          "partitionKey": {
+            "paths": [
+              "/TenantId"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/_etag/?"
+              }
+            ]
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', toLower(parameters('cosmosDbAccountName')), parameters('cosmosDbDatabaseName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}/{2}', toLower(parameters('cosmosDbAccountName')), parameters('cosmosDbDatabaseName'), variables('containerByBusinessLine'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('containerByBusinessLine')]",
+          "partitionKey": {
+            "paths": [
+              "/TenantId"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/_etag/?"
+              }
+            ]
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', toLower(parameters('cosmosDbAccountName')), parameters('cosmosDbDatabaseName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}/{2}', toLower(parameters('cosmosDbAccountName')), parameters('cosmosDbDatabaseName'), variables('containerbyBusinessTenant'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('containerbyBusinessTenant')]",
+          "partitionKey": {
+            "paths": [
+              "/BizLocationId"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/_etag/?"
+              }
+            ]
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', toLower(parameters('cosmosDbAccountName')), parameters('cosmosDbDatabaseName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}/{2}', toLower(parameters('cosmosDbAccountName')), parameters('cosmosDbDatabaseName'), variables('containerbySyntheticKey'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('containerbySyntheticKey')]",
+          "partitionKey": {
+            "paths": [
+              "/TenantId_TenantLocationId"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/_etag/?"
+              }
+            ]
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', toLower(parameters('cosmosDbAccountName')), parameters('cosmosDbDatabaseName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DataFactory/factories",
+      "apiVersion": "2018-06-01",
+      "name": "[parameters('dataFactoryName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('cosmosDbAccountName'))]"
+        ],
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {},
+      "resources": [
+        {
+            "type": "linkedservices",
+            "name": "[variables('azureStorageLinkedServiceName')]",
+            "dependsOn": [
+              "[parameters('dataFactoryName')]"
+            ],
+            "apiVersion": "2018-06-01",
+            "properties": {
+              "type": "AzureBlobFS",
+              "description": "Azure Storage linked service",
+              "typeProperties": {
+                "url": "[concat('https://', parameters('storageAccountName'), '.dfs.core.windows.net')]",
+                "accountKey": {
+                        "type": "SecureString",
+                        "value": "[listKeys(parameters('storageAccountName'), '2019-04-01').keys[0].value]"
+                    }
+              }
+            }
+        },
+        {
+          "type": "linkedservices",
+          "name": "[variables('azureCosmosLinkedServiceName')]",
+          "dependsOn": [
+            "[parameters('dataFactoryName')]"
+          ],
+          "apiVersion": "2018-06-01",
+          "properties": {
+            "type": "CosmosDb",
+            "description": "Azure CosmosDB linked service",
+            "typeProperties": {
+                "connectionString": "[concat('AccountEndpoint=https://', parameters('cosmosDbAccountName'), '.documents.azure.com:443/;Database=',parameters('cosmosDbDatabaseName'),';AccountKey=', listKeys(parameters('cosmosDbAccountName'), '2019-12-12').primaryMasterKey, ';')]"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "[concat(parameters('dataFactoryName'), '/DS_', variables('containerbySyntheticKey'))]",
+      "type": "Microsoft.DataFactory/factories/datasets",
+      "apiVersion": "2018-06-01",
+      "properties": {
+          "linkedServiceName": {
+              "referenceName": "[variables('azureCosmosLinkedServiceName')]",
+              "type": "LinkedServiceReference"
+          },
+          "annotations": [],
+          "type": "CosmosDbSqlApiCollection",
+          "schema": {},
+          "typeProperties": {
+              "collectionName": "[variables('containerbySyntheticKey')]"
+          }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
+        "[resourceId('Microsoft.DataFactory/factories/linkedservices', parameters('dataFactoryName'), variables('azureCosmosLinkedServiceName'))]"
+      ]
+    },
+    {
+      "name": "[concat(parameters('dataFactoryName'), '/DS_', variables('containerbyBusinessTenant'))]",
+      "type": "Microsoft.DataFactory/factories/datasets",
+      "apiVersion": "2018-06-01",
+      "properties": {
+          "linkedServiceName": {
+              "referenceName": "[variables('azureCosmosLinkedServiceName')]",
+              "type": "LinkedServiceReference"
+          },
+          "annotations": [],
+          "type": "CosmosDbSqlApiCollection",
+          "schema": {},
+          "typeProperties": {
+              "collectionName": "[variables('containerbyBusinessTenant')]"
+          }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
+        "[resourceId('Microsoft.DataFactory/factories/linkedservices', parameters('dataFactoryName'), variables('azureCosmosLinkedServiceName'))]"
+      ]
+    },
+    {
+      "name": "[concat(parameters('dataFactoryName'), '/DS_', variables('containerByBusinessLine'))]",
+      "type": "Microsoft.DataFactory/factories/datasets",
+      "apiVersion": "2018-06-01",
+      "properties": {
+          "linkedServiceName": {
+              "referenceName": "[variables('azureCosmosLinkedServiceName')]",
+              "type": "LinkedServiceReference"
+          },
+          "annotations": [],
+          "type": "CosmosDbSqlApiCollection",
+          "schema": {},
+          "typeProperties": {
+              "collectionName": "[variables('containerByBusinessLine')]"
+          }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
+        "[resourceId('Microsoft.DataFactory/factories/linkedservices', parameters('dataFactoryName'), variables('azureCosmosLinkedServiceName'))]"
+      ]
+    },
+    {
+      "name": "[concat(parameters('dataFactoryName'), '/DS_', variables('containerAllTenants'))]",
+      "type": "Microsoft.DataFactory/factories/datasets",
+      "apiVersion": "2018-06-01",
+      "properties": {
+          "linkedServiceName": {
+              "referenceName": "[variables('azureCosmosLinkedServiceName')]",
+              "type": "LinkedServiceReference"
+          },
+          "annotations": [],
+          "type": "CosmosDbSqlApiCollection",
+          "schema": {},
+          "typeProperties": {
+              "collectionName": "[variables('containerAllTenants')]"
+          }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
+        "[resourceId('Microsoft.DataFactory/factories/linkedservices', parameters('dataFactoryName'), variables('azureStorageLinkedServiceName'))]"
+      ]
+    },
+    {
+      "name": "[concat(parameters('dataFactoryName'), '/ADLS_HotelData')]",
+      "type": "Microsoft.DataFactory/factories/datasets",
+      "apiVersion": "2018-06-01",
+      "properties": {
+          "linkedServiceName": {
+              "referenceName": "[variables('azureStorageLinkedServiceName')]",
+              "type": "LinkedServiceReference"
+          },
+          "annotations": [],
+          "type": "DelimitedText",
+          "typeProperties": {
+              "location": {
+                "type": "AzureBlobFSLocation",
+                "fileSystem": "hoteldata"
+              },
+              "columnDelimiter": ",",
+              "escapeChar": "\\",
+              "quoteChar": "\""
+          },
+          "schema": []
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
+        "[resourceId('Microsoft.DataFactory/factories/linkedservices', parameters('dataFactoryName'), variables('azureStorageLinkedServiceName'))]"
+      ]
+    },
+    {
+      "name": "[concat(parameters('dataFactoryName'), '/ADLS_RentData')]",
+      "type": "Microsoft.DataFactory/factories/datasets",
+      "apiVersion": "2018-06-01",
+      "properties": {
+          "linkedServiceName": {
+              "referenceName": "[variables('azureStorageLinkedServiceName')]",
+              "type": "LinkedServiceReference"
+          },
+          "annotations": [],
+          "type": "DelimitedText",
+          "typeProperties": {
+              "location": {
+                "type": "AzureBlobFSLocation",
+                "fileSystem": "rentdata"
+              },
+              "columnDelimiter": ",",
+              "escapeChar": "\\",
+              "quoteChar": "\""
+          },
+          "schema": []
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DataFactory/factories', parameters('dataFactoryName'))]",
+        "[resourceId('Microsoft.DataFactory/factories/linkedservices', parameters('dataFactoryName'), variables('azureStorageLinkedServiceName'))]"
+      ]
+    }
+  ]
+}
