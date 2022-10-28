@@ -21,14 +21,14 @@ Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/en-us/azure/c
 - [Challenge-2:Load sample multitenant data to Azure Storage Account](#Challenge-2-Load-sample-multitenant-data-to-Azure-Storage-Account)
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small,-medium-and-large-customers)
 - [Challenge-4: Build ADF Pipelines to load data into Cosmos DB](#Challenge-4-Build-ADF-Pipelines-to-load-data-into-Cosmos-DB)
-- [Challenge-5: Validate Cosmos DB features Partition Key, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
+- [Challenge-5: Validate Cosmos DB features Partition Key for Multitenancy, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
     
 ## Business Scenario
-Fictitious ISV company called ""Smart Booking Inc"" has built an on-line reservation application called "EasyReserveApp" and deployed to Car Rental and Hotel business industries. 
+Fictitious ISV company called "Smart Booking Inc" has built an on-line reservation application called "EasyReserveApp" and deployed to Car Rental and Hotel business industries. 
 
 It currently has the following clients:
 
-Car Rental Industry:
+### Car Rental Industry:
 
 **Value Rentals** with offices in Denver, Grand Canyon & Rapid City.
 
@@ -36,7 +36,7 @@ Car Rental Industry:
 
 **Spendless** Rentals with offices in New York, San Francisco, Orlando. 
 
-Hotel Industry:
+### Hotel Industry:
 
 **GoodFellas** Hotels with offices in Atlanta, New York, San Francisco, Orlando, Los Angeles.
 
@@ -111,7 +111,7 @@ You have successfully deployed the required services to Azure. Congratulations f
 We have created an anonymous fictitious data to showcase the multitenant data model with this lab. Extract this data
 to your environment from the github link.
 
-2.1 Download the EasyReserveApp Multitenant data from the repo 'data'' folder to your laptop folder.
+2.1 Download the EasyReserveApp Multitenant data from the github repo`s "data" folder to your laptop folder.
 
 <img src="./images/MulittenantCosmosDB_Storage_SampleDataSource.jpg" alt="Source Sample Data location" Width="600">
 
