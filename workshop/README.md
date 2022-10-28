@@ -21,7 +21,7 @@ Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/en-us/azure/c
 - [Challenge-2:Load sample multitenant data to Azure Storage Account](#Challenge-2-Load-sample-multitenant-data-to-Azure-Storage-Account)
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small,-medium-and-large-customers)
 - [Challenge-4: Build ADF Pipelines to load data into Cosmos DB](#Challenge-4-Build-ADF-Pipelines-to-load-data-into-Cosmos-DB)
-- [Challenge-5: Validate Cosmos DB features auto failover for high availability, autoscale for scalability and low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-auto-failover-autoscale-and-low-latency)
+- [Challenge-5: Validate Cosmos DB features Partition Key, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
     
 ## Business Scenario
 Fictitious ISV company called ""Smart Booking Inc"" has built an on-line reservation application called "EasyReserveApp" and deployed to Car Rental and Hotel business industries. 
@@ -357,15 +357,15 @@ Repeat the above step with 'ADLS_RentalData' as the source dataset and  'DS_stra
 
 Congratullations! You have successfully completed Challenge-4!!
 
-## Challenge-5: Validate Cosmos DB features Partitioning, auto failover, autoscale and low latency
+## Challenge-5: Validate Cosmos DB features Partitioning, Auto failover, Autoscale and Low latency
 
-### Partitioning Strategy Validation
+### 5.1 Partitioning Strategy Validation
 Validate the data you have loaded into various containers using the parittion key strategies in Challenge-3. 
 You will be Executing the queries in the data explorer to understand the value of partition strategies. 
 Plan the partition key to avoid the 20GB logical partition size limit. Physical partition of the container 
 can grow horizontally without disrupting the live production environment.  
 
-### 1. Container with tenant partition key
+### Container with tenant partition key
 This strategy can be used to support many small size customers and can add as many customers as you need 
 to support your business growth.
 
@@ -390,7 +390,7 @@ select "Query Stats" and note the Request Charge, lookup time and Query executio
 
 Query with tenantId will show better numbers than non-partition key BizName.
 
-### 2. Container per business line with tenant partition key
+### Container per business line with tenant partition key
 This strategy can be used to separate data per application or business line to support different throughput, 
 indexing requirement.
 
@@ -406,7 +406,7 @@ Select "Execute Selection" button from the top tab.
 This container has only Car Rental data. You will only 3 logical partitions with number of records per tenant.
 
 
-### 3. Container per business address with biz_location partition key
+### Container per business address with biz_location partition key
 This stategy is used to support the mid size customers with bigger volume than 20GB of data. It creates logical 
 parition per business location of each tenant.
 
@@ -415,13 +415,13 @@ SELECT count(1) as count, c.BizLocationId FROM c group by c.BizLocationId
 
 You will get 8 logical partitions keeping the data separate per business location per tenant.
 
-### 4. Container per tenant with tenant business as partition key
+### Container per tenant with tenant business as partition key
 This strategy is used to isolate the noisy neighbor from the other mid size customers.
 
 
-### High Availability Features:
+### 5.2 High Availability Features:
 Azure Cosmos DB is designed to provide multiple features and configuration options to achieve high availability for all 
-solutions' availability needs.
+solution availability needs.
 
 ### Replica Outages
 Replica outages refer to outages of individual nodes in an Azure Cosmos DB cluster deployed in an 
@@ -434,10 +434,10 @@ availability zones, which results increased SLAs, as availability zones are phys
 distinct power source, network, and cooling. See Availability Zones. When an Azure Cosmos DB account is 
 deployed using availability zones, Azure Cosmos DB provides RTO = 0 and RPO = 0 even in a zone outage.
 
-5.1 Select 'Replicate data globally' under 'Settings' section in the left pane. It show all the available regions 
+Select 'Replicate data globally' under 'Settings' section in the left pane. It show all the available regions 
 for Cosmos DB deployment. Availability Zone option for the write region can be enabled at the time of account creation.
 
-select '+ Add region' to add a read region. Check the box for 'Availability Zone'.
+select "+ Add region" to add a read region. Check the box for 'Availability Zone'.
 
 ### Region Outages
 Region outages refer to outages that affect all Azure Cosmos DB nodes in an Azure region, across all availability 
@@ -448,15 +448,15 @@ durability and availability
 Cosmos DB provides continuous and periodic backup modes.  
 
 ### Service-Managed failover: It allows Azure Cosmos DB to fail over the write region of multi-region account. Region 
-failovers are detected and handled by Azure and don't require any changes from the application.
+failovers are detected and handled by Azure and do not require any changes from the application.
 
-5.2: Select "Service-Managed Failover" option to failover the database to read region at the time region outage.
+Select "Service-Managed Failover" option to failover the database to read region at the time region outage.
 
 Select the "On" button under "Enable Service-Managed Failover".
 
 It will take sometime to enable the failover option.
 
-### Autoscale for scalability
+### 5.3 Autoscale for scalability
 It allows you to scale the throughput (RU/s) of your database or container automatically and instantly. 
 The throughput is scaled based on the usage, without impacting the availability, latency, throughput, or 
 performance of the workload.
@@ -464,15 +464,24 @@ performance of the workload.
 Autoscale provisioned throughput is well suited for mission-critical workloads that have variable or unpredictable 
 traffic patterns, and require SLAs on high performance and scale.
 
-5.3 Select 'Data Explorer' from the left pane and expand 'bookingsdb' database. 
+Select 'Data Explorer' from the left pane and expand 'bookingsdb' database. 
 
 Select 'Scale' setting.
 
-Change Max RU/s to '2000'' and select save button.
+Change Max RU/s to '2000' and select save button.
 
 It will change the throughput instantly without impacting the current workloads.
 
 ### Sub Millisecond Fast Response Time
+Select 'Data Explorer' from the left pane and expand 'bookingsdb' database.
+Select hover over 'strategy_by_Tenant' container and select three dots.
+It provide options to create SQL Query, Stored Procedure, UDF & Trigers. Select the 'New SQL Query' option. 
+
+Type the following Query:
+
+SELECT count(1) as count, c.TenantId FROM c group by c.TenantId
+
+select "Query Stats" and check the Query execution time. It shows the sub millisecond response time.
 
 
 
