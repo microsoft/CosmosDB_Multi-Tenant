@@ -21,7 +21,7 @@ Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/en-us/azure/c
 - [Challenge-2:Load sample multitenant data to Azure Storage Account](#Challenge-2-Load-sample-multitenant-data-to-Azure-Storage-Account)
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small,-medium-and-large-customers)
 - [Challenge-4: Build ADF Pipelines to load data into Cosmos DB](#Challenge-4-Build-ADF-Pipelines-to-load-data-into-Cosmos-DB)
-- [Challenge-5: Validate Cosmos DB features auto failover for high availability, autoscale for scalability and low latency response](#Challenge-5-Validate-Cosmos-DB-features-auto-failover-autoscale-and-low-latency)
+- [Challenge-5: Validate Cosmos DB features auto failover for high availability, autoscale for scalability and low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-auto-failover-autoscale-and-low-latency)
     
 ## Business Scenario
 Fictitious ISV company called ""Smart Booking Inc"" has built an on-line reservation application called "EasyReserveApp" and deployed to Car Rental and Hotel business industries. 
@@ -357,7 +357,66 @@ Repeat the above step with 'ADLS_RentalData' as the source dataset and  'DS_stra
 
 Congratullations! You have successfully completed Challenge-4!!
 
-## Challenge-5: Validate Cosmos DB features auto failover autoscale and low latency
+## Challenge-5: Validate Cosmos DB features Partitioning, auto failover, autoscale and low latency
+
+### Partitioning Strategy Validation
+Validate the data you have loaded into various containers using the parittion key strategies in Challenge-3. 
+You will be Executing the queries in the data explorer to understand the value of partition strategies. 
+Plan the partition key to avoid the 20GB logical partition size limit. Physical partition of the container 
+can grow horizontally without disrupting the live production environment.  
+
+### 1. Container with tenant partition key
+This strategy can be used to support many small size customers and can add as many customers as you need 
+to support your business growth.
+
+Select 'Data Explorer' from the left pane and expand 'bookingsdb' database.
+Select hover over 'strategy_by_Tenant' container and select three dots.
+It provide options to create SQL Query, Stored Procedure, UDF & Trigers. Select the 'New SQL Query' option. 
+
+Type the following Query:
+
+SELECT count(1) as count, c.TenantId FROM c group by c.TenantId
+
+Select "Execute Selection" button from the top tab.
+
+You will 6 logical partitions with number of records per tenant.
+
+select "Query Stats" and note the Request Charge, lookup time and Query execution times.
+
+Execute the following Query:
+
+SELECT count(1) as count, c.BizName from c group by c.BizName
+select "Query Stats" and note the Request Charge, lookup time and Query execution times.
+
+Query with tenantId will show better numbers than non-partition key BizName.
+
+### 2. Container per business line with tenant partition key
+This strategy can be used to separate data per application or business line to support different throughput, 
+indexing requirement.
+
+Select hover over 'strategy_by_BusinessLine' container and select three dots.
+It provide options to create SQL Query, Stored Procedure, UDF & Trigers. Select the 'New SQL Query' option. 
+
+Type the following Query:
+
+SELECT count(1) as count, c.TenantId FROM c group by c.TenantId
+
+Select "Execute Selection" button from the top tab.
+
+This container has only Car Rental data. You will only 3 logical partitions with number of records per tenant.
+
+
+### 3. Container per business address with biz_location partition key
+This stategy is used to support the mid size customers with bigger volume than 20GB of data. It creates logical 
+parition per business location of each tenant.
+
+Execute the following Query:
+SELECT count(1) as count, c.BizLocationId FROM c group by c.BizLocationId
+
+You will get 8 logical partitions keeping the data separate per business location per tenant.
+
+### 4. Container per tenant with tenant business as partition key
+This strategy is used to isolate the noisy neighbor from the other mid size customers.
 
 
 ### High Availability Features:
