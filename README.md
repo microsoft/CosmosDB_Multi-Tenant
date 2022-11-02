@@ -11,8 +11,23 @@ End-to-end database management, with serverless and automatic scaling matching y
 
 Supports multiple database APIs including native API for NoSQL, API for Mongo DB, Apache Cassandra, Apache Gremlin and Table.
 
+### Multi-Tenancy Support 
+
+### Distributed Databae
 By using partitions with Azure Cosmos DB containers, you can create containers that are shared across multiple tenants. 
 With large containers, Azure Cosmos DB spreads your tenants across multiple physical nodes to achieve a high degree of scale.
+
+### Highly Scalable Throughput:
+
+### Why Cosmos DB?
+Here are the scenarios where Cosmos DB can help:
+* Customers want to modernize their monolithic onpremise application as SaaS application.
+* Internet based company wants to expand globally with low latency and highly scalable throughput. 
+* Customer wants to save costs to support multiple customers but want to isolate the data per customer.
+* Application needs to support multiple businesses with flexible schema.
+* Application is not able to scale and having difficulty to meet SLAs with growing data.
+
+All the above use cases need a new mindset and special features. This workshop will show you how Cosmos DB will be the best option. 
 
 Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/introduction) for more details and training. 
 
@@ -69,6 +84,7 @@ into actionable business insights. Azure Data Factory is a managed cloud service
 extract-transform-load (ETL), extract-load-transform (ELT), and data integration projects.
 
 Access [Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/introduction) documentation for more details and training. 
+
 
 ## Challenge-1: Deploy Azure Services  
 
