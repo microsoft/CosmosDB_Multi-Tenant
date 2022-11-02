@@ -85,12 +85,6 @@ extract-transform-load (ETL), extract-load-transform (ELT), and data integration
 
 Access [Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/introduction) documentation for more details and training. 
 
-## Challenge-0: Evaluate the use cases for Cosmos DB
-1.1 Customers want to modernize their monolithic onpremise application as SaaS application.
-1.2 Internet based company wants expand globally with low latency and highly scalable throughput. 
-1.3 Customer wants to save costs to support multiple customers but want to isolate the data per customer.
-1.4 Application needs to support multiple businesses with flexible schema.
-1.5 Application is not able to scale and not meeting SLAs with growing data.
 
 ## Challenge-1: Deploy Azure Services  
 
