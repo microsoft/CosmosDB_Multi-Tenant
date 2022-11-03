@@ -33,9 +33,9 @@ Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/en-us/azure/c
 
 ## Workshop Challenge List
 - [Challenge-1: Deploy Azure Storage, Azure Cosmos DB & Azure Data Factory Services to Azure Subscription](#challenge-1-Deploy-Azure-Services)
-- [Challenge-2:Load sample multitenant data to Azure Storage Account](#Challenge-2-Load-sample-multitenant-data-to-Azure-Storage-Account)
+- [Challenge-2:Model data to build SaaS applications](#Challenge-2-Model-data-to-build-SaaS-applications)
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
-- [Challenge-4: Build ADF Pipelines to load data into Cosmos DB](#Challenge-4-Build-ADF-Pipelines-to-load-data-into-Cosmos-DB)
+- [Challenge-4: Load multi-tenant data into Cosmos DB with an application](#Challenge-4-Load-multi-tenant-data-into-Cosmos-DB-with-an-application)
 - [Challenge-5: Validate Cosmos DB features Partition Key for Multitenancy, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
     
 ## Business Scenario
@@ -88,10 +88,6 @@ We have developed an Azure Deployment script to provision the required Azure Ser
 
 It will create the following services in your subscription:
 * Azure Cosmos DB with 4 containers
-* Azure Data Lake Storage Gen2 with 2 containers
-* Azure Data Factory
-* Configures Linked Services in ADF for both the Cosmos DB and ADLS Gen2
-* Configures Datasets for the 4 Cosmos Db containers and the 2 ADLS containers
 
 It may take 2 to 5 minutes to create the services.
 
@@ -105,37 +101,8 @@ It will take you to your resource group showing the installed services.
 
 You have successfully deployed the required services to Azure. Congratulations for completing your first challenge.
 
-## Challenge-2: Load sample multitenant data to Azure Storage Account
-We have created an anonymous fictitious data to showcase the multitenant data model with this lab. Extract this data
-to your environment from the github link.
-
-2.1 Download the EasyReserveApp Multitenant data from the github repo`s "data" folder to your laptop folder.
-
-<img src="./images/MulittenantCosmosDB_Storage_SampleDataSource.jpg" alt="Source Sample Data location" Width="600">
-
-### Load Hotel Reservation Data: 
-
-2.2 Select the Storage Account Service from the Resource group Overview screen (above screen)
-<img src="./images/MulittenantCosmosDB_storage_container_selection.jpg" alt="select hotel storage container" Width="600">
-
-2.3 Upload Hotel booking data into hotel storage container.
-
-<img src="./images/MulittenantCosmosDB_storage_upload_hotel_data.jpg" alt="select sample data from laptop" Width="600">
-Click-1: Select Upload button on the hotel data container overview screen.
-Click-2: It will open up ""Upload blob"" window and Select the File Folder icon.
-Click-3: Browse through your laptop and select the downloaded 'multi_tenent_hotel_reservations.csv' file
-
-You would see csv file in the container after successful upload operation.
-<img src="./images/MulittenantCosmosDB_storage_hotel_data_loaded.jpg" alt="Uploaded hotel data file" Width="600">
-
-### Load Rental Car Reservation Data:
-
-2.4 Select Containers bread crumb and then select 'rentdata' container from the list to upload the sample data.
-Repeat the above steps and upload data from 'mult_tenent_car_reservations.csv' file.
-
-You have successfully loaded the sample booking data into a storage account. 
-
-Congratulation, You have completed the second challenge and now you know how to store data in Azure Storage accounts!!
+## Challenge-2: Model data to build SaaS applications
+Explain how to model data for NoSQL Dabases. TBD
 
 
 ## Challenge-3: Design Cosmos DB Account to serve small, medium and large customers
