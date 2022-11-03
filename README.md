@@ -33,7 +33,7 @@ Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/en-us/azure/c
 
 ## Workshop Challenge List
 - [Challenge-1: Deploy Azure Storage, Azure Cosmos DB & Azure Data Factory Services to Azure Subscription](#challenge-1-Deploy-Azure-Services)
-- [Challenge-2:Model data to build SaaS applications](#Challenge-2-Model-data-to-build-SaaS-applications)
+- [Challenge-2: Model data to build SaaS applications](#Challenge-2-Model-data-to-build-SaaS-applications)
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
 - [Challenge-4: Load multi-tenant data into Cosmos DB with an application](#Challenge-4-Load-multi-tenant-data-into-Cosmos-DB-with-an-application)
 - [Challenge-5: Validate Cosmos DB features Partition Key for Multitenancy, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
