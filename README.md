@@ -58,7 +58,7 @@ It currently has the following clients:
 
 **Hiking Hotels** in Denver, Grand Canyon & Rapid City.
 
-**Casino Hotels** in Los Vegas & Reno.
+**Casino Hotels** in Las Vegas & Reno.
 
 **FamilyFun Hotels** with offices in Disney World & Disney Land.
 
