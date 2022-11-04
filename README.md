@@ -21,13 +21,14 @@ With large containers, Azure Cosmos DB spreads your tenants across multiple phys
 
 ### Why Cosmos DB?
 Here are the scenarios where Cosmos DB can help:
-* Customers want to modernize their monolithic onpremise application as SaaS application.
-* Internet based company wants to expand globally with low latency and highly scalable throughput. 
-* Customer wants to save costs to support multiple customers but want to isolate the data per customer.
+* Looking to modernize their monolithic onpremise applications as SaaS applications.
+* Goals to expand globally with low latency and highly scalable throughput. 
+* Trying to reduce costs to support multiple customers with fluctuating throughput requirement.
 * Application needs to support multiple businesses with flexible schema.
-* Application is not able to scale and having difficulty to meet SLAs with growing data.
+* Unable to meet performance SLA requirements and reaching max storage limits with growing data.
 
-All the above use cases need a new mindset and special features. This workshop will show you how Cosmos DB will be the best option. 
+All the above use cases needs a new mindset and unique database features. 
+This workshop will show you how Cosmos DB will be the best option. 
 
 Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/introduction) for more details and training. 
 
@@ -61,10 +62,13 @@ It currently has the following clients:
 
 **FamilyFun Hotels** with offices in Disney World & Disney Land.
 
-Let us see how Azure Cosmos DB can be designed to support these small, medium and large customers.  
+It is trying to migrate the application as SaaS application in the cloud. 
+Let us see how to modernize this application with Azure Cosmos DB. 
+
+You will have to redesign the data model to offer it as SaaS application. 
 
 ## Architecture Solution Diagram
-<img src="./images/cosmos-lab-architecture.jpg" alt="Architecture for Azure Cosmos DB Lab" Width="600"> 
+<img src="./images/Multi-Tenant_Cosmos_DB_Workshop_Architecture.jpg" alt="Architecture for Azure Cosmos DB Lab" Width="600"> 
 
 
 
@@ -102,20 +106,44 @@ It will take you to your resource group showing the installed services.
 You have successfully deployed the required services to Azure. Congratulations for completing your first challenge.
 
 ## Challenge-2: Model data to build SaaS applications
-Explain how to model data for NoSQL Dabases. TBD
+Let us review the object model for this application and plan the data model for SaaS application.
+
+### Multi-Tenant Reservation System Object Model
+"Tenant" object stores all the business customer data
+"Biz Locations" contains the tenant business locations address and contact info
+"Hotel_Room" contains catalog of rooms details for offering
+"Rental_Car" contains catalog of cars details for offering.
+"Room_Inventory" maintains availability for each hotel business locations.
+"Rental_Car_Inventory" maintains availability for each rental car business locations.
+"Customers" maintains all the customer profile data.
+"Car_Rental_Reservations" stores all the car rental reservations. 
+"Hotel_Reservations" stores all the hotel reservations. 
+
+<img src="./images/Multi-tenant-Reservation-system-object-model.jpg" alt="Multi-Tenant Reservation System Object Model" Width="600">
+
+### Access Patterns
+You would want to keep all the relevant data in one object based on the following common access patterns to write and read data.
+1) Hotel Room & Rental Car availability to support customer search based on location, dates and room/car types.
+2) Update the availability after the customer completes the reservation.
+3) Customer reviews the reservation. 
+4) Business Owners and Support Team access the reservations for their location. 
+
+You may want to create two document models. One to keep Reservation info and the other one to keep availability info.
+
+* Customer searches for the availability using the availability_doc. 
+* Reservation data will be inserted as soon as customer completes the reservation booking. 
+* Customers, Hotel Managers, Hotel support team can access the reservation at anytime.
+
 
 
 ## Challenge-3: Design Cosmos DB Account to serve small, medium and large customers
 
-Review the reservation data for Car and Hotel industries:
+Access Repo's Data folder and find the following data objects in JSON format.
 
-<img src="./images/MulittenantCosmosDB_DataModel_Architecture.jpg" alt="Application Data Model Architecture" Width="600">
+<img src="./images/Multi-Tenant_Reservation_System_Sample_Data.jpg" alt="Sample Data Objects" Width="600">
 
-**TenantId**: Application has assigned a unique 'tenantId'' for each business entity.
-
-**TenantBizId**: Application has assigned a unique 'tenantBizId' for each of the serving offices with each business entity.
-
-**LocationId**: Application has assigned a unique "LocationId" for each address associated with an operating unit of all businesses. 
+Check out the CSV files and understand that the flat data does not work for SaaS model.
+Think about ways to group the data into the two documents models you have identified. 
 
 ### Design Database for small size customers 
 
