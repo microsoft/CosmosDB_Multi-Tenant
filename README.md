@@ -37,8 +37,15 @@ Here are the scenarios where Cosmos DB can help:
 
 All the above use cases need a new mindset and special features. This workshop will show you how Cosmos DB will be the best option.
 
+## Workshop Challenge List
+- [Challenge-1: Deploy Azure Storage, Azure Cosmos DB & Azure Data Factory Services to Azure Subscription](#challenge-1-Deploy-Azure-Services)
+- [Challenge-2: Model data to build SaaS applications](#Challenge-2-Model-data-to-build-SaaS-applications)
+- [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
+- [Challenge-4: Load multi-tenant data into Cosmos DB with an application](#Challenge-4-Load-multi-tenant-data-into-Cosmos-DB-with-an-application)
+- [Challenge-5: Validate Cosmos DB features Partition Key for Multitenancy, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
 
-## Multi-Tenancy for Software Companies 
+
+## Multi-Tenancy reatures for Software Companies 
 
 ### Distributes Data horizontally
 By using partitions with Azure Cosmos DB containers, you can create containers that are shared across multiple tenants. 
@@ -79,12 +86,6 @@ select the geography for their deployment.
 
 Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/introduction) for more details and training. 
 
-## Workshop Challenge List
-- [Challenge-1: Deploy Azure Storage, Azure Cosmos DB & Azure Data Factory Services to Azure Subscription](#challenge-1-Deploy-Azure-Services)
-- [Challenge-2: Model data to build SaaS applications](#Challenge-2-Model-data-to-build-SaaS-applications)
-- [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
-- [Challenge-4: Load multi-tenant data into Cosmos DB with an application](#Challenge-4-Load-multi-tenant-data-into-Cosmos-DB-with-an-application)
-- [Challenge-5: Validate Cosmos DB features Partition Key for Multitenancy, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
     
 ## Business Scenario
 Fictitious ISV company called "Smart Booking Inc" has built an on-line reservation application called "EasyReserveApp" and 
@@ -92,7 +93,7 @@ deployed to Car Rental and Hotel business industries.
 
 It currently has the following clients in Car Rental and Hotel Industry:
 
-<img src="./images/MulittenantCosmosDB_DataModel_Architecture.jpg" alt="Application Data Model Architecture" Width="600" Height="300">
+<img src="./images/MulittenantCosmosDB_DataModel_Architecture.jpg" alt="Application Data Model Architecture" Width="600" Height="400">
 
 
 This workshop covers how Azure Cosmos DB can be designed to support small, medium and large customers using this use case..  
