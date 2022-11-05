@@ -48,27 +48,27 @@ With large containers, Azure Cosmos DB spreads your tenants across multiple phys
 Typically, you provision a defined number of request units per second for your workload, which is referred 
 to as throughput. 
 
-1) Shared container with partition keys per tenant
+#### 1) Shared container with partition keys per tenant
 When you use a single container for multiple tenants, you can make use of Azure Cosmos DB partitioning support. 
 By using separate partition keys for each tenant, you can easily query the data for a single tenant.
 This approach tends to work well when the amount of data stored for each tenant is small. It can be a good choice for 
 building a pricing model that includes a free tier, and for business-to-consumer (B2C) solutions. 
 In general, by using shared containers, you achieve the highest density of tenants and therefore the lowest price per tenant.
 
-2) Container per tenant
+#### 2) Container per tenant
 You can provision dedicated containers for each tenant. This can work well for isolating the customer tenant data.
 When using a container for each tenant, you can consider sharing throughput with other tenants by provisioning 
 throughput at the database level. You can provision dedicated throughput for guaranteed level of performance, serve 
 medium size customers, to avoid noisy neighbor problem. 
 
-3) Database account for tenant
+#### 3) Database account for tenant
 You can provision separate database accounts for each tenant, which provides the highest level of isolation, 
 but the lowest density. A single database account is dedicated to a tenant, which means they are not subject to 
 the noisy neighbor problem. You can also configure the location of the database account according to the 
 tenant's requirements, and you can tune the configuration of Azure Cosmos DB features, such as geo-replication 
 and customer-managed encryption keys, to suit each tenant's requirements.
 
-4) Hybrid Approaches
+#### 4) Hybrid Approaches
 You can consider a combination of the above approaches to suit different tenants' requirements and your pricing model. 
 For example:
 * Provision all free trial customers within a shared container, and use the tenant ID or a synthetic key partition key.
@@ -92,7 +92,7 @@ deployed to Car Rental and Hotel business industries.
 
 It currently has the following clients in Car Rental and Hotel Industry:
 
-<img src="./images/MulittenantCosmosDB_DataModel_Architecture.jpg" alt="Application Data Model Architecture" Width="600">
+<img src="./images/MulittenantCosmosDB_DataModel_Architecture.jpg" alt="Application Data Model Architecture" Width="600" Height="300">
 
 
 This workshop covers how Azure Cosmos DB can be designed to support small, medium and large customers using this use case..  
