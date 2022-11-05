@@ -45,15 +45,18 @@ All the above use cases need a new mindset and special features. This workshop w
 - [Challenge-5: Validate Cosmos DB features Partition Key for Multitenancy, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
 
 
-## Multi-Tenancy reatures for Software Companies 
+## Multi-Tenancy features for Software Companies 
 
 ### Distributes Data horizontally
 By using partitions with Azure Cosmos DB containers, you can create containers that are shared across multiple tenants. 
 With large containers, Azure Cosmos DB spreads your tenants across multiple physical nodes to achieve a high degree of scale.
 
-### Highly Scalable Throughput:
+### Control Throughput for different sizes of customers to lower your costs: 
 Typically, you provision a defined number of request units per second for your workload, which is referred 
-to as throughput. 
+to as throughput. You can assign throughput at a container level, at a database level to share among the containers, automatically
+scale up to the max throughput for address unpredicted workloads and scale down to 10% of Max to save costs.
+
+### Strategies to support small, medium and large customers
 
 #### 1) Shared container with partition keys per tenant
 When you use a single container for multiple tenants, you can make use of Azure Cosmos DB partitioning support. 
