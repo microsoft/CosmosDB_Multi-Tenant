@@ -4,22 +4,30 @@
 
 ## Cosmos DB Introduction
 
-Azure Cosmos DB is a fully managed NoSQL database for modern multitenant application development. You can build applications fast with open source APIs, multiple SDKs, schemaless data and no-ETL analytics over operational data.
+Azure Cosmos DB is a fully managed NoSQL database for modern multitenant application development. You can build applications 
+fast with open source APIs, multiple SDKs, schemaless data and no-ETL analytics over operational data.
 Single-digit millisecond response times, and instant scalability, guarantee speed at any scale.
 Guarantee business continuity, 99.999% availability and enterprise-grade security for every application.
-End-to-end database management, with serverless and automatic scaling matching your application and TCO needs.
-
+End-to-end database management, with serverless and automatic scaling matching your application and TCO needs. 
 Supports multiple database APIs including native API for NoSQL, API for Mongo DB, Apache Cassandra, Apache Gremlin and Table.
+It also started supporting PostgreSQL extended with the Citus Open Source which is useful for highly scalable relational apps.
 
-### Multi-Tenancy Support 
+To begin using Azure Cosmos DB, create an Azure Cosmos DB account in an Azure resource group in your subscription. 
+You then create databases and containers within the account.
 
-### Distributed Databae
-By using partitions with Azure Cosmos DB containers, you can create containers that are shared across multiple tenants. 
-With large containers, Azure Cosmos DB spreads your tenants across multiple physical nodes to achieve a high degree of scale.
+A single Azure Cosmos DB account can virtually manage an unlimited amount of data and provisioned throughput. 
+To manage your data and provisioned throughput, you can create one or more databases within your account, 
+then one or more containers to store your data. 
 
-### Highly Scalable Throughput:
+<img src="./images/CosmosDB_ResourceModel.jpg" alt="Cosmos DB Resource Model" Width="600">
 
-### Why Cosmos DB?
+Request Units: Cost of database operations is normalized by Azure Cosmos DB and is experssed by Request Units (RU). It is a performance 
+currency abstracting the system resources such as CPU, IOPS and Memory to perform the database operations supported by 
+Azure Cosmos DB. You can examine the response header to track the number of RUs that are consumed by any database 
+operation.
+<img src="./images/CosmosDB_Request_unit.jpg" alt="Request Unit Diagram" Width="600" >
+
+## Why Cosmos DB?
 Here are the scenarios where Cosmos DB can help:
 * Looking to modernize their monolithic onpremise applications as SaaS applications.
 * Goals to expand globally with low latency and highly scalable throughput. 
@@ -27,8 +35,47 @@ Here are the scenarios where Cosmos DB can help:
 * Application needs to support multiple businesses with flexible schema.
 * Unable to meet performance SLA requirements and reaching max storage limits with growing data.
 
-All the above use cases needs a new mindset and unique database features. 
-This workshop will show you how Cosmos DB will be the best option. 
+All the above use cases need a new mindset and special features. This workshop will show you how Cosmos DB will be the best option.
+
+
+## Multi-Tenancy for Software Companies 
+
+### Distributes Data horizontally
+By using partitions with Azure Cosmos DB containers, you can create containers that are shared across multiple tenants. 
+With large containers, Azure Cosmos DB spreads your tenants across multiple physical nodes to achieve a high degree of scale.
+
+### Highly Scalable Throughput:
+Typically, you provision a defined number of request units per second for your workload, which is referred 
+to as throughput. 
+
+1) Shared container with partition keys per tenant
+When you use a single container for multiple tenants, you can make use of Azure Cosmos DB partitioning support. 
+By using separate partition keys for each tenant, you can easily query the data for a single tenant.
+This approach tends to work well when the amount of data stored for each tenant is small. It can be a good choice for 
+building a pricing model that includes a free tier, and for business-to-consumer (B2C) solutions. 
+In general, by using shared containers, you achieve the highest density of tenants and therefore the lowest price per tenant.
+
+2) Container per tenant
+You can provision dedicated containers for each tenant. This can work well for isolating the customer tenant data.
+When using a container for each tenant, you can consider sharing throughput with other tenants by provisioning 
+throughput at the database level. You can provision dedicated throughput for guaranteed level of performance, serve 
+medium size customers, to avoid noisy neighbor problem. 
+
+3) Database account for tenant
+You can provision separate database accounts for each tenant, which provides the highest level of isolation, 
+but the lowest density. A single database account is dedicated to a tenant, which means they are not subject to 
+the noisy neighbor problem. You can also configure the location of the database account according to the 
+tenant's requirements, and you can tune the configuration of Azure Cosmos DB features, such as geo-replication 
+and customer-managed encryption keys, to suit each tenant's requirements.
+
+4) Hybrid Approaches
+You can consider a combination of the above approaches to suit different tenants' requirements and your pricing model. 
+For example:
+* Provision all free trial customers within a shared container, and use the tenant ID or a synthetic key partition key.
+* Offer a paid Bronze tier that deploys a dedicated container per tenant, but with shared throughput on a database.
+* Offer a higher Silver tier that provisions dedicated throughput for the tenant's container.
+* Offer the highest Gold tier, and provide a dedicated database account for the tenant, which also allows tenants to 
+select the geography for their deployment.
 
 Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/introduction) for more details and training. 
 
@@ -40,32 +87,16 @@ Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/en-us/azure/c
 - [Challenge-5: Validate Cosmos DB features Partition Key for Multitenancy, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
     
 ## Business Scenario
-Fictitious ISV company called "Smart Booking Inc" has built an on-line reservation application called "EasyReserveApp" and deployed to Car Rental and Hotel business industries. 
+Fictitious ISV company called "Smart Booking Inc" has built an on-line reservation application called "EasyReserveApp" and 
+deployed to Car Rental and Hotel business industries. 
 
-It currently has the following clients:
+It currently has the following clients in Car Rental and Hotel Industry:
 
-### Car Rental Industry:
+<img src="./images/MulittenantCosmosDB_DataModel_Architecture.jpg" alt="Application Data Model Architecture" Width="600">
 
-**Value Rentals** with offices in Denver, Grand Canyon & Rapid City.
 
-**Luxury Rentals** with offices in Miami Beach & Daytona Beach.
+This workshop covers how Azure Cosmos DB can be designed to support small, medium and large customers using this use case..  
 
-**Spendless** Rentals with offices in New York, San Francisco, Orlando. 
-
-### Hotel Industry:
-
-**GoodFellas** Hotels with offices in Atlanta, New York, San Francisco, Orlando, Los Angeles.
-
-**Hiking Hotels** in Denver, Grand Canyon & Rapid City.
-
-**Casino Hotels** in Las Vegas & Reno.
-
-**FamilyFun Hotels** with offices in Disney World & Disney Land.
-
-It is trying to migrate the application as SaaS application in the cloud. 
-Let us see how to modernize this application with Azure Cosmos DB. 
-
-You will have to redesign the data model to offer it as SaaS application. 
 
 ## Architecture Solution Diagram
 <img src="./images/Multi-Tenant_Cosmos_DB_Workshop_Architecture.jpg" alt="Architecture for Azure Cosmos DB Lab" Width="600"> 
