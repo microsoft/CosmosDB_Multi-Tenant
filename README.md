@@ -2,7 +2,7 @@
 
 # Azure Cosmos DB for Multitenant Applications Workshop
 
-## Cosmos DB Introduction
+## Azure Cosmos DB Introduction
 
 Azure Cosmos DB is a fully managed NoSQL database for modern multitenant application development. You can build applications 
 fast with open source APIs, multiple SDKs, schemaless data and no-ETL analytics over operational data.
@@ -21,36 +21,37 @@ then one or more containers to store your data.
 
 <img src="./images/CosmosDB_ResourceModel.jpg" alt="Cosmos DB Resource Model" Width="600">
 
-** Request Units: ** Cost of database operations is normalized by Azure Cosmos DB and is experssed by Request Units (RU). It is a performance 
+#### Request Units: 
+Cost of database operations is normalized by Azure Cosmos DB and is experssed by Request Units (RU). It is a performance 
 currency abstracting the system resources such as CPU, IOPS and Memory to perform the database operations supported by 
 Azure Cosmos DB. You can examine the response header to track the number of RUs that are consumed by any database 
 operation.
 <img src="./images/CosmosDB_Request_unit.jpg" alt="Request Unit Diagram" Width="600" >
 
 
-** Indexing: ** Azure Cosmos DB is a schema-agnostic database that allows you to iterate on your application without having to deal with schema 
+#### Indexing: Azure Cosmos DB is a schema-agnostic database that allows you to iterate on your application without having to deal with schema 
 or index management. By default, Azure Cosmos DB automatically indexes every property for all items in your container without 
 having to define any schema or configure secondary indexes. When an item is written, Azure Cosmos DB effectively indexes each 
 property's path and its corresponding value. In some situations, you may want to override this automatic behavior to better suit your requirements. You can customize a 
 container's indexing policy by setting its indexing mode, and include or exclude property paths.
 
-## Why Cosmos DB?
-Here are the scenarios where Cosmos DB can help:
+## Why Azure Cosmos DB?
+Here are the scenarios where Azure Cosmos DB can help:
 * Looking to modernize their monolithic onpremise applications as SaaS applications.
 * Goals to expand globally with low latency and highly scalable throughput. 
 * Trying to reduce costs to support multiple customers with fluctuating throughput requirement.
 * Application needs to support multiple businesses with flexible schema.
 * Unable to meet performance SLA requirements and reaching max storage limits with growing data.
 
-All the above use cases need a new mindset and special features. This workshop will show you how Cosmos DB will be the best option.
+All the above use cases need a new mindset and special features. This workshop will show you how Azure Cosmos DB will be the best option.
 
 ## Workshop Challenge List
 - [Challenge-1: Deploy Azure Storage, Azure Cosmos DB & Azure Data Factory Services to Azure Subscription](#challenge-1-Deploy-Azure-Services)
 - [Challenge-2: Model data to build SaaS applications](#Challenge-2-Model-data-to-build-SaaS-applications)
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
-- [Challenge-4: Load multi-tenant data into Cosmos DB with an application](#Challenge-4-Load-multi-tenant-data-into-Cosmos-DB-with-an-application)
-- [Challenge-5: Validate Cosmos DB features Partition Key for Multitenancy, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
-
+- [Challenge-4: Validate Cosmos DB features Partition Key for Multitenancy, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
+- [Challenge-5: Optimize costs and performance with Indexing Policy](#Challenge-5-Optimize-costs-and-performance-with-Indexing-Policy)
+- [Challenge-6: Load multi-tenant data into Cosmos DB with an application](#Challenge-4-Load-multi-tenant-data-into-Cosmos-DB-with-an-application)
 
 ## Multi-Tenancy features for Software Companies 
 
@@ -122,15 +123,17 @@ You have successfully deployed the required services to Azure. Congratulations f
 Let us review the object model for this application and plan the data model for SaaS application.
 
 ### Multi-Tenant Reservation System Object Model
-"Tenant" object stores all the business customer data
-"Biz Locations" contains the tenant business locations address and contact info
-"Hotel_Room" contains catalog of rooms details for offering
-"Rental_Car" contains catalog of cars details for offering.
-"Room_Inventory" maintains availability for each hotel business locations.
-"Rental_Car_Inventory" maintains availability for each rental car business locations.
-"Customers" maintains all the customer profile data.
-"Car_Rental_Reservations" stores all the car rental reservations. 
-"Hotel_Reservations" stores all the hotel reservations. 
+**Tenant** object stores all the business customer data.
+
+**Biz Locations** contains the tenant business locations address and contact info.
+
+**Hotel_Room** contains catalog of rooms details for offering.
+**Rental_Car** contains catalog of cars details for offering.
+**Room_Inventory** maintains availability for each hotel business locations.
+**Rental_Car_Inventory** maintains availability for each rental car business locations.
+**Customers** maintains all the customer profile data.
+**Car_Rental_Reservations** stores all the car rental reservations. 
+**Hotel_Reservations** stores all the hotel reservations. 
 
 <img src="./images/Multi-tenant-Reservation-system-object-model.jpg" alt="Multi-Tenant Reservation System Object Model" Width="600">
 
