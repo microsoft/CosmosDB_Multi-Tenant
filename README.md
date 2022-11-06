@@ -15,6 +15,7 @@ It also started supporting PostgreSQL extended with the Citus Open Source which 
 To begin using Azure Cosmos DB, create an Azure Cosmos DB account in an Azure resource group in your subscription. 
 You then create databases and containers within the account.
 
+#### Resource Model:
 A single Azure Cosmos DB account can virtually manage an unlimited amount of data and provisioned throughput. 
 To manage your data and provisioned throughput, you can create one or more databases within your account, 
 then one or more containers to store your data. 
@@ -29,7 +30,8 @@ operation.
 <img src="./images/CosmosDB_Request_unit.jpg" alt="Request Unit Diagram" Width="600" >
 
 
-#### Indexing: Azure Cosmos DB is a schema-agnostic database that allows you to iterate on your application without having to deal with schema 
+#### Indexing: 
+Azure Cosmos DB is a schema-agnostic database that allows you to iterate on your application without having to deal with schema 
 or index management. By default, Azure Cosmos DB automatically indexes every property for all items in your container without 
 having to define any schema or configure secondary indexes. When an item is written, Azure Cosmos DB effectively indexes each 
 property's path and its corresponding value. In some situations, you may want to override this automatic behavior to better suit your requirements. You can customize a 
@@ -51,7 +53,7 @@ All the above use cases need a new mindset and special features. This workshop w
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
 - [Challenge-4: Validate Cosmos DB features Partition Key for Multitenancy, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
 - [Challenge-5: Optimize costs and performance with Indexing Policy](#Challenge-5-Optimize-costs-and-performance-with-Indexing-Policy)
-- [Challenge-6: Load multi-tenant data into Cosmos DB with an application](#Challenge-4-Load-multi-tenant-data-into-Cosmos-DB-with-an-application)
+- [Challenge-6: Load multi-tenant data into Cosmos DB with an application](#Challenge-6-Load-multi-tenant-data-into-Cosmos-DB-with-an-application)
 
 ## Multi-Tenancy features for Software Companies 
 
@@ -270,7 +272,7 @@ Validate the Synthetic partition key.
 <img src="./images/MulittenantCosmosDB_DB_SyntheticCombo_Container.jpg" alt="Synthetic partition key container" Width="600">
 
 
-## Challenge-4: Validate Cosmos DB features Partitioning, Auto failover, Autoscale and Low latency
+## Challenge-4: Validate Cosmos DB features Partitioning Auto failover Autoscale and Low latency
 
 ### 5.1 Partitioning Strategy Validation
 Validate the data you have loaded into various containers using the parittion key strategies in Challenge-3. 
