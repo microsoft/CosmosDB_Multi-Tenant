@@ -21,11 +21,18 @@ then one or more containers to store your data.
 
 <img src="./images/CosmosDB_ResourceModel.jpg" alt="Cosmos DB Resource Model" Width="600">
 
-Request Units: Cost of database operations is normalized by Azure Cosmos DB and is experssed by Request Units (RU). It is a performance 
+** Request Units: ** Cost of database operations is normalized by Azure Cosmos DB and is experssed by Request Units (RU). It is a performance 
 currency abstracting the system resources such as CPU, IOPS and Memory to perform the database operations supported by 
 Azure Cosmos DB. You can examine the response header to track the number of RUs that are consumed by any database 
 operation.
 <img src="./images/CosmosDB_Request_unit.jpg" alt="Request Unit Diagram" Width="600" >
+
+
+** Indexing: ** Azure Cosmos DB is a schema-agnostic database that allows you to iterate on your application without having to deal with schema 
+or index management. By default, Azure Cosmos DB automatically indexes every property for all items in your container without 
+having to define any schema or configure secondary indexes. When an item is written, Azure Cosmos DB effectively indexes each 
+property's path and its corresponding value. In some situations, you may want to override this automatic behavior to better suit your requirements. You can customize a 
+container's indexing policy by setting its indexing mode, and include or exclude property paths.
 
 ## Why Cosmos DB?
 Here are the scenarios where Cosmos DB can help:
@@ -192,9 +199,9 @@ Requirement:
 Consider the option of loading the rental car and hotel room data with inventory type as the parition key. Another option 
 is to load the data per business location using business location id. 
 
-3.1 Load Rental Car and Hotel Room availability data into 'Availability_by_Inventory_Item' container
+3.1 Load the Rental Car and Hotel Room availability data into 'Availability_by_Inventory_Item' container
 
-3.2 Load Rental Car and Hotel Room availability data into 'Availability_by_BizLocation' container
+3.2 Load the Rental Car and Hotel Room availability data into 'Availability_by_BizLocation' container
 
 3.3 Analyze Query performance to satisfy read and write requirement
 
@@ -205,6 +212,15 @@ is to load the data per business location using business location id.
 * Business support team should be able to pull up the reservation to help the client requests.
 * Transaction should be able to update the avilability count. 
 * Business manager should be able to pull the total reservations per day 
+
+Consider the advantages of loading the reservation data with customerId as the partition key vs loading the data with 
+Business location as the partition key.
+
+3.4 Load the reservation data into 'Reservation_by_Customer' container
+
+3.5 Load the reservation data into 'Reservation_by_BizLocation' container 
+
+3.5 Analyze the query performance to satisfy read and write requirement.
 
 
 
@@ -250,11 +266,8 @@ Validate the Synthetic partition key.
 
 <img src="./images/MulittenantCosmosDB_DB_SyntheticCombo_Container.jpg" alt="Synthetic partition key container" Width="600">
 
-## Challenge-4: Load multi-tenant data into Cosmos DB with an application
 
-Add instructions to clone the repo to run an application from a local environment.
-
-## Challenge-5: Validate Cosmos DB features Partitioning, Auto failover, Autoscale and Low latency
+## Challenge-4: Validate Cosmos DB features Partitioning, Auto failover, Autoscale and Low latency
 
 ### 5.1 Partitioning Strategy Validation
 Validate the data you have loaded into various containers using the parittion key strategies in Challenge-3. 
@@ -380,6 +393,44 @@ SELECT count(1) as count, c.TenantId FROM c group by c.TenantId
 
 select "Query Stats" and check the Query execution time. It shows the sub millisecond response time.
 
+## Challenge-5: Optimize costs and performance with Indexing Policy
+The default indexing policy for newly created containers indexes every property of every item. This allows 
+you to get good query performance without having to think about indexing and index management upfront. 
+In some situations, you may want to override this automatic behavior to better suit your requirements.
+
+In Azure Cosmos DB, the total consumed storage is the combination of both the Data size and Index size. 
+By optimizing the number of paths that are indexed, you can substantially reduce the latency and RU charge 
+of write operations.
+
+Will walk you through the steps to include properties required for queries and exculde the rest.
+
+5.1 Expand 'Reservation_by_Customer' container and select 'Settings' section. It will show 'settings' 
+and 'indexing Policy' tabs. Select 'indexingPolicy'. It will show you the default policy to index every 
+property in the document.
+<img src="./images/CosmosDB_Indexing_default_view_Marked.jpg" alt="Indexing default view" width="600">
+
+5.2 Identify the properties you would be used most with your application queries. Let us consdier the following 
+for our use case:
+* creaditCard
+* totalAmount
+* tenantId
+* tBizId
+* tBizLocId
+* bizName
+* tBizAddress/city
+* tBizAddress/zipcode
+
+5.3 Set the 'automatic' property value to 'false' and type "/*" as path property value in the excludeedPaths section 
+to exclude all the attributes. Enter "/creditCard/?" as the value to the path property in the includedPath section. 
+enter "," and copy and paste the section below to enter all the indexing property names.
+
+Your indexing policy should look like the following picture.
+<img src="./images/CosmosDB_Indexing_include_path_view_Marked.jpg" alt="Modified indexing policy to index specific properties" width="600">
+
+
+## Challenge-6: Load multi-tenant data into Cosmos DB with an application
+
+Add instructions to clone the repo to run an application from a local environment.
 
 
 
