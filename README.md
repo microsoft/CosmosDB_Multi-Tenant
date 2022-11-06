@@ -51,7 +51,7 @@ All the above use cases need a new mindset and special features. This workshop w
 - [Challenge-1: Deploy Azure Storage, Azure Cosmos DB & Azure Data Factory Services to Azure Subscription](#challenge-1-Deploy-Azure-Services)
 - [Challenge-2: Model data to build SaaS applications](#Challenge-2-Model-data-to-build-SaaS-applications)
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
-- [Challenge-4: Validate Cosmos DB features Partition Key for Multitenancy, Auto Failover for high availability, Autoscale for scalability and Low latency response](#Challenge-5-Validate-Cosmos-DB-features-Partitioning-Auto-failover-Autoscale-and-Low-latency)
+- [Challenge-4: Validate Cosmos DB features Partition Key, Auto Failover, Autoscale and Low Latency](#Challenge-4-Validate-Cosmos-DB-features-Partition-key-Auto-failover-Autoscale-and-Low-latency)
 - [Challenge-5: Optimize costs and performance with Indexing Policy](#Challenge-5-Optimize-costs-and-performance-with-Indexing-Policy)
 - [Challenge-6: Load multi-tenant data into Cosmos DB with an application](#Challenge-6-Load-multi-tenant-data-into-Cosmos-DB-with-an-application)
 
@@ -272,9 +272,9 @@ Validate the Synthetic partition key.
 <img src="./images/MulittenantCosmosDB_DB_SyntheticCombo_Container.jpg" alt="Synthetic partition key container" Width="600">
 
 
-## Challenge-4: Validate Cosmos DB features Partitioning Auto failover Autoscale and Low latency
+## Challenge-4: Validate Cosmos DB features Partition key, Auto failover, Autoscale and Low latency
 
-### 5.1 Partitioning Strategy Validation
+### 4.1 Partitioning Strategy Validation
 Validate the data you have loaded into various containers using the parittion key strategies in Challenge-3. 
 You will be Executing the queries in the data explorer to understand the value of partition strategies. 
 Plan the partition key to avoid the 20GB logical partition size limit. Physical partition of the container 
@@ -334,7 +334,7 @@ You will get 8 logical partitions keeping the data separate per business locatio
 This strategy is used to isolate the noisy neighbor from the other mid size customers.
 
 
-### 5.2 High Availability Features:
+### 4.2 High Availability Features:
 Azure Cosmos DB is designed to provide multiple features and configuration options to achieve high availability for all 
 solution availability needs.
 
@@ -371,7 +371,7 @@ Select the "On" button under "Enable Service-Managed Failover".
 
 It will take sometime to enable the failover option.
 
-### 5.3 Autoscale for scalability
+### 4.3 Autoscale for scalability
 It allows you to scale the throughput (RU/s) of your database or container automatically and instantly. 
 The throughput is scaled based on the usage, without impacting the availability, latency, throughput, or 
 performance of the workload.
