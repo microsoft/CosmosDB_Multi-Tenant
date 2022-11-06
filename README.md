@@ -98,20 +98,22 @@ We have developed an Azure Deployment script to provision the required Azure Ser
 
 1.2. It display a custom deployment screen as shown below.
 
-<img src="./images/Deploy_CosmosDBMultTenant_Lab_Services.jpg" alt="Azure Custom Depolyment Screen" Width="600">
+<img src="./images/AzureDeployment_Script_Options_Marked.jpg" alt="Azure Custom Depolyment Screen" Width="600">
 	
-1.3 Select your region from the dropdown list for example "East US 2".
+1.3 Select 'Create new' button and enter 'smartbooking' as the resource group name.
 
-1.4 Click on "Review+create" button.
+1.4 Select your region from the dropdown list for example "East US 2".
 
-1.5 It completes the validation as the next step and click on 'create' button.
+1.5 Click on "Review+create" button.
+
+1.6 It completes the validation as the next step and click on 'create' button.
 
 It will create the following services in your subscription:
 * Azure Cosmos DB with 4 containers
 
 It may take 2 to 5 minutes to create the services.
 
-1.6 Click on "Go to resource group" when the deployment is complete.
+1.7 Click on "Go to resource group" when the deployment is complete.
 
 <img src="./images/Deploy_CosmosDBMultTenant_Lab_Services_Complete.jpg" alt="Deployment complete" Width="600">
 
