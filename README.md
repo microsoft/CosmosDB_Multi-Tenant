@@ -98,7 +98,7 @@ We have developed an Azure Deployment script to provision the required Azure Ser
 
 1.2. It display a custom deployment screen as shown below.
 
-<img src="./images/AzureDeployment_Script_Options_Marked.jpg" alt="Azure Custom Depolyment Screen" Width="600" height="300">
+<img src="./images/AzureDeployment_Script_Options_Marked.jpg" alt="Azure Custom Depolyment Screen" Width="600" height="400">
 	
 1.3 Select 'Create new' button and enter 'smartbooking' as the resource group name.
 
