@@ -98,7 +98,7 @@ We have developed an Azure Deployment script to provision the required Azure Ser
 
 1.2. It display a custom deployment screen as shown below.
 
-<img src="./images/AzureDeployment_Script_Options_Marked.jpg" alt="Azure Custom Depolyment Screen" Width="600">
+<img src="./images/AzureDeployment_Script_Options_Marked.jpg" alt="Azure Custom Depolyment Screen" Width="600" height="300">
 	
 1.3 Select 'Create new' button and enter 'smartbooking' as the resource group name.
 
@@ -229,49 +229,6 @@ Business location as the partition key.
 
 3.5 Analyze the query performance to satisfy read and write requirement.
 
-
-
-### Partitioning Strategy to support different indexing requirement for each industry
-Azure Cosmos DB provides autoindexing for all attributes in a document. You can limit the indexing attributes to save data storage costs.
-You may have different indexing requirement for rental and hotel businesses application queries.
-For example reporting may demand to query data based on the room type for hotel data and by car size for rental car data.
-
-You can create separate containers for rental and car industries with 'TenantId' as the partition key. 
-
-3.2 Review 'strategy_by_BusinessLine' container definition designed to load one business line data.
-	
-	Click-1: Expand 'strategy_by_BusinessLine' container
-
-	Click-2: select 'Settings'
-
-<img src="./images/MulittenantCosmosDB_DB_TenantsByBusinessLine_Container.jpg" alt="container by business config" Width="600">
-
-### Partitioning Strategy to support mid size customers
-You can partition data based an an unique attribute such as business locationId for each customer to support mid size customers. 
-You will have to make sure the data volume of each business location should not exceed 20GB limit of the logical partition size.
-
-3.3 Review the configuration set in the 'Strategy_by_BusinessTenant'container to partition the data by locationId.
-	
-	Click-1: Expand 'Strategy_by_BusinessTenant' container definition
-
-	Click-2: select 'Settings'
-
-<img src="./images/MulittenantCosmosDB_DB_By_TenantBiz_Container.jpg" alt="container by business locations" Width="600">
-
-
-### Partitioning Strategy to combine multiple parameters as a synthetic key: 
-It is not easy to find a property with unique values to partition data. You can create composite value by combining properties.
-Azure Cosmos DB support synthetic key as a partition key.
-
-3.4 Review the container configuration with Synthetic partition key.
-	
-	Click-1: Expand 'Strategy_by_SyntheticKey' container
-
-	Click-2: select 'Settings'
-
-Validate the Synthetic partition key.
-
-<img src="./images/MulittenantCosmosDB_DB_SyntheticCombo_Container.jpg" alt="Synthetic partition key container" Width="600">
 
 
 ## Challenge-4: Validate Cosmos DB features Partition key, Auto failover, Autoscale and Low latency
@@ -415,6 +372,8 @@ Will walk you through the steps to include properties required for queries and e
 and 'indexing Policy' tabs. Select 'indexingPolicy'. It will show you the default policy to index every 
 property in the document.
 <img src="./images/CosmosDB_Indexing_default_view_Marked.jpg" alt="Indexing default view" width="600">
+
+
 
 5.2 Identify the properties you would be used most with your application queries. Let us consdier the following 
 for our use case:
