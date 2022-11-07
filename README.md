@@ -198,7 +198,8 @@ select the geography for their deployment.
 
 
 ### Right strategy to load availability data 
-Requirement:
+**Requirement**:
+
 * Support customer client (end customer) search by date, location and inventory type (Rental Car & Hotel Room Type)
 * Customer support team from each business should be able to search for availability to help with reservations. 
 * Customer manager should be able to load the availability data every month. 
@@ -265,6 +266,8 @@ team and the managers, InventoryId would be the best partition key.
 
 
 ### Right strategy to load reservation data
+**Requirement**
+
 * Application need to complete the reservation booking transaction.
 * Customer client should be able to review the reservations at anytime. 
 * Business support team should be able to pull up the reservation to help the client requests.
@@ -304,10 +307,16 @@ select * from c where c.custId=3286
 
 Execute the query from the options on the top section. 
 
-Execute the same query by selecting **Reservation_by_BizLocation** container's SQL Query window.
+
+Execute the same query by creating a **Reservation_by_BizLocation** container's SQL Query window by following the 
+above steps.
+
+Evaluate **Request Charge** and **Query engine excution time** values based on customerId and Business location 
+partition keys. You would see the value of using the right partition key for the high volume queries. 
 
 
 <img src="./images/ReservationsByCustomerIdPartitionComparision_Marked.jpg" alt="Reservation Data partition key comparision " width="700">
+
 
 ## Challenge-4: Validate Cosmos DB features Auto failover, Autoscale and Low latency
 
