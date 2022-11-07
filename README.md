@@ -164,7 +164,7 @@ Access Repo's **Data folder** and find the following data objects in JSON format
 
 Check out the CSV files and understand that the flat data does not work for SaaS model.
 Think about ways to group the data into the two documents models you have identified. 
-Download all the files into your local folder.
+**Download all the files into your local folder.**
 
 ### Database Strategies to support small, medium and large customers
 
@@ -221,7 +221,7 @@ Access the data in your local folder to load the data.
 * Hit the "Upload" button to load the data. 
 It will take 2 to 3 minutes based on the RU setting.
 
-<img src="./images/Upload_Availability_Data_Marked.jpg" alt="Load data into availability document" width="600">
+<img src="./images/Upload_Availability_Data_Marked.jpg" alt="Load data into availability document" width="800" height="700">
 
 #### Load Rental Car availability data
 
@@ -255,7 +255,7 @@ and c.availableCars > 0 and c.inventoryId=4 and c.bizAddress.city='San Francisco
 
 ```
 
-<img src="./images/OpenQueryToolWindowMarked.jpg" alt="Open new SQL Query Window" width="400">
+<img src="./images/OpenQueryToolWindowMarked.jpg" alt="Open new SQL Query Window" width="600">
 
 Repeat the same query in 'Availability_by_Location' container by following the above steps.
 
@@ -263,7 +263,7 @@ Compare the "Request charge" and "Query Engine Execution time". You can recogniz
 right partitioning key. Since volume of the end customer queries are much more than the business support 
 team and the managers, InventoryId would be the best partition key. 
 
-<img src="./images/AvailabilityByInventoryIdPartitionComparision_Marked.jpg" alt="Availability partition key comparision" width="700">
+<img src="./images/AvailabilityByInventoryIdPartitionComparision_Marked.jpg" alt="Availability partition key comparision" width="800" height="700">
 
 
 ### Right strategy to load reservation data
@@ -316,7 +316,7 @@ Evaluate **Request Charge** and **Query engine excution time** values based on c
 partition keys. You would see the value of using the right partition key for the high volume queries. 
 
 
-<img src="./images/ReservationsByCustomerIdPartitionComparision_Marked.jpg" alt="Reservation Data partition key comparision " width="700">
+<img src="./images/ReservationsByCustomerIdPartitionComparision_Marked.jpg" alt="Reservation Data partition key comparision " width="800" height="700">
 
 
 ## Challenge-4: Validate Cosmos DB features Auto failover, Autoscale and Low latency
@@ -421,7 +421,7 @@ to exclude all the attributes. Enter "/creditCard/?" as the value to the path pr
 enter "," and copy and paste the section below to enter all the indexing property names.
 
 Your indexing policy should look like the following picture.
-<img src="./images/CosmosDB_Indexing_include_path_view_Marked.jpg" alt="Modified indexing policy to index specific properties" width="600">
+<img src="./images/CosmosDB_Indexing_include_path_view_Marked.jpg" alt="Modified indexing policy to index specific properties" width="800">
 
 
 ## Challenge-6: Load multi-tenant data into Cosmos DB with an application
