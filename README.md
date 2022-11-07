@@ -158,12 +158,13 @@ You may want to create two document models. One to keep Reservation info and the
 
 ## Challenge-3: Design Cosmos DB Account to serve small, medium and large customers
 
-Access Repo's Data folder and find the following data objects in JSON format.
+Access Repo's **Data folder** and find the following data objects in JSON format.
 
 <img src="./images/Multi-Tenant_Reservation_System_Sample_Data.jpg" alt="Sample Data Objects" Width="600">
 
 Check out the CSV files and understand that the flat data does not work for SaaS model.
 Think about ways to group the data into the two documents models you have identified. 
+Download all the files into your local folder.
 
 ### Database Strategies to support small, medium and large customers
 
@@ -207,8 +208,8 @@ select the geography for their deployment.
 Consider the option of loading the rental car and hotel room data with inventory type as the parition key. Another option 
 is to load the data per business location using business location id. 
 
-3.1 Load the Rental Car and Hotel Room availability data into 'Availability_by_Inventory_Item' container 
-with InventoryId as the partitionKey.
+#### 3.1 Load the Reservation availability data into a container with InventoryId as the partitionKey.
+Access the data in your local folder to load the data.
 
 #### Load Hotel Room availability data
 
@@ -266,7 +267,7 @@ team and the managers, InventoryId would be the best partition key.
 
 
 ### Right strategy to load reservation data
-**Requirement**
+**Requirement**:
 
 * Application need to complete the reservation booking transaction.
 * Customer client should be able to review the reservations at anytime. 
