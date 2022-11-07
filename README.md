@@ -255,7 +255,7 @@ and c.availableCars > 0 and c.inventoryId=4 and c.bizAddress.city='San Francisco
 
 ```
 
-<img src="./images/OpenQueryToolWindowMarked.jpg" alt="Open new SQL Query Window" width="600">
+<img src="./images/OpenQueryToolWindowMarked.jpg" alt="Open new SQL Query Window" width="800">
 
 Repeat the same query in 'Availability_by_Location' container by following the above steps.
 
