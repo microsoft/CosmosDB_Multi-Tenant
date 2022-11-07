@@ -34,8 +34,7 @@ operation.
 Azure Cosmos DB is a schema-agnostic database that allows you to iterate on your application without having to deal with schema 
 or index management. By default, Azure Cosmos DB automatically indexes every property for all items in your container without 
 having to define any schema or configure secondary indexes. When an item is written, Azure Cosmos DB effectively indexes each 
-property's path and its corresponding value. In some situations, you may want to override this automatic behavior to better suit your requirements. You can customize a 
-container's indexing policy by setting its indexing mode, and include or exclude property paths.
+property's path and its corresponding value. In some situations, you may want to override this automatic behavior to improve write performance and cost. You can customize a container's indexing policy by setting include or exclude property paths.
 
 ## Why Azure Cosmos DB?
 Here are the scenarios where Azure Cosmos DB can help:
@@ -68,7 +67,7 @@ scale up to the max throughput for address unpredicted workloads and scale down 
 
 
 
-Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/introduction) for more details and training. 
+Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/azure/cosmos-db/introduction) for more details and training. 
 
     
 ## Business Scenario
@@ -180,18 +179,17 @@ When using a container for each tenant, you can consider sharing throughput with
 throughput at the database level. You can provision dedicated throughput for guaranteed level of performance, serve 
 medium size customers, to avoid noisy neighbor problem. 
 
-#### 3) Database account for tenant
+#### 3) Account per tenant
 You can provision separate database accounts for each tenant, which provides the highest level of isolation, 
 but the lowest density. A single database account is dedicated to a tenant, which means they are not subject to 
-the noisy neighbor problem. You can also configure the location of the database account according to the 
-tenant's requirements, and you can tune the configuration of Azure Cosmos DB features, such as geo-replication 
+the noisy neighbor problem. You can also configure the location of the container data via replication according to the 
+tenant's requirements, and you can tune the configuration of Azure Cosmos DB features, network access, backup policy  
 and customer-managed encryption keys, to suit each tenant's requirements.
 
 #### 4) Hybrid Approaches
 You can consider a combination of the above approaches to suit different tenants' requirements and your pricing model. 
 For example:
 * Provision all free trial customers within a shared container, and use the tenant ID or a synthetic key partition key.
-* Offer a paid Bronze tier that deploys a dedicated container per tenant, but with shared throughput on a database.
 * Offer a higher Silver tier that provisions dedicated throughput for the tenant's container.
 * Offer the highest Gold tier, and provide a dedicated database account for the tenant, which also allows tenants to 
 select the geography for their deployment.
@@ -234,7 +232,7 @@ Business location as the partition key.
 ## Challenge-4: Validate Cosmos DB features Partition key, Auto failover, Autoscale and Low latency
 
 ### 4.1 Partitioning Strategy Validation
-Validate the data you have loaded into various containers using the parittion key strategies in Challenge-3. 
+Validate the data you have loaded into various containers using the partition key strategies in Challenge-3. 
 You will be Executing the queries in the data explorer to understand the value of partition strategies. 
 Plan the partition key to avoid the 20GB logical partition size limit. Physical partition of the container 
 can grow horizontally without disrupting the live production environment.  
