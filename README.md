@@ -51,7 +51,7 @@ All the above use cases need a new mindset and special features. This workshop w
 - [Challenge-1: Deploy Azure Storage, Azure Cosmos DB & Azure Data Factory Services to Azure Subscription](#challenge-1-Deploy-Azure-Services)
 - [Challenge-2: Model data to build SaaS applications](#Challenge-2-Model-data-to-build-SaaS-applications)
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
-- [Challenge-4: Validate Cosmos DB features Partition Key, Auto Failover, Autoscale and Low Latency](#Challenge-4-Validate-Cosmos-DB-features-Partition-key-Auto-failover-Autoscale-and-Low-latency)
+- [Challenge-4: Validate Cosmos DB features Auto Failover, Autoscale and Low Latency](#Challenge-4-Validate-Cosmos-DB-features-Auto-failover-Autoscale-and-Low-latency)
 - [Challenge-5: Optimize costs and performance with Indexing Policy](#Challenge-5-Optimize-costs-and-performance-with-Indexing-Policy)
 - [Challenge-6: Load multi-tenant data into Cosmos DB with an application](#Challenge-6-Load-multi-tenant-data-into-Cosmos-DB-with-an-application)
 
@@ -98,7 +98,7 @@ We have developed an Azure Deployment script to provision the required Azure Ser
 
 1.2. It display a custom deployment screen as shown below.
 
-<img src="./images/AzureDeployment_Script_Options_Marked.jpg" alt="Azure Custom Depolyment Screen" Width="600" height="500">
+<img src="./images/AzureDeployment_Script_Options_Marked.jpg" alt="Azure Custom Depolyment Screen" Width="600" height="600">
 	
 1.3 Select 'Create new' button and enter 'smartbooking' as the resource group name.
 
@@ -206,11 +206,62 @@ Requirement:
 Consider the option of loading the rental car and hotel room data with inventory type as the parition key. Another option 
 is to load the data per business location using business location id. 
 
-3.1 Load the Rental Car and Hotel Room availability data into 'Availability_by_Inventory_Item' container
+3.1 Load the Rental Car and Hotel Room availability data into 'Availability_by_Inventory_Item' container 
+with InventoryId as the partitionKey.
 
-3.2 Load the Rental Car and Hotel Room availability data into 'Availability_by_BizLocation' container
+#### Load Hotel Room availability data
+
+* Select Data Explorer from the left panel.
+* Expand 'Availability_by_inventory_item' container and select 'items' section. 
+* Select 'Upload Item' button on the top right tabs.
+* Select the 'Folder' icon to load the data.
+* Select 'Hotel_room_availability.json' file you have downloaded from the github site.
+* Hit the "Upload" button to load the data. 
+It will take 2 to 3 minutes based on the RU setting.
+
+<img src="./images/Upload_Availability_Data_Marked.jpg" alt="Load data into availability document" width="600">
+
+#### Load Rental Car availability data
+
+* Repeat the same to load Rental Car data from "rental_car_availability.json".
+
+#### Load Tenant Data 
+
+* Repeat the same to load tenant data from 'tenantData.json'.
+
+
+3.2 Load the Rental Car and Hotel Room availability data into 'Availability_by_BizLocation' container with 
+Business location Id (tBizLoc) as the partition key.
+
+* Expand 'Availability_by_inventory_item' container and select 'items' section. 
+* Repeat the steps of 3.1 to load Rental Car and Hotel room availabiity data.
 
 3.3 Analyze Query performance to satisfy read and write requirement
+
+Expand 'Availability_by_inventory_item' container and select items section
+Select 'windows with + sign' from the options on the top section.
+
+Copy and paste the following query in a SQL Editor to search for **Compact** cars between 11/11 and 11/14 
+in 'San Francisco' city.
+
+Execute the query from the options on the top section.
+
+```
+SELECT *
+FROM c where c.availDate >'2022-11-11' and c.availDate <'2022-11-14' 
+and c.availableCars > 0 and c.inventoryId=4 and c.bizAddress.city='San Francisco'
+
+```
+
+<img src="./images/OpenQueryToolWindowMarked.jpg" alt="Open new SQL Query Window" width="400">
+
+Repeat the same query in 'Availability_by_Location' container by following the above steps.
+
+Compare the "Request charge" and "Query Engine Execution time". You can recognize the value of 
+right partitioning key. Since volume of the end customer queries are much more than the business support 
+team and the managers, InventoryId would be the best partition key. 
+
+<img src="./images/AvailabilityByInventoryIdPartitionComparision_Marked.jpg" alt="Availability partition key comparision" width="700">
 
 
 ### Right strategy to load reservation data
@@ -223,77 +274,45 @@ is to load the data per business location using business location id.
 Consider the advantages of loading the reservation data with customerId as the partition key vs loading the data with 
 Business location as the partition key.
 
-3.4 Load the reservation data into 'Reservation_by_Customer' container
+3.4 Load the reservation data into the container with **customerId** as the partition key.
 
-3.5 Load the reservation data into 'Reservation_by_BizLocation' container 
+* Expand 'Reservation_by_Customer' container and select 'items' section. 
+* Repeat the steps of 3.1 to load Rental Car and Hotel room reservation data 
+from the following files:
+	1) multi_tenent_car_reservations.json
+	2) multi_tenent_hotel_reservations.json
+	3) customerData.json
+
+3.5 Load the reservation data into the container with **Business location (syntheticKey)** as the partition key. 
+
+* Expand 'Reservation_by_BizLocation' container and select 'items' section. 
+* Repeat the steps of 3.1 to load Rental Car and Hotel room reservation data 
+from the following files:
+	1) multi_tenent_car_reservations.json
+	2) multi_tenent_hotel_reservations.json
+	3) customerData.json
 
 3.5 Analyze the query performance to satisfy read and write requirement.
 
+Expand **Reservation_by_Customer** container and select **Items** section.
+Create a new SQL Query window and paste the folowing query
+
+```
+select * from c where c.custId=3286
+
+```
+
+Execute the query from the options on the top section. 
+
+Execute the same query by selecting **Reservation_by_BizLocation** container's SQL Query window.
 
 
-## Challenge-4: Validate Cosmos DB features Partition key, Auto failover, Autoscale and Low latency
+<img src="./images/ReservationsByCustomerIdPartitionComparision_Marked.jpg" alt="Reservation Data partition key comparision " width="700">
 
-### 4.1 Partitioning Strategy Validation
-Validate the data you have loaded into various containers using the parittion key strategies in Challenge-3. 
-You will be Executing the queries in the data explorer to understand the value of partition strategies. 
-Plan the partition key to avoid the 20GB logical partition size limit. Physical partition of the container 
-can grow horizontally without disrupting the live production environment.  
-
-### Container with tenant partition key
-This strategy can be used to support many small size customers and can add as many customers as you need 
-to support your business growth.
-
-Select 'Data Explorer' from the left pane and expand 'bookingsdb' database.
-Select hover over 'strategy_by_Tenant' container and select three dots.
-It provide options to create SQL Query, Stored Procedure, UDF & Trigers. Select the 'New SQL Query' option. 
-
-Type the following Query:
-
-SELECT count(1) as count, c.TenantId FROM c group by c.TenantId
-
-Select "Execute Selection" button from the top tab.
-
-You will 6 logical partitions with number of records per tenant.
-
-select "Query Stats" and note the Request Charge, lookup time and Query execution times.
-
-Execute the following Query:
-
-SELECT count(1) as count, c.BizName from c group by c.BizName
-select "Query Stats" and note the Request Charge, lookup time and Query execution times.
-
-Query with tenantId will show better numbers than non-partition key BizName.
-
-### Container per business line with tenant partition key
-This strategy can be used to separate data per application or business line to support different throughput, 
-indexing requirement.
-
-Select hover over 'strategy_by_BusinessLine' container and select three dots.
-It provide options to create SQL Query, Stored Procedure, UDF & Trigers. Select the 'New SQL Query' option. 
-
-Type the following Query:
-
-SELECT count(1) as count, c.TenantId FROM c group by c.TenantId
-
-Select "Execute Selection" button from the top tab.
-
-This container has only Car Rental data. You will only 3 logical partitions with number of records per tenant.
+## Challenge-4: Validate Cosmos DB features Auto failover, Autoscale and Low latency
 
 
-### Container per business address with biz_location partition key
-This stategy is used to support the mid size customers with bigger volume than 20GB of data. It creates logical 
-parition per business location of each tenant.
-
-Execute the following Query:
-SELECT count(1) as count, c.BizLocationId FROM c group by c.BizLocationId
-
-You will get 8 logical partitions keeping the data separate per business location per tenant.
-
-### Container per tenant with tenant business as partition key
-This strategy is used to isolate the noisy neighbor from the other mid size customers.
-
-
-### 4.2 High Availability Features:
+### 4.1 High Availability Features:
 Azure Cosmos DB is designed to provide multiple features and configuration options to achieve high availability for all 
 solution availability needs.
 
@@ -330,7 +349,7 @@ Select the "On" button under "Enable Service-Managed Failover".
 
 It will take sometime to enable the failover option.
 
-### 4.3 Autoscale for scalability
+### 4.2 Autoscale for scalability
 It allows you to scale the throughput (RU/s) of your database or container automatically and instantly. 
 The throughput is scaled based on the usage, without impacting the availability, latency, throughput, or 
 performance of the workload.
@@ -371,6 +390,7 @@ Will walk you through the steps to include properties required for queries and e
 5.1 Expand 'Reservation_by_Customer' container and select 'Settings' section. It will show 'settings' 
 and 'indexing Policy' tabs. Select 'indexingPolicy'. It will show you the default policy to index every 
 property in the document.
+
 <img src="./images/CosmosDB_Indexing_default_view_Marked.jpg" alt="Indexing default view" width="600">
 
 
