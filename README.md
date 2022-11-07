@@ -221,7 +221,7 @@ Access the data in your local folder to load the data.
 * Hit the "Upload" button to load the data. 
 It will take 2 to 3 minutes based on the RU setting.
 
-<img src="./images/Upload_Availability_Data_Marked.jpg" alt="Load data into availability document" width="800" height="700">
+<img src="./images/Upload_Availability_Data_Marked.jpg" alt="Load data into availability document" width="800">
 
 #### Load Rental Car availability data
 
@@ -263,7 +263,7 @@ Compare the "Request charge" and "Query Engine Execution time". You can recogniz
 right partitioning key. Since volume of the end customer queries are much more than the business support 
 team and the managers, InventoryId would be the best partition key. 
 
-<img src="./images/AvailabilityByInventoryIdPartitionComparision_Marked.jpg" alt="Availability partition key comparision" width="800" height="700">
+<img src="./images/AvailabilityByInventoryIdPartitionComparision_Marked.jpg" alt="Availability partition key comparision" width="800">
 
 
 ### Right strategy to load reservation data
@@ -316,7 +316,7 @@ Evaluate **Request Charge** and **Query engine excution time** values based on c
 partition keys. You would see the value of using the right partition key for the high volume queries. 
 
 
-<img src="./images/ReservationsByCustomerIdPartitionComparision_Marked.jpg" alt="Reservation Data partition key comparision " width="800" height="700">
+<img src="./images/ReservationsByCustomerIdPartitionComparision_Marked.jpg" alt="Reservation Data partition key comparision " width="800">
 
 
 ## Challenge-4: Validate Cosmos DB features Auto failover, Autoscale and Low latency
@@ -401,7 +401,7 @@ Will walk you through the steps to include properties required for queries and e
 and 'indexing Policy' tabs. Select 'indexingPolicy'. It will show you the default policy to index every 
 property in the document.
 
-<img src="./images/CosmosDB_Indexing_default_view_Marked.jpg" alt="Indexing default view" width="600">
+<img src="./images/CosmosDB_Indexing_default_view_Marked.jpg" alt="Indexing default view" width="800">
 
 
 
