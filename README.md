@@ -154,7 +154,7 @@ You may want to create two document models. One to keep Reservation info and the
 * Reservation data will be inserted as soon as customer completes the reservation booking. 
 * Customers, Hotel Managers, Hotel support team can access the reservation at anytime.
 
-
+<img src="./images/CosmosDocumentObjectDesign.jpg" alt="Cosmos DB Document Model diagram" width="600">
 
 ## Challenge-3: Design Cosmos DB Account to serve small, medium and large customers
 
@@ -207,6 +207,13 @@ select the geography for their deployment.
 
 Consider the option of loading the rental car and hotel room data with inventory type as the parition key. Another option 
 is to load the data per business location using business location id. 
+
+#### Scale database throughput to bulk load the data without rate limit error
+Expand **SaaS_Multitenant_DB** database and select **Scale** section.
+Keep Autoscale option and set the Max RU/s to 11000 units.
+Select **Save** to complete the operation.
+
+<img src="./images/Database_Scale_Up_11K._Marked.jpg" alt="Scale up database throughput" width="600">
 
 #### 3.1 Load the Reservation availability data into a container with InventoryId as the partitionKey.
 Access the data in your local folder to load the data.
@@ -296,7 +303,12 @@ from the following files:
 	2) multi_tenent_hotel_reservations.json
 	3) customerData.json
 
-3.5 Analyze the query performance to satisfy read and write requirement.
+#### Scale down the database throughput to save costs. Very critical and very important step! 
+Expand **SaaS_Multitenant_DB** database and select **Scale** section.
+Keep Autoscale option and set the Max RU/s to 4000 units.
+Select **Save** to complete the operation.
+
+3.6 Analyze the query performance to satisfy read and write requirement.
 
 Expand **Reservation_by_Customer** container and select **Items** section.
 Create a new SQL Query window and paste the folowing query
@@ -340,24 +352,33 @@ deployed using availability zones, Azure Cosmos DB provides RTO = 0 and RPO = 0 
 Select 'Replicate data globally' under 'Settings' section in the left pane. It show all the available regions 
 for Cosmos DB deployment. Availability Zone option for the write region can be enabled at the time of account creation.
 
-select "+ Add region" to add a read region. Check the box for 'Availability Zone'.
+select "+ Add region" to add a read region. Check the box for 'Availability Zone'. **No save action needed for this lab.**
+
+<img src="./images/Deploy_CosmosDBMultTenant_Lab_CosmosDB_add_region_save.jpg" alt="Region availability zones" width="800">
 
 ### Region Outages
 Region outages refer to outages that affect all Azure Cosmos DB nodes in an Azure region, across all availability 
 zones. In the rare cases of region outages, Azure Cosmos DB can be configured to support various outcomes of 
 durability and availability
 
-##Durability: To protect against complete data loss that may result from catastrophic disasters in a region, Azure 
+#### Durability: 
+To protect against complete data loss that may result from catastrophic disasters in a region, Azure 
 Cosmos DB provides continuous and periodic backup modes.  
 
-### Service-Managed failover: It allows Azure Cosmos DB to fail over the write region of multi-region account. Region 
+#### Service-Managed failover: 
+It allows Azure Cosmos DB to fail over the write region of multi-region account. Region 
 failovers are detected and handled by Azure and do not require any changes from the application.
 
 Select "Service-Managed Failover" option to failover the database to read region at the time region outage.
 
+<img src="./images/Cosmosdb_feature_Automatic_Failover.jpg" alt="Auto failover feature" width="800">
+
 Select the "On" button under "Enable Service-Managed Failover".
 
-It will take sometime to enable the failover option.
+<img src="./images/CosmosDB_feature_Service_Managed_Failover_TurnOn.jpg" alt="Auto failover feature" width="800">
+
+**No action is need for this lab.** It will take sometime to enable the failover option.
+
 
 ### 4.2 Autoscale for scalability
 It allows you to scale the throughput (RU/s) of your database or container automatically and instantly. 
@@ -367,22 +388,28 @@ performance of the workload.
 Autoscale provisioned throughput is well suited for mission-critical workloads that have variable or unpredictable 
 traffic patterns, and require SLAs on high performance and scale.
 
-Select 'Data Explorer' from the left pane and expand 'bookingsdb' database. 
+Select 'Data Explorer' from the left pane and expand 'SaaS_Multitenant_DB' database. 
 
 Select 'Scale' setting.
 
-Change Max RU/s to '2000' and select save button.
+Change Max RU/s back to '4000' and select save button if you have not already. 
 
 It will change the throughput instantly without impacting the current workloads.
 
+<img src="./images/cosmosdb_autoscale_feature_marked.jpg" alt="Cosmos DB Autoscale feature" width="600">
+
 ### Sub Millisecond Fast Response Time
-Select 'Data Explorer' from the left pane and expand 'bookingsdb' database.
-Select hover over 'strategy_by_Tenant' container and select three dots.
+Select 'Data Explorer' from the left pane and expand 'SaaS_Multitenant_DB' database.
+Select hover over 'Reservation_by_Customer' container and select three dots.
 It provide options to create SQL Query, Stored Procedure, UDF & Trigers. Select the 'New SQL Query' option. 
+
+<img src="./images/cosmosdb_queryTool_create_marked.jpg" alt="Cosmos DB Query Tool Start" width="600">
 
 Type the following Query:
 
-SELECT count(1) as count, c.TenantId FROM c group by c.TenantId
+```
+SELECT * FROM c where c.custId=4691
+```
 
 select "Query Stats" and check the Query execution time. It shows the sub millisecond response time.
 
