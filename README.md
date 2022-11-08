@@ -34,18 +34,24 @@ operation.
 Azure Cosmos DB is a schema-agnostic database that allows you to iterate on your application without having to deal with schema 
 or index management. By default, Azure Cosmos DB automatically indexes every property for all items in your container without 
 having to define any schema or configure secondary indexes. When an item is written, Azure Cosmos DB effectively indexes each 
-property's path and its corresponding value. In some situations, you may want to override this automatic behavior to better suit your requirements. You can customize a 
-container's indexing policy by setting its indexing mode, and include or exclude property paths.
+property's path and its corresponding value. In some situations, you may want to override this automatic behavior to better 
+suit your requirements. You can customize a container's indexing policy by setting its indexing mode, and include or exclude 
+property paths.
+
+Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/azure/cosmos-db/introduction) for more details and training. 
 
 ## Why Azure Cosmos DB?
 Here are the scenarios where Azure Cosmos DB can help:
 * Looking to modernize their monolithic onpremise applications as SaaS applications.
+* scale up to the max throughput for addressing unpredicted workloads and scale down automatically.
 * Goals to expand globally with low latency and highly scalable throughput. 
 * Trying to reduce costs to support multiple customers with fluctuating throughput requirement.
 * Application needs to support multiple businesses with flexible schema.
 * Unable to meet performance SLA requirements and reaching max storage limits with growing data.
 
 All the above use cases need a new mindset and special features. This workshop will show you how Azure Cosmos DB will be the best option.
+
+
 
 ## Workshop Challenge List
 - [Challenge-1: Deploy Azure Storage, Azure Cosmos DB & Azure Data Factory Services to Azure Subscription](#challenge-1-Deploy-Azure-Services)
@@ -66,14 +72,13 @@ Typically, you provision a defined number of request units per second for your w
 to as throughput. You can assign throughput at a container level, at a database level to share among the containers, automatically
 scale up to the max throughput for address unpredicted workloads and scale down to 10% of Max to save costs.
 
-
-
-Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/en-us/azure/cosmos-db/introduction) for more details and training. 
-
     
 ## Business Scenario
 Fictitious ISV company called "Smart Booking Inc" has built an on-line reservation application called "EasyReserveApp" and 
-deployed to Car Rental and Hotel business industries. 
+currently deployed as on-premises application to 7 customers in Car Rental and Hotel business industries. This application is a 
+hit in the industry and they want to convert as a SaaS application to meet the global demand. They are looking for a database to 
+handle unpredictable volume, maintain low latency response to users at any part of the world, optimized the costs based on the usage
+and maintain high availability & business continuity. 
 
 It currently has the following clients in Car Rental and Hotel Industry:
 
@@ -177,22 +182,20 @@ In general, by using shared containers, you achieve the highest density of tenan
 
 #### 2) Container per tenant
 You can provision dedicated containers for each tenant. This can work well for isolating the customer tenant data.
-When using a container for each tenant, you can consider sharing throughput with other tenants by provisioning 
-throughput at the database level. You can provision dedicated throughput for guaranteed level of performance, serve 
-medium size customers, to avoid noisy neighbor problem. 
+When using a container for each tenant, you can consider sharing throughput at the database level. You can provision dedicated 
+throughput for guaranteed level of performance, serve medium size customers, to avoid noisy neighbor problem. 
 
-#### 3) Database account for tenant
+#### 3) Account for tenant
 You can provision separate database accounts for each tenant, which provides the highest level of isolation, 
 but the lowest density. A single database account is dedicated to a tenant, which means they are not subject to 
-the noisy neighbor problem. You can also configure the location of the database account according to the 
-tenant's requirements, and you can tune the configuration of Azure Cosmos DB features, such as geo-replication 
-and customer-managed encryption keys, to suit each tenant's requirements.
+the noisy neighbor problem. You can also configure the location of the container data via replication according to the 
+tenant's requirements, and you can tune the configuration of Azure Cosmos DB features, network access, backup policy, 
+geo-replication and customer-managed encryption keys, to suit each tenant's requirements.
 
 #### 4) Hybrid Approaches
 You can consider a combination of the above approaches to suit different tenants' requirements and your pricing model. 
 For example:
 * Provision all free trial customers within a shared container, and use the tenant ID or a synthetic key partition key.
-* Offer a paid Bronze tier that deploys a dedicated container per tenant, but with shared throughput on a database.
 * Offer a higher Silver tier that provisions dedicated throughput for the tenant's container.
 * Offer the highest Gold tier, and provide a dedicated database account for the tenant, which also allows tenants to 
 select the geography for their deployment.
@@ -215,7 +218,7 @@ Select **Save** to complete the operation.
 
 <img src="./images/Database_Scale_Up_11K._Marked.jpg" alt="Scale up database throughput" width="600">
 
-#### 3.1 Load the Reservation availability data into a container with InventoryId as the partitionKey.
+#### 3.1 Load the Reservation availability data into a container with **InventoryId** as the partition Key.
 Access the data in your local folder to load the data.
 
 #### Load Hotel Room availability data
