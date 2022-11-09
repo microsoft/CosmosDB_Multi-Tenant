@@ -229,7 +229,7 @@ select the geography for their deployment.
 Consider the option of loading the rental car and hotel room data with inventory type as the parition key. Another option 
 is to load the data per business location using business location id. 
 
-#### Scale database throughput to bulk load the data without rate limit error - **DONOT MISS THIS STEP**
+#### Scale database throughput to bulk load the data without rate limit error - **DONOT MISS THIS STEP!!**
 Expand **SaaS_Multitenant_DB** database and select **Scale** section.
 Keep Autoscale option and set the Max RU/s to 11000 units.
 Select **Save** to complete the operation.
