@@ -8,25 +8,43 @@
       "templateHash": "3973803974471500583"
     }
   },
-  "parameters": {},
+  "parameters": {
+    "cosmosDbLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Location for the Cosmos DB account."
+      },
+      "allowedValues": [
+        "East US",
+        "East US 2",
+        "Central US",
+        "North Central US",
+        "South Central US",
+        "West US",
+        "West US 2",
+        "West US 3",
+        "West Central US"
+      ]
+    }
+  },
   "variables": {
     "cosmosAccountName": "[toLower( concat('smartbookinginc-', uniqueString(resourceGroup().id)))]",
-    "cosmosSaaSDatabase":"SaaS_Multitenant_DB",
-    "containerByInventoryItem":"Availability_by_Inventory_Item",
-    "inventoryItemPK":"inventoryId",
+    "cosmosSaaSDatabase": "SaaS_Multitenant_DB",
+    "containerByInventoryItem": "Availability_by_Inventory_Item",
+    "inventoryItemPK": "inventoryId",
     "containerByCustomer": "Reservation_by_Customer",
-    "customerPK":"custId",
-    "containerbyLocation":"Availability_by_Location",
-    "locationPK":"BizLocId",
-    "containerbyBizLocation":"Reservation_by_BizLocation",
-    "bizLocationPK":"syntheticKey",
-    "containerBySingleTenant":"Reservation_by_Single_Tenant",
-    "singleTenantPK":"BizId",
-    "cosmosEnterpriseDB":"Enterprise_DB",
-    "containerSingleTenantByInventoryId":"Single_Tenant_Availability_by_Inventory_Item",
-    "singleTenantInvIdPK":"inventoryId",
-    "containerReservationsByBizLoc":"Reservations_by_BizLocation",
-    "reserationByBizLocPK":"BizId"
+    "customerPK": "custId",
+    "containerbyLocation": "Availability_by_Location",
+    "locationPK": "BizLocId",
+    "containerbyBizLocation": "Reservation_by_BizLocation",
+    "bizLocationPK": "syntheticKey",
+    "containerBySingleTenant": "Reservation_by_Single_Tenant",
+    "singleTenantPK": "BizId",
+    "cosmosEnterpriseDB": "Enterprise_DB",
+    "containerSingleTenantByInventoryId": "Single_Tenant_Availability_by_Inventory_Item",
+    "singleTenantInvIdPK": "inventoryId",
+    "containerReservationsByBizLoc": "Reservations_by_BizLocation",
+    "reserationByBizLocPK": "BizId"
   },
   "resources": [
     {
@@ -34,7 +52,7 @@
       "apiVersion": "2022-05-15",
       "name": "[variables('cosmosAccountName')]",
       "kind": "GlobalDocumentDB",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('cosmosDbLocation')]",
       "properties": {
         "databaseAccountOfferType": "Standard",
         "consistencyPolicy": {
@@ -42,11 +60,11 @@
         },
         "locations": [
           {
-            "locationName": "[resourceGroup().location]"
+            "locationName": "[parameters('cosmosDbLocation')]"
           }
         ],
         "capacity": {
-          "totalThroughputLimit":11000
+          "totalThroughputLimit": 11000
         }
       }
     },
