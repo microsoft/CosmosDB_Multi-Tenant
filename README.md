@@ -59,7 +59,7 @@ All the above use cases need a new mindset and special features. This workshop w
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
 - [Challenge-4: Validate Cosmos DB features Auto Failover, Autoscale and Low Latency](#Challenge-4-Validate-Cosmos-DB-features-Auto-failover-Autoscale-and-Low-latency)
 - [Challenge-5: Optimize costs and performance with Indexing Policy](#Challenge-5-Optimize-costs-and-performance-with-Indexing-Policy)
-- [Challenge-6: Load multi-tenant data into Cosmos DB with an application](#Challenge-6-Load-multi-tenant-data-into-Cosmos-DB-with-an-application)
+- [Challenge-6: Build an application using Azure Cosmos DB as the database](#Challenge-6-Build-an-application-using-Azure-Cosmos-DB-as-the-database)
 
 ## Multi-Tenancy features for Software Companies 
 
@@ -454,7 +454,7 @@ Your indexing policy should look like the following picture.
 <img src="./images/CosmosDB_Indexing_include_path_view_Marked.jpg" alt="Modified indexing policy to index specific properties" width="800">
 
 
-## Challenge-6: Build an application with Cosmos DB as its database 
+## Challenge-6: Build an application using Azure Cosmos DB as the database  
 Cosmos DB is a developer friendly and support SaaS applications with no schema and indexing to manage. It also provides built
 in Cache for improved performance. 
 
@@ -510,30 +510,52 @@ The Azure Cosmos DB Emulator provides a local environment that emulates the Azur
 Using the Azure Cosmos DB Emulator, you can develop and test your application locally, without creating an Azure subscription 
 or incurring any costs. When you're satisfied with how your application is working in the Azure Cosmos DB Emulator, you can 
 switch to using an Azure Cosmos DB account in the cloud.
-6.1 Download the emulator
-	[download](https://aka.ms/cosmosdb-emulator) and install the latest version of Azure Cosmos DB Emulator 
-	on your local computer. You can develop applications using Azure Cosmos DB Emulator with the account using the APIs for
-	NoSQL, Apache Cassandra, Mongo DB, Apache Gremlin and Table. Currently the data explorer in the emulator fully supports
-	viewing SQL data only.
 
 #### Requirements to install:
-	* Currently Windows Server 2016, 2019 or Windows 10 host OS are supported. The host OS with Active Directory enabled is 
-	currently not supported.
-	* 64-bit operating system
-	* 2-GB RAM
-	* 10-GB available hard disk space
-	* administrative privileges on the computer. The emulator will add a certificate and also set the firewall rules in order
-	to run its services. Therefore admin rights are necessary for the emulator to be able to execute such operations.
-	
-2) download and quick start
+* Currently Windows Server 2016, 2019 or Windows 10 host OS are supported. The host OS with Active 
+	Directory enabled is currently not supported.
+* 64-bit operating system
+* 2-GB RAM
+* 10-GB available hard disk space
+* administrative privileges on the computer. The emulator will add a certificate and also set the firewall 
+	rules in order to run its services. Therefore admin rights are necessary for the emulator to be able to 
+	execute such operations.	
 
-[Clone the Jave App repository] (https://github.com/Azure-Samples/azure-cosmos-java-getting-started)
+6.9 Download the emulator
+	[download](https://aka.ms/cosmosdb-emulator) and install the latest version of Azure Cosmos DB Emulator 
+	on your local computer. 
 
-4) Make changes to connection string and run
-5) Verify the changes on Azure environment
-6) How does it fit with DevOps
+	You will download azure-cosmosdb-emulator-2.14.9-3c8bff92.msi file to your local environment.
 
-Add instructions to clone the repo to run an application from a local environment.
+	Run a DOS window as an **administrator** and run the install by entering the full file name at the prompt.
+<img src="./cosmos_emulator_install_admin_window_Marked.jpg" alt="Emulator install in admin window" width="600">
+
+
+6.10 Install launches the emulator in a browser with the following screen.
+
+<img src="./images/CosmosDB_Emulater_Start_Screen_Marked.jpg" alt="Emulator start screen" width="600">
+
+6.11 Copy the URI and Primary key to a notepad.
+
+6.12 Open up Visual Studio Quick Start application and use the Solution Explorer to navigate to **App.config**.
+update **EndpointUri** and **PrimaryKey** which you copied from Cosmos DB Emulator.
+
+<img src="./images/cosmos_vs_app_config_change_Marked.jpg" alt="Visual Studio Config Change" width="600">
+
+6.11 Execute the application from Visual Studio with a breakpoint
+
+6.12 Verify the data using the **Explorer** in the local Cosmos DB emulator tool
+
+<img src="./images/CosmosDB_Emulator_CreateItem_Marked.jpg" alt="Verify data in local Emulator tool" width="600">
+
+You can also run SQL queries to analyze the data using the **SQL Query window** similar to the tool you used 
+with Azure Cosmos DB Service. **This is the best way to estimate your query costs and optimize your queries 
+to save costs.** 
+
+<img src="./images/CosmosDB_Emulator_RunQuery_Marked.jpg" alt="Run SQL Query using emulator" width="600">
+
+You have built your local environment to build applications on Cosmos DB with no costs till you are ready to 
+deploy to Azure. 
 
 
 
