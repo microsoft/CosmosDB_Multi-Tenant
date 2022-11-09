@@ -180,13 +180,13 @@ You may want to create two document models. One to keep Reservation info and the
 
 ## Challenge-3: Design Cosmos DB Account to serve small, medium and large customers
 
-Download the **Workshop Data zip file** (Multi-Tenant_CosmosDB_Workshop_data.zip) from Microsoft Teams chat window.
+Download the **Workshop Data zip file** (Multi-Tenant_CosmosDB_Workshop_data.zip) from **Microsoft Teams chat window**.
 Unzip the file into your local folder and you should see the following files. 
 
 <img src="./images/Multi-Tenant_Reservation_System_Sample_Data.jpg" alt="Sample Data Objects" Width="600">
 
 Check out the CSV files and understand that the flat data does not work for SaaS model.
-Think about ways to group the data into the two documents models you have identified. 
+Think about the ways to group the data into the two documents models you have identified. 
 
 
 ### Database Strategies to support small, medium and large customers
