@@ -59,7 +59,7 @@ All the above use cases need a new mindset and special features. This workshop w
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
 - [Challenge-4: Validate Cosmos DB features Auto Failover, Autoscale and Low Latency](#Challenge-4-Validate-Cosmos-DB-features-Auto-failover-Autoscale-and-Low-latency)
 - [Challenge-5: Optimize costs and performance with Indexing Policy](#Challenge-5-Optimize-costs-and-performance-with-Indexing-Policy)
-- [Challenge-6: Build an application using Azure Cosmos DB as the database](#Challenge-6-Build-an-application-using-Azure-Cosmos-DB-as-the-database)
+- [Challenge-6: Build an application using Azure Cosmos DB with no cost](#Challenge-6-Build-an-application-using-Azure-Cosmos-DB-with-no-cost)
 
 ## Multi-Tenancy features for Software Companies 
 
@@ -454,7 +454,7 @@ Your indexing policy should look like the following picture.
 <img src="./images/CosmosDB_Indexing_include_path_view_Marked.jpg" alt="Modified indexing policy to index specific properties" width="800">
 
 
-## Challenge-6: Build an application using Azure Cosmos DB as the database  
+## Challenge-6: Build an application using Azure Cosmos DB with no cost  
 Cosmos DB is a developer friendly and support SaaS applications with no schema and indexing to manage. It also provides built
 in Cache for improved performance. 
 
@@ -478,13 +478,12 @@ with Visual Studio 2022.
 
 6.4 Clean and rebuild the solution.
 
-6.5 Put a breakpoint in **GetStartedDemoAsync** method at 
+6.5 Put a breakpoint in **GetStartedDemoAsync** method at  
 ```
 this.ReplaceFamilyItemAsync();
-```
-call. 
+``` 
 
-<img src="./images/cosmosdb_dotnet_app_breakpoint_marked.jpg" alt="create a breakpoint" width="600">
+<img src="./images/cosmosdb_dotnet_app_breakpoint_marked.jpg" alt="create a breakpoint" width="800">
 
 6.6 run the debug program by selecting green start button.
 
@@ -499,10 +498,11 @@ This application creates documents in the Cosmos DB Items container and stops at
 6.8 Come back to Visual Studio and continue the execution by selecting 'Continue' button.
 It will delete all the items it created in the Cosmos DB database.
 
-6.9 Go back to Cosmos DB in Azure Portal and verify that if the application has deleted the database, container
+6.9 Go back to Cosmos DB in Azure Portal and verify if the application has deleted the database, container
 and items.
 
-You are successfully built an application to create database, container and populate with items. Congratulations!!.
+You are successfully built an application to access Cosmos DB Service and to create database, container and 
+populate with items. Congratulations!!.
 
 
 ### Azure Cosmos DB emulator
@@ -521,26 +521,28 @@ switch to using an Azure Cosmos DB account in the cloud.
 	rules in order to run its services. Therefore admin rights are necessary for the emulator to be able to 
 	execute such operations.	
 
-6.10 Download the emulator
-	[download](https://aka.ms/cosmosdb-emulator) and install the latest version of Azure Cosmos DB Emulator 
-	on your local computer. 
+6.10 Download Azure Cosmos DB Emulator
 
-	You will download azure-cosmosdb-emulator-2.14.9-3c8bff92.msi file to your local environment.
+[download](https://aka.ms/cosmosdb-emulator) and install the latest version of Azure Cosmos DB Emulator 
+on your local computer. 
 
-	Run a DOS window as an **administrator** and run the install by entering the full file name at the prompt.
-<img src="./cosmos_emulator_install_admin_window_Marked.jpg" alt="Emulator install in admin window" width="600">
+You will download azure-cosmosdb-emulator-2.14.9-3c8bff92.msi file to your local environment.
+
+Run a DOS window as an **administrator** and run the install by entering the full file name at the prompt.
+
+<img src="./images/cosmos_emulator_install_admin_window_Marked.jpg" alt="Emulator install in admin window" width="600">
 
 
-6.11 Install launches the emulator in a browser with the following screen.
+6.11 Installer launches the emulator in a browser with the following screen.
 
-<img src="./images/CosmosDB_Emulater_Start_Screen_Marked.jpg" alt="Emulator start screen" width="600">
+<img src="./images/CosmosDB_Emulater_Start_Screen_Marked.jpg" alt="Emulator start screen" width="800">
 
-6.12 Copy the URI and Primary key to a notepad.
+6.12 Copy the **URI** and **Primary key** to a notepad.
 
 6.13 Open up Visual Studio Quick Start application and use the Solution Explorer to navigate to **App.config**.
 update **EndpointUri** and **PrimaryKey** which you copied from Cosmos DB Emulator.
 
-<img src="./images/cosmos_vs_app_config_change_Marked.jpg" alt="Visual Studio Config Change" width="600">
+<img src="./images/cosmos_vs_app_config_change_Marked.jpg" alt="Visual Studio Config Change" width="800">
 
 6.14 Execute the application from Visual Studio with a breakpoint
 
@@ -548,9 +550,10 @@ update **EndpointUri** and **PrimaryKey** which you copied from Cosmos DB Emulat
 
 <img src="./images/CosmosDB_Emulator_CreateItem_Marked.jpg" alt="Verify data in local Emulator tool" width="600">
 
-You can also run SQL queries to analyze the data using the **SQL Query window** similar to the tool you used 
-with Azure Cosmos DB Service. **This is the best way to estimate your query costs and optimize your queries 
-to save costs.** 
+6.16 You can also run SQL queries to analyze the data using the **SQL Query window** similar to the tool you used 
+with Azure Cosmos DB Service. 
+
+**This is the best way to estimate your query costs and optimize your queries to save costs.** 
 
 <img src="./images/CosmosDB_Emulator_RunQuery_Marked.jpg" alt="Run SQL Query using emulator" width="600">
 
