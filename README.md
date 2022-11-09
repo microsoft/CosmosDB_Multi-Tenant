@@ -461,8 +461,9 @@ SELECT * FROM c where c.custId=4691
 ```
 
 ## Challenge-6: Build an application using Azure Cosmos DB with no cost  
-Cosmos DB is a developer friendly and support SaaS applications with no schema and indexing to manage. It also provides built
-in Cache for improved performance. 
+Cosmos DB is a developer friendly database and supports SaaS applications with no schema and indexing to manage. 
+It also provides built in Cache for improved performance. It provides Cosmos DB Emulator tool to build your 
+applications using Cosmos DB in your development environment with no cost.
 
 ### Quick Start
 You can test building an application from Azure Portal itself. Select 'Quick start' from the left panel.
