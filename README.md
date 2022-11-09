@@ -54,7 +54,7 @@ All the above use cases need a new mindset and special features. This workshop w
 
 
 ## Workshop Challenge List
-- [Challenge-1: Deploy Azure Storage, Azure Cosmos DB & Azure Data Factory Services to Azure Subscription](#challenge-1-Deploy-Azure-Services)
+- [Challenge-1: Deploy Azure Cosmos DB Service](#challenge-1-Deploy-Azure-Cosmos-DB-Service)
 - [Challenge-2: Model data to build SaaS applications](#Challenge-2-Model-data-to-build-SaaS-applications)
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
 - [Challenge-4: Validate Cosmos DB features Auto Failover, Autoscale and Low Latency](#Challenge-4-Validate-Cosmos-DB-features-Auto-failover-Autoscale-and-Low-latency)
@@ -93,7 +93,7 @@ This workshop covers how Azure Cosmos DB can be designed to support small, mediu
 
 
 
-## Challenge-1: Deploy Azure Services  
+## Challenge-1: Deploy Azure Cosmos DB Service 
 
 We have developed an Azure Deployment script to provision the required Azure Services used in the above architecture diagram.
 
@@ -235,7 +235,7 @@ Select **Save** to complete the operation.
 
 <img src="./images/Database_Scale_Up_11K._Marked.jpg" alt="Scale up database throughput" width="600">
 
-#### 3.1 Load the Reservation availability data into a container with **InventoryId** as the partition Key.
+#### 3.1 Load the availability data into a container with **InventoryId** as the partition Key.
 Access the data in your local folder to load the data.
 
 #### Load Hotel Room availability data
@@ -259,13 +259,12 @@ It will take 2 to 3 minutes based on the RU setting.
 * Repeat the same to load tenant data from 'tenantData.json'.
 
 
-3.2 Load the Rental Car and Hotel Room availability data into 'Availability_by_BizLocation' container with 
-Business location Id (tBizLoc) as the partition key.
+#### 3.2 Load the availability data into a container with Business location Id (tBizLoc) as the partition key.
 
-* Expand 'Availability_by_inventory_item' container and select 'items' section. 
+* Expand 'Availability_by_Location' container and select 'items' section. 
 * Repeat the steps of 3.1 to load Rental Car and Hotel room availabiity data.
 
-3.3 Analyze Query performance to satisfy read and write requirement
+#### 3.3 Analyze Query performance based on two partition key strategies to satisfy the read and write requirement
 
 Expand 'Availability_by_inventory_item' container and select items section
 Select 'windows with + sign' from the options on the top section.
@@ -288,7 +287,7 @@ Repeat the same query in 'Availability_by_Location' container by following the a
 
 Compare the "Request charge" and "Query Engine Execution time". You can recognize the value of 
 right partitioning key. Since volume of the end customer queries are much more than the business support 
-team and the managers, InventoryId would be the best partition key. 
+team and manager queries, InventoryId would be the best partition key. 
 
 <img src="./images/AvailabilityByInventoryIdPartitionComparision_Marked.jpg" alt="Availability partition key comparision" width="800">
 
@@ -305,7 +304,7 @@ team and the managers, InventoryId would be the best partition key.
 Consider the advantages of loading the reservation data with customerId as the partition key vs loading the data with 
 Business location as the partition key.
 
-3.4 Load the reservation data into the container with **customerId** as the partition key.
+#### 3.4 Load the reservation data into a container with **customerId** as the partition key.
 
 * Expand 'Reservation_by_Customer' container and select 'items' section. 
 * Repeat the steps of 3.1 to load Rental Car and Hotel room reservation data 
@@ -314,7 +313,7 @@ from the following files:
 	2) multi_tenent_hotel_reservations.json
 	3) customerData.json
 
-3.5 Load the reservation data into the container with **Business location (syntheticKey)** as the partition key. 
+#### 3.5 Load the reservation data into a container with **Business location (syntheticKey)** as the partition key. 
 
 * Expand 'Reservation_by_BizLocation' container and select 'items' section. 
 * Repeat the steps of 3.1 to load Rental Car and Hotel room reservation data 
@@ -328,7 +327,7 @@ Expand **SaaS_Multitenant_DB** database and select **Scale** section.
 Keep Autoscale option and set the Max RU/s to 4000 units.
 Select **Save** to complete the operation.
 
-3.6 Analyze the query performance to satisfy read and write requirement.
+#### 3.6 Analyze the query performance to satisfy read and write requirement.
 
 Expand **Reservation_by_Customer** container and select **Items** section.
 Create a new SQL Query window and paste the folowing query
