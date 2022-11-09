@@ -454,7 +454,37 @@ Your indexing policy should look like the following picture.
 <img src="./images/CosmosDB_Indexing_include_path_view_Marked.jpg" alt="Modified indexing policy to index specific properties" width="800">
 
 
-## Challenge-6: Load multi-tenant data into Cosmos DB with an application
+## Challenge-6: Build an application with Cosmos DB as its database 
+Cosmos DB is a developer friendly and support SaaS applications with no schema and indexing to manage. It also provides built
+in Cache for improved performance.
+
+### Azure Cosmos DB emulator
+The Azure Cosmos DB Emulator provides a local environment that emulates the Azure Cosmos DB service for development purposes. 
+Using the Azure Cosmos DB Emulator, you can develop and test your application locally, without creating an Azure subscription 
+or incurring any costs. When you're satisfied with how your application is working in the Azure Cosmos DB Emulator, you can 
+switch to using an Azure Cosmos DB account in the cloud.
+6.1 Download the emulator
+	[download](https://aka.ms/cosmosdb-emulator) and install the latest version of Azure Cosmos DB Emulator 
+	on your local computer. You can develop applications using Azure Cosmos DB Emulator with the account using the APIs for
+	NoSQL, Apache Cassandra, Mongo DB, Apache Gremlin and Table. Currently the data explorer in the emulator fully supports
+	viewing SQL data only.
+
+#### Requirements to install:
+	* Currently Windows Server 2016, 2019 or Windows 10 host OS are supported. The host OS with Active Directory enabled is 
+	currently not supported.
+	* 64-bit operating system
+	* 2-GB RAM
+	* 10-GB available hard disk space
+	* administrative privileges on the computer. The emulator will add a certificate and also set the firewall rules in order
+	to run its services. Therefore admin rights are necessary for the emulator to be able to execute such operations.
+	
+2) download and quick start
+
+[Clone the Jave App repository] (https://github.com/Azure-Samples/azure-cosmos-java-getting-started)
+
+4) Make changes to connection string and run
+5) Verify the changes on Azure environment
+6) How does it fit with DevOps
 
 Add instructions to clone the repo to run an application from a local environment.
 
