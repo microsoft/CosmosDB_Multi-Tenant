@@ -486,20 +486,20 @@ call.
 
 <img src="./images/cosmosdb_dotnet_app_breakpoint_marked.jpg" alt="create a breakpoint" width="600">
 
-6.5 run the debug program by selecting green start button.
+6.6 run the debug program by selecting green start button.
 
 <img src="./images/cosmosdb_dotnet_app_exec_output.jpg" alt="create a breakpoint" width="600">
 
 This application creates documents in the Cosmos DB Items container and stops at the breakpoint.
 
-6.6 Go back to Cosmos DB in Azure Portal and verify the data the application has created.
+6.7 Go back to Cosmos DB in Azure Portal and verify the data the application has created.
 
 <img src="./images/CosmosDB_QuickStart_Create_Items_Marked.jpg" alt="create a breakpoint" width="600">
 
-6.7 Come back to Visual Studio and continue the execution by selecting 'Continue' button.
+6.8 Come back to Visual Studio and continue the execution by selecting 'Continue' button.
 It will delete all the items it created in the Cosmos DB database.
 
-6.8 Go back to Cosmos DB in Azure Portal and verify that if the application has deleted the database, container
+6.9 Go back to Cosmos DB in Azure Portal and verify that if the application has deleted the database, container
 and items.
 
 You are successfully built an application to create database, container and populate with items. Congratulations!!.
@@ -521,7 +521,7 @@ switch to using an Azure Cosmos DB account in the cloud.
 	rules in order to run its services. Therefore admin rights are necessary for the emulator to be able to 
 	execute such operations.	
 
-6.9 Download the emulator
+6.10 Download the emulator
 	[download](https://aka.ms/cosmosdb-emulator) and install the latest version of Azure Cosmos DB Emulator 
 	on your local computer. 
 
@@ -531,20 +531,20 @@ switch to using an Azure Cosmos DB account in the cloud.
 <img src="./cosmos_emulator_install_admin_window_Marked.jpg" alt="Emulator install in admin window" width="600">
 
 
-6.10 Install launches the emulator in a browser with the following screen.
+6.11 Install launches the emulator in a browser with the following screen.
 
 <img src="./images/CosmosDB_Emulater_Start_Screen_Marked.jpg" alt="Emulator start screen" width="600">
 
-6.11 Copy the URI and Primary key to a notepad.
+6.12 Copy the URI and Primary key to a notepad.
 
-6.12 Open up Visual Studio Quick Start application and use the Solution Explorer to navigate to **App.config**.
+6.13 Open up Visual Studio Quick Start application and use the Solution Explorer to navigate to **App.config**.
 update **EndpointUri** and **PrimaryKey** which you copied from Cosmos DB Emulator.
 
 <img src="./images/cosmos_vs_app_config_change_Marked.jpg" alt="Visual Studio Config Change" width="600">
 
-6.11 Execute the application from Visual Studio with a breakpoint
+6.14 Execute the application from Visual Studio with a breakpoint
 
-6.12 Verify the data using the **Explorer** in the local Cosmos DB emulator tool
+6.15 Verify the data using the **Explorer** in the local Cosmos DB emulator tool
 
 <img src="./images/CosmosDB_Emulator_CreateItem_Marked.jpg" alt="Verify data in local Emulator tool" width="600">
 
@@ -555,7 +555,13 @@ to save costs.**
 <img src="./images/CosmosDB_Emulator_RunQuery_Marked.jpg" alt="Run SQL Query using emulator" width="600">
 
 You have built your local environment to build applications on Cosmos DB with no costs till you are ready to 
-deploy to Azure. 
+deploy to Azure. Congratulations!!
+
+This workshop provided you a hands-on experience to model data in Cosmos DB and optimize the throughput for small, medium and 
+enterprise customers. Also gave an experience to build applications using Cosmos DB in your development 
+environment with no cost. 
+
+Please send your feedback and suggestions to us!!
 
 
 
