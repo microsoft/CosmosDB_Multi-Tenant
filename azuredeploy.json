@@ -1,0 +1,310 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.5.6.12127",
+      "templateHash": "3973803974471500583"
+    }
+  },
+  "parameters": {},
+  "variables": {
+    "cosmosAccountName": "[toLower( concat('smartbookinginc-', uniqueString(resourceGroup().id)))]",
+    "cosmosSaaSDatabase":"SaaS_Multitenant_DB",
+    "containerByInventoryItem":"Availability_by_Inventory_Item",
+    "inventoryItemPK":"inventoryId",
+    "containerByCustomer": "Reservation_by_Customer",
+    "customerPK":"custId",
+    "containerbyLocation":"Availability_by_Location",
+    "locationPK":"BizLocId",
+    "containerbyBizLocation":"Reservation_by_BizLocation",
+    "bizLocationPK":"syntheticKey",
+    "containerBySingleTenant":"Reservation_by_Single_Tenant",
+    "singleTenantPK":"BizId",
+    "cosmosEnterpriseDB":"Enterprise_DB",
+    "containerSingleTenantByInventoryId":"Single_Tenant_Availability_by_Inventory_Item",
+    "singleTenantInvIdPK":"inventoryId",
+    "containerReservationsByBizLoc":"Reservations_by_BizLocation",
+    "reserationByBizLocPK":"BizId"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "apiVersion": "2022-05-15",
+      "name": "[variables('cosmosAccountName')]",
+      "kind": "GlobalDocumentDB",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "databaseAccountOfferType": "Standard",
+        "consistencyPolicy": {
+          "defaultConsistencyLevel": "Session"
+        },
+        "locations": [
+          {
+            "locationName": "[resourceGroup().location]"
+          }
+        ],
+        "capacity": {
+          "totalThroughputLimit":11000
+        }
+      }
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}', toLower(variables('cosmosAccountName')), variables('cosmosSaaSDatabase'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('cosmosSaaSDatabase')]"
+        },
+        "options": {
+          "throughput": 1000
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', toLower(variables('cosmosAccountName')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}/{2}', toLower(variables('cosmosAccountName')), variables('cosmosSaaSDatabase'), variables('containerByInventoryItem'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('containerByInventoryItem')]",
+          "partitionKey": {
+            "paths": [
+              "[format('/{0}', variables('inventoryItemPK'))]"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/_etag/?"
+              }
+            ]
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', toLower(variables('cosmosAccountName')), variables('cosmosSaaSDatabase'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}/{2}', toLower(variables('cosmosAccountName')), variables('cosmosSaaSDatabase'), variables('containerByCustomer'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('containerByCustomer')]",
+          "partitionKey": {
+            "paths": [
+              "[format('/{0}', variables('customerPK'))]"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/_etag/?"
+              }
+            ]
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', toLower(variables('cosmosAccountName')), variables('cosmosSaaSDatabase'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}/{2}', toLower(variables('cosmosAccountName')), variables('cosmosSaaSDatabase'), variables('containerbyLocation'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('containerbyLocation')]",
+          "partitionKey": {
+            "paths": [
+              "[format('/{0}', variables('locationPK'))]"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/_etag/?"
+              }
+            ]
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', toLower(variables('cosmosAccountName')), variables('cosmosSaaSDatabase'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}/{2}', toLower(variables('cosmosAccountName')), variables('cosmosSaaSDatabase'), variables('containerbyBizLocation'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('containerbyBizLocation')]",
+          "partitionKey": {
+            "paths": [
+              "[format('/{0}', variables('bizLocationPK'))]"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/_etag/?"
+              }
+            ]
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', toLower(variables('cosmosAccountName')), variables('cosmosSaaSDatabase'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}/{2}', toLower(variables('cosmosAccountName')), variables('cosmosSaaSDatabase'), variables('containerBySingleTenant'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('containerBySingleTenant')]",
+          "partitionKey": {
+            "paths": [
+              "[format('/{0}', variables('singleTenantPK'))]"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/_etag/?"
+              }
+            ]
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', toLower(variables('cosmosAccountName')), variables('cosmosSaaSDatabase'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}', toLower(variables('cosmosAccountName')), variables('cosmosEnterpriseDB'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('cosmosEnterpriseDB')]"
+        },
+        "options": {
+          "throughput": 1000
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts', toLower(variables('cosmosAccountName')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}/{2}', toLower(variables('cosmosAccountName')), variables('cosmosEnterpriseDB'), variables('containerSingleTenantByInventoryId'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('containerSingleTenantByInventoryId')]",
+          "partitionKey": {
+            "paths": [
+              "[format('/{0}', variables('singleTenantInvIdPK'))]"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/_etag/?"
+              }
+            ]
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', toLower(variables('cosmosAccountName')), variables('cosmosEnterpriseDB'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+      "apiVersion": "2022-05-15",
+      "name": "[format('{0}/{1}/{2}', toLower(variables('cosmosAccountName')), variables('cosmosEnterpriseDB'), variables('containerReservationsByBizLoc'))]",
+      "properties": {
+        "resource": {
+          "id": "[variables('containerReservationsByBizLoc')]",
+          "partitionKey": {
+            "paths": [
+              "[format('/{0}', variables('reserationByBizLocPK'))]"
+            ],
+            "kind": "Hash"
+          },
+          "indexingPolicy": {
+            "indexingMode": "consistent",
+            "includedPaths": [
+              {
+                "path": "/*"
+              }
+            ],
+            "excludedPaths": [
+              {
+                "path": "/_etag/?"
+              }
+            ]
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', toLower(variables('cosmosAccountName')), variables('cosmosEnterpriseDB'))]"
+      ]
+    }
+  ]
+}
