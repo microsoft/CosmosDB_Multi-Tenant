@@ -456,7 +456,54 @@ Your indexing policy should look like the following picture.
 
 ## Challenge-6: Build an application with Cosmos DB as its database 
 Cosmos DB is a developer friendly and support SaaS applications with no schema and indexing to manage. It also provides built
-in Cache for improved performance.
+in Cache for improved performance. 
+
+### Quick Start
+You can test building an application from Azure Portal itself. Select 'Quick start' from the left panel.
+It will you programming language options .NET, Xamarin, Java, Node.js & Phython to choose.
+Use the default .NET option.
+
+6.1 Select create 'Items' container button.
+It creates an **Items** container in "ToDoList" database with 400 RU throughput capacity.
+
+<img src="./images/CosmosDB_QuickStart_AddContainer_Marked.jpg" alt="Quick Start Create Container" width="600">
+
+6.2 Select Download button to download .NET app to your laptop.
+
+<img src="./images/CosmosDB_QuickStart_Download_App_Marked.jpg" alt="Download .NET app button" width="600">
+
+6.3 Extract all from 'DocumentDB-Quickstart-DotNet.zip' file and open "CosmosGettingStarted.sln" in sql-dotnot folder 
+with Visual Studio 2022.
+<img src="./images/cosmosdb_dotnet_downloadzip_marked.jpg" alt="Download ZIP and open Visual Studio" width="600">
+
+6.4 Clean and rebuild the solution.
+
+6.5 Put a breakpoint in **GetStartedDemoAsync** method at 
+```
+this.ReplaceFamilyItemAsync();
+```
+call. 
+
+<img src="./images/cosmosdb_dotnet_app_breakpoint_marked.jpg" alt="create a breakpoint" width="600">
+
+6.5 run the debug program by selecting green start button.
+
+<img src="./images/cosmosdb_dotnet_app_exec_output.jpg" alt="create a breakpoint" width="600">
+
+This application creates documents in the Cosmos DB Items container and stops at the breakpoint.
+
+6.6 Go back to Cosmos DB in Azure Portal and verify the data the application has created.
+
+<img src="./images/CosmosDB_QuickStart_Create_Items_Marked.jpg" alt="create a breakpoint" width="600">
+
+6.7 Come back to Visual Studio and continue the execution by selecting 'Continue' button.
+It will delete all the items it created in the Cosmos DB database.
+
+6.8 Go back to Cosmos DB in Azure Portal and verify that if the application has deleted the database, container
+and items.
+
+You are successfully built an application to create database, container and populate with items. Congratulations!!.
+
 
 ### Azure Cosmos DB emulator
 The Azure Cosmos DB Emulator provides a local environment that emulates the Azure Cosmos DB service for development purposes. 
