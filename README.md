@@ -378,7 +378,7 @@ Select "Service-Managed Failover" option to failover the database to read region
 
 Select the "On" button under "Enable Service-Managed Failover".
 
-<img src="./images/CosmosDB_feature_Service_Managed_Failover_TurnOn.jpg" alt="Auto failover feature" width="800">
+<img src="./images/CosmosDB_feature_Service_Managed_Failover_TurnOn.jpg" alt="Auto failover feature" width="800" height="500">
 
 **No action is need for this lab.** It will take sometime to enable the failover option.
 
@@ -437,6 +437,7 @@ property in the document.
 
 5.2 Identify the properties you would be used most with your application queries. Let us consdier the following 
 for our use case:
+* custId
 * creaditCard
 * totalAmount
 * tenantId
@@ -453,6 +454,11 @@ enter "," and copy and paste the section below to enter all the indexing propert
 Your indexing policy should look like the following picture.
 <img src="./images/CosmosDB_Indexing_include_path_view_Marked.jpg" alt="Modified indexing policy to index specific properties" width="800">
 
+5.4 Run the SQL query and check the Query Stats
+
+```
+SELECT * FROM c where c.custId=4691
+```
 
 ## Challenge-6: Build an application using Azure Cosmos DB with no cost  
 Cosmos DB is a developer friendly and support SaaS applications with no schema and indexing to manage. It also provides built
