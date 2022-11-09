@@ -231,10 +231,24 @@ is to load the data per business location using business location id.
 
 #### Scale database throughput to bulk load the data without rate limit error - **DO NOT MISS THIS STEP!!**
 Expand **SaaS_Multitenant_DB** database and select **Scale** section.
+
+Change the selection from manual to Autoscale. 
+Click on Save. It will take sometime.
+
+Update the Max RUs to 11000 when it is done. 
+
+Select **Save** again to complete the operation. You will see how **fast** you can increase the throughput capacity. 
+
 Keep Autoscale option and set the Max RU/s to 11000 units. Every physical partition has 10k RU capacity. By increasing
 the capacity to more than 10k will give you two physical partitions to store the data with better speed. 
 
-Select **Save** to complete the operation.
+You would not see any throttling because we have higher throughput the required for the write operations.  
+
+#### Best Practice: 
+Throttling is **NOT** bad. It will put it in the queue for the next second. It is better to build applications with 
+a retry logic. This is critical for SaaS applications.
+
+
 
 <img src="./images/Database_Scale_Up_11K._Marked.jpg" alt="Scale up database throughput" width="600">
 
