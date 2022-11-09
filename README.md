@@ -97,34 +97,51 @@ This workshop covers how Azure Cosmos DB can be designed to support small, mediu
 
 We have developed an Azure Deployment script to provision the required Azure Services used in the above architecture diagram.
 
-1.1 Click the "Deploy to Azure" button
+1.1 Open a new InPrivate window from your Microsoft Edge browser. 
+
+<img src="./images/Browser_in_private_Marked.jpg" alt="Edge Browser InPrivate Window selection" width="400">
+
+1.2 Enter the following Workshop github link in the browser.
+```
+	https://github.com/microsoft/CosmosDB_Multi-Tenant
+```
+
+1.3 Click **Challenge-1** from Workshop Chalenge List. 
+
+1.4 Click the "Deploy to Azure" button
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FCosmosDB_Multi-Tenant%2Fmain%2Fazuredeploy.json)
 
-1.2. It display a custom deployment screen as shown below.
+1.5 Enter your Workshop **login Id and Password** provided by the instructor.
 
-<img src="./images/AzureDeployment_Script_Options_Marked.jpg" alt="Azure Custom Depolyment Screen" Width="600" height="600">
+1.6 You will see **Welcome to SDP Innovation!** screen. Select **Yes**.
+
+1.7. Enter the following options in the custom deployment screen.
 	
-1.3 Select 'Create new' button and enter 'smartbooking' as the resource group name.
+* Select your allocated resource group from the dropdown.
 
-1.4 Select your region from the dropdown list for example "East US 2".
+* Select your region from the dropdown list for **Cosmos DB Location** selection. 
 
-1.5 Click on "Review+create" button.
+Best practice is to keep resource group and Cosmos DB account in the same region. We had to set the resource group
+"West US" to automate the deployment script. Don't follow this practice in your environment.
+
+1.8 Click on "Review+create" button.
+
+<img src="./images/CosmosDB_AzureDeploymentOptions_Marked.jpg" alt="Azure Custom Depolyment Screen" Width="600">
 
 1.6 It completes the validation as the next step and click on 'create' button.
 
-It will create the following services in your subscription:
-* Azure Cosmos DB with 4 containers
+It will provision Azure Cosmos DB account in your subscription:
 
 It may take 2 to 5 minutes to create the services.
 
 1.7 Click on "Go to resource group" when the deployment is complete.
 
-<img src="./images/Deploy_CosmosDBMultTenant_Lab_Services_Complete.jpg" alt="Deployment complete" Width="600">
+<img src="./images/CosmosDB_AzureDeployment_Complete_Marked.jpg" alt="Deployment complete" Width="600">
 
-It will take you to your resource group showing the installed services.
+It will take you to your resource group showing the installed Azure Cosmos DB services.
 
-<img src="./images/MulittenantCosmosDB_ResourceGroup.jpg" alt="Resource Group with Services list" Width="600">
+<img src="./images/CosmosDB_AzureDeployment_ResourceGroup_Marked.jpg" alt="Resource Group with Services list" Width="600">
 
 You have successfully deployed the required services to Azure. Congratulations for completing your first challenge.
 
@@ -466,11 +483,13 @@ It also provides built in Cache for improved performance. It provides Cosmos DB 
 applications using Cosmos DB in your development environment with no cost.
 
 ### Quick Start
-You can test building an application from Azure Portal itself. Select 'Quick start' from the left panel.
+You can test building an application from Cosmos DB service portal itself. Select 'Quick start' from the left panel.
 It will you programming language options .NET, Xamarin, Java, Node.js & Phython to choose.
+
 Use the default .NET option.
 
 6.1 Select create 'Items' container button.
+
 It creates an **Items** container in "ToDoList" database with 400 RU throughput capacity.
 
 <img src="./images/CosmosDB_QuickStart_AddContainer_Marked.jpg" alt="Quick Start Create Container" width="600">
@@ -481,6 +500,7 @@ It creates an **Items** container in "ToDoList" database with 400 RU throughput 
 
 6.3 Extract all from 'DocumentDB-Quickstart-DotNet.zip' file and open "CosmosGettingStarted.sln" in sql-dotnot folder 
 with Visual Studio 2022.
+
 <img src="./images/cosmosdb_dotnet_downloadzip_marked.jpg" alt="Download ZIP and open Visual Studio" width="600">
 
 6.4 Clean and rebuild the solution.
@@ -500,7 +520,7 @@ This application creates documents in the Cosmos DB Items container and stops at
 
 6.7 Go back to Cosmos DB in Azure Portal and verify the data the application has created.
 
-<img src="./images/CosmosDB_QuickStart_Create_Items_Marked.jpg" alt="create a breakpoint" width="600">
+<img src="./images/CosmosDB_QuickStart_Create_Items_Marked.jpg" alt="create a breakpoint" width="800">
 
 6.8 Come back to Visual Studio and continue the execution by selecting 'Continue' button.
 It will delete all the items it created in the Cosmos DB database.
@@ -512,7 +532,7 @@ You are successfully built an application to access Cosmos DB Service and to cre
 populate with items. Congratulations!!.
 
 
-### Azure Cosmos DB emulator
+### Azure Cosmos DB Emulator
 The Azure Cosmos DB Emulator provides a local environment that emulates the Azure Cosmos DB service for development purposes. 
 Using the Azure Cosmos DB Emulator, you can develop and test your application locally, without creating an Azure subscription 
 or incurring any costs. When you're satisfied with how your application is working in the Azure Cosmos DB Emulator, you can 
@@ -520,13 +540,16 @@ switch to using an Azure Cosmos DB account in the cloud.
 
 #### Requirements to install:
 * Currently Windows Server 2016, 2019 or Windows 10 host OS are supported. The host OS with Active 
-	Directory enabled is currently not supported.
+Directory enabled is currently not supported.
 * 64-bit operating system
 * 2-GB RAM
 * 10-GB available hard disk space
 * administrative privileges on the computer. The emulator will add a certificate and also set the firewall 
-	rules in order to run its services. Therefore admin rights are necessary for the emulator to be able to 
-	execute such operations.	
+rules in order to run its services. Therefore admin rights are necessary for the emulator to be able to 
+execute such operations.	
+
+Access [Azure Cosmos DB Emulator for local development and testing](https://learn.microsoft.com/en-us/azure/cosmos-db/local-emulator?tabs=ssl-netstd21#how-does-the-emulator-work) 
+for more details.
 
 6.10 Download Azure Cosmos DB Emulator
 
