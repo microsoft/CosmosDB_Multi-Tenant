@@ -232,12 +232,9 @@ is to load the data per business location using business location id.
 #### Scale database throughput to bulk load the data without rate limit error - **DO NOT MISS THIS STEP!!**
 Expand **SaaS_Multitenant_DB** database and select **Scale** section.
 
-Change the selection from manual to Autoscale. 
-Click on Save. It will take sometime.
+Update the Max RUs to 11000.  
 
-Update the Max RUs to 11000 when it is done. 
-
-Select **Save** again to complete the operation. You will see how **fast** you can increase the throughput capacity. 
+Select **Save** to complete the operation. You will see how **fast** you can increase the throughput capacity. 
 
 **Tip:**
 If you get a warning that it will take sometime to add, then wait for few minutes. Just click 'Overview' or another option and
