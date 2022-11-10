@@ -378,8 +378,8 @@ partition keys. You would see the value of using the right partition key for the
 
 
 ### 4.1 High Availability Features:
-Azure Cosmos DB is designed to provide multiple features and configuration options to achieve high availability for all 
-solution availability needs.
+Azure Cosmos DB is designed to provide multiple features and configuration options to achieve high availability to satisfy 
+the mission critical enterprise application's requirement.
 
 ### Replica Outages
 Replica outages refer to outages of individual nodes in an Azure Cosmos DB cluster deployed in an 
@@ -390,7 +390,7 @@ data in each Azure region for your account within a four replica quorum.
 In many Azure regions, it is possible to distribute your Azure Cosmos DB cluster across 
 availability zones, which results increased SLAs, as availability zones are physically separate and provide 
 distinct power source, network, and cooling. See Availability Zones. When an Azure Cosmos DB account is 
-deployed using availability zones, Azure Cosmos DB provides RTO = 0 and RPO = 0 even in a zone outage.
+deployed using availability zones, Azure Cosmos DB provides RTO = 0 and RPO = 0 even with a zone outage.
 
 Select 'Replicate data globally' under 'Settings' section in the left pane. It show all the available regions 
 for Cosmos DB deployment. Availability Zone option for the write region can be enabled at the time of account creation.
@@ -400,7 +400,7 @@ select "+ Add region" to add a read region. Check the box for 'Availability Zone
 <img src="./images/Deploy_CosmosDBMultTenant_Lab_CosmosDB_add_region_save.jpg" alt="Region availability zones" width="800">
 
 ### Region Outages
-Region outages refer to outages that affect all Azure Cosmos DB nodes in an Azure region, across all availability 
+Region outages refer to the outages that affect all Azure Cosmos DB nodes in an Azure region, across all availability 
 zones. In the rare cases of region outages, Azure Cosmos DB can be configured to support various outcomes of 
 durability and availability
 
@@ -443,7 +443,7 @@ It will change the throughput instantly without impacting the current workloads.
 
 ### Sub Millisecond Fast Response Time
 Select 'Data Explorer' from the left pane and expand 'SaaS_Multitenant_DB' database.
-Select hover over 'Reservation_by_Customer' container and select three dots.
+Hover over 'Reservation_by_Customer' container and select three dots.
 It provide options to create SQL Query, Stored Procedure, UDF & Trigers. Select the 'New SQL Query' option. 
 
 <img src="./images/cosmosdb_queryTool_create_marked.jpg" alt="Cosmos DB Query Tool Start" width="600">
@@ -454,22 +454,23 @@ Type the following Query:
 SELECT * FROM c where c.custId=4691
 ```
 
-select "Query Stats" and check the Query execution time. It shows the sub millisecond response time.
+select "Query Stats" tab and check the Query execution time. It shows the sub millisecond response time.
 
 ## Challenge-5: Optimize costs and performance with Indexing Policy
-The default indexing policy for newly created containers indexes every property of every item. This allows 
-you to get good query performance without having to think about indexing and index management upfront. 
+The default indexing policy for newly created containers indexes every property of every item. 
+This allows you to get good query performance without having to think about indexing and index management upfront. 
 In some situations, you may want to override this automatic behavior to better suit your requirements.
 
 In Azure Cosmos DB, the total consumed storage is the combination of both the Data size and Index size. 
-By optimizing the number of paths that are indexed, you can substantially reduce the latency and RU charge 
-of write operations.
+By optimizing the number of paths that are indexed, you can substantially reduce the storage cost, the latency 
+and RU charge of write operations.
 
 Will walk you through the steps to include properties required for queries and exculde the rest.
 
 5.1 Expand 'Reservation_by_Customer' container and select 'Settings' section. It will show 'settings' 
-and 'indexing Policy' tabs. Select 'indexingPolicy'. It will show you the default policy to index every 
-property in the document.
+and 'indexing Policy' tabs. 
+
+Select 'indexingPolicy'. It will show you the default policy to index every property in the document.
 
 <img src="./images/CosmosDB_Indexing_default_view_Marked.jpg" alt="Indexing default view" width="800">
 
@@ -488,10 +489,14 @@ for our use case:
 * tBizAddress/zipcode
 
 5.3 Set the 'automatic' property value to 'false' and type "/*" as path property value in the excludeedPaths section 
-to exclude all the attributes. Enter "/creditCard/?" as the value to the path property in the includedPath section. 
+to exclude all the attributes. 
+
+Enter "/creditCard/?" as the value to the path property in the includedPath section. 
+
 enter "," and copy and paste the section below to enter all the indexing property names.
 
-Your indexing policy should look like the following picture.
+Your indexing policy should look like the following picture when you complete.
+
 <img src="./images/CosmosDB_Indexing_include_path_view_Marked.jpg" alt="Modified indexing policy to index specific properties" width="800">
 
 5.4 Run the SQL query and check the Query Stats
