@@ -67,7 +67,7 @@ All the above use cases need a new mindset and special features. This workshop w
 By using partitions with Azure Cosmos DB containers, you can create containers that are shared across multiple tenants. 
 With large containers, Azure Cosmos DB spreads your tenants across multiple physical nodes to achieve a high degree of scale.
 
-### Control Throughput based on the size of the customer to lower your costs: 
+### Control the **throughput** based on the size of the customer to lower your costs: 
 Typically, you provision a defined number of request units per second for your workload, which is referred 
 to as throughput. You can assign throughput at a container level, at a database level to share among the containers, automatically
 scale up to the max throughput for address unpredicted workloads and scale down to 10% of Max to save costs.
@@ -239,14 +239,21 @@ Update the Max RUs to 11000 when it is done.
 
 Select **Save** again to complete the operation. You will see how **fast** you can increase the throughput capacity. 
 
-Keep Autoscale option and set the Max RU/s to 11000 units. Every physical partition has 10k RU capacity. By increasing
-the capacity to more than 10k will give you two physical partitions to store the data with better speed. 
+**Tip:**
+If you get a warning that it will take sometime to add, then wait for few minutes. Just click 'Overview' or another option and
+come back to refresh the screen. 
 
-You would not see any throttling because we have higher throughput the required for the write operations.  
+There is an important factor to set the Max RU/s to 11000 units. Every physical partition has 10k RU capacity. By increasing
+the capacity to more than 10k will give you two physical partitions to write the data faster. You can apply the same 
+logic and increase the capacity to higher amount based on the write needs. Don't forget to scale back otherwise you will
+get a big bill. **So Cosmos DB is not expensive but the human factor is!!**
+
+You would not see any throttling because we have higher throughput than the required for the write operations.  
 
 #### Best Practice: 
-Throttling is **NOT** bad. It will put it in the queue for the next second. It is better to build applications with 
-a retry logic. This is critical for SaaS applications.
+Throttling is **NOT** bad. If your requests reaches the limit then it will put them in the queue and
+send the details in the header regarding how long you need to wait to retry. It is better to build applications with 
+a retry logic based on the wait time. **This is critical for SaaS applications.**
 
 
 
