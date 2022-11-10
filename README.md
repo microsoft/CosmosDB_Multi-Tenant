@@ -222,9 +222,11 @@ select the geography for their deployment.
 ### Right strategy to load availability data 
 **Requirement**:
 
-* Support customer client (end customer) search by date, location and inventory type (Rental Car & Hotel Room Type)
-* Customer support team from each business should be able to search for availability to help with reservations. 
-* Customer manager should be able to load the availability data every month. 
+* Support the end user search by date, location and inventory type (Rental Car & Hotel Room Type) with low latency 
+- Reah Heavy operation.
+* Customer support team from each business should be able to search for availability to help with reservations - 
+read the data based on their business location.
+* Customer manager should be able to load the availability data every month - Write heavy operation. 
 
 Consider the option of loading the rental car and hotel room data with inventory type as the parition key. Another option 
 is to load the data per business location using business location id. 
@@ -293,14 +295,14 @@ It will take 2 to 3 minutes based on the RU setting.
 Expand 'Availability_by_inventory_item' container and select items section
 Select 'windows with + sign' from the options on the top section.
 
-Copy and paste the following query in a SQL Editor to search for **Compact** cars between 11/11 and 11/14 
+Copy and paste the following query in a SQL Editor to search for **Compact** cars between 11/18 and 11/21 
 in 'San Francisco' city.
 
 Execute the query from the options on the top section.
 
 ```
 SELECT *
-FROM c where c.availDate >'2022-11-11' and c.availDate <'2022-11-14' 
+FROM c where c.availDate >'2022-11-18' and c.availDate <'2022-11-21' 
 and c.availableCars > 0 and c.inventoryId=4 and c.bizAddress.city='San Francisco'
 
 ```
@@ -319,11 +321,11 @@ team and manager queries, InventoryId would be the best partition key.
 ### Right strategy to load reservation data
 **Requirement**:
 
-* Application need to complete the reservation booking transaction.
-* Customer client should be able to review the reservations at anytime. 
-* Business support team should be able to pull up the reservation to help the client requests.
-* Transaction should be able to update the avilability count. 
-* Business manager should be able to pull the total reservations per day 
+* Application needs to complete the reservation booking transaction with sub milli-second response - Faster write operation. 
+* End user should be able to review their reservations with low latency - Read heavy operation.  
+* Business support team needs to pull the reservation details to help the client request - Read data based on their business location.
+* Reservation transaction should update the avilability count - Need to provide consistancy with multi-commit or with less than 10 second delay. 
+* Business manager should be able to pull the total reservations per day analyze their business - Get data based on the business location. 
 
 Consider the advantages of loading the reservation data with customerId as the partition key vs loading the data with 
 Business location as the partition key.
