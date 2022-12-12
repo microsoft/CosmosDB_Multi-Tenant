@@ -80,7 +80,7 @@ they want to convert this application as a SaaS application to meet the global d
 to handle unpredictable volume, maintain low latency response time to users at any part of the world, maintain high 
 availability & business continuity with optimized cost based on the usage. 
 
-It currently has the following clients in Car Rental and Hotel Industry:
+It currently has the following clients in the Hotel Industry:
 
 <img src="./images/MultiTenant_Hotel_Business_Model.jpg" alt="Application Data Model Architecture" Width="600" Height="400">
 
@@ -150,26 +150,24 @@ You have successfully deployed the required services to Azure. Congratulations f
 Let us review the object model for this application and plan the data model for SaaS application.
 
 ### Multi-Tenant Reservation System Object Model
-**Business_Entity** object stores all the business entity data.
 
-**Tenant** contains the tenant location address and contact info.
-
-**Hotel_Room** contains catalog of rooms details for offering.
-**Rental_Car** contains catalog of cars details for offering.
-**Room_Inventory** maintains availability for each hotel business locations.
-**Rental_Car_Inventory** maintains availability for each rental car business locations.
-**Customers** maintains all the customer profile data.
-**Car_Rental_Reservations** stores all the car rental reservations. 
-**Hotel_Reservations** stores all the hotel reservations. 
+**Business_Entity** object contains all the business entity data.
+**Tenant** object contains the tenant location address and contact info.
+**Hotel_Room** object contains catalog of rooms with type, view, no.of.beds etc.
+**Customers** object has all the customer profile data. 
+**Room_Inventory** object contains all the room numbers with room type in each tenant location.
+**Room_Availability** object contains available dates with rate info for each tenant location.
+**Hotel_Reservations** object contains all the hotel reservations for each tenant location.
 
 <img src="./images/MultiTenant_Hotel_Business_Software_Object_Model.jpg" alt="Multi-Tenant Reservation System Object Model" Width="600">
 
 ### Access Patterns
 You would want to keep all the relevant data in one object based on the following common access patterns to write and read data.
-1) Hotel Room & Rental Car availability to support customer search based on location, dates and room/car types.
-2) Update the availability after the customer completes the reservation.
-3) Customer reviews the reservation. 
-4) Business Owners and Support Team access the reservations for their location. 
+1) Hotel Room availability to support customer search based on location, dates and room/car types.
+2) Need to update availability after customer completes the reservation.
+3) Customer can review or change the reservation. 
+4) Business Owners and the support Team at each tenant location need to access the availability and 
+book/change reservation as per their customer request. 
 
 You may want to create two document models. One to keep Reservation info and the other one to keep availability info.
 
@@ -177,7 +175,7 @@ You may want to create two document models. One to keep Reservation info and the
 * Reservation data will be inserted as soon as customer completes the reservation booking. 
 * Customers, Hotel Managers, Hotel support team can access the reservation at anytime.
 
-<img src="./images/CosmosDocumentObjectDesign.jpg" alt="Cosmos DB Document Model diagram" width="600">
+<img src="./images/CosmosDB_MultiTenant_Hotel_Business_Data_Model.jpg" alt="Cosmos DB Document Model diagram" width="600">
 
 ## Challenge-3: Design Cosmos DB Account to serve small, medium and large customers
 
@@ -194,10 +192,11 @@ Think about the ways to group the data into the two documents models you have id
 
 #### 1) Shared container with partition keys per tenant
 When you use a single container for multiple tenants, you can make use of Azure Cosmos DB partitioning support. 
-By using separate partition keys for each tenant, you can easily query the data for a single tenant.
-This approach tends to work well when the amount of data stored for each tenant is small. It can be a good choice for 
-building a pricing model that includes a free tier, and for business-to-consumer (B2C) solutions. 
-In general, by using shared containers, you achieve the highest density of tenants and therefore the lowest price per tenant.
+By using tenantId as the partition key, you can keep the data for each tenant in one logical partition and can perform 
+faster querys. This approach tends to work well when the amount of data stored for each tenant is small. It can be a 
+good choice for building a pricing model that includes a free tier, and for business-to-consumer (B2C) solutions. 
+In general, by using shared containers, you achieve the highest density of tenants and therefore the lowest price 
+per tenant.
 
 #### 2) Container per tenant
 You can provision dedicated containers for each tenant. This can work well for isolating the customer tenant data.
@@ -227,149 +226,26 @@ select the geography for their deployment.
 * Customer support team from each business should be able to search for availability to help with reservations - **read data based on the business location.**
 * Customer manager should be able to load the availability data every month - **Write heavy operation.** 
 
-Consider the option of loading the rental car and hotel room data with inventory type as the parition key. Another option 
-is to load the data per business location using business location id. 
-
-#### Scale database throughput to bulk load the data without rate limit error - **DO NOT MISS THIS STEP!!**
-Expand **SaaS_Multitenant_DB** database and select **Scale** section.
-
-Update the Max RUs to 11000.  
-
-Select **Save** to complete the operation. You will see how **fast** you can increase the throughput capacity. 
-
-**Tip:**
-If you get a warning that it will take sometime to add, then wait for few minutes. Just click 'Overview' or another option and
-come back to refresh the screen. 
-
-There is an important factor to set the Max RU/s to 11000 units. Every physical partition has 10k RU capacity. By increasing
-the capacity to more than 10k will give you two physical partitions to write the data faster. You can apply the same 
-logic and increase the capacity to higher amount based on the write needs. Don't forget to scale back otherwise you will
-get a big bill. **So Cosmos DB is not expensive but the human factor is!!**
-
-You would not see any throttling because we have higher throughput than the required for the write operations.  
+Consider the option of loading the hotel room availability and reservation data with tenantId as the parition key in 
+one container. Evaluate the option of creating availability data in one container and reservation data in another 
+container.   
 
 #### Best Practice: 
 Throttling is **NOT** bad. If your requests reaches the limit then it will put them in the queue and
 send the details in the header regarding how long you need to wait to retry. It is better to build applications with 
 a retry logic based on the wait time. **This is critical for SaaS applications.**
 
+### 3.1 Partitioning Key Design
 
+### 3.2 Number of containers per tenant
 
-<img src="./images/Database_Scale_Up_11K._Marked.jpg" alt="Scale up database throughput" width="600">
+### 3.3 Throughput Design:
 
-#### 3.1 Load the availability data into a container with **InventoryId** as the partition Key.
-Access the data in your local folder to load the data.
+Database with Shared throughput 
 
-#### Load Hotel Room availability data
+Database with Shared & Isolated throughput 
 
-* Select Data Explorer from the left panel.
-* Expand 'Availability_by_inventory_item' container and select 'items' section. 
-* Select 'Upload Item' button on the top right tabs.
-* Select the 'Folder' icon to load the data.
-* Select 'Hotel_room_availability.json' file you have downloaded from the github site.
-* Hit the "Upload" button to load the data. 
-It will take 2 to 3 minutes based on the RU setting.
-
-<img src="./images/Upload_Availability_Data_Marked.jpg" alt="Load data into availability document" width="800">
-
-#### Load Rental Car availability data
-
-* Repeat the same to load Rental Car data from "rental_car_availability.json".
-
-#### Load Tenant Data 
-
-* Repeat the same to load tenant data from 'tenantData.json'.
-
-
-#### 3.2 Load the availability data into a container with Business location Id (tBizLoc) as the partition key.
-
-* Expand 'Availability_by_Location' container and select 'items' section. 
-* Repeat the steps of 3.1 to load Rental Car and Hotel room availabiity data.
-
-#### 3.3 Analyze Query performance based on two partition key strategies to satisfy the read and write requirement
-
-Expand 'Availability_by_inventory_item' container and select items section
-Select 'windows with + sign' from the options on the top section.
-
-Copy and paste the following query in a SQL Editor to search for **Compact** cars between 11/18 and 11/21 
-in 'San Francisco' city.
-
-Execute the query from the options on the top section.
-
-```
-SELECT *
-FROM c where c.availDate >'2022-11-18' and c.availDate <'2022-11-21' 
-and c.availableCars > 0 and c.inventoryId=4 and c.bizAddress.city='San Francisco'
-
-```
-
-<img src="./images/OpenQueryToolWindowMarked.jpg" alt="Open new SQL Query Window" width="800">
-
-Repeat the same query in 'Availability_by_Location' container by following the above steps.
-
-Compare the "Request charge" and "Query Engine Execution time". You can recognize the value of 
-right partitioning key. Since volume of the end customer queries are much more than the business support 
-team and manager queries, InventoryId would be the best partition key. 
-
-<img src="./images/AvailabilityByInventoryIdPartitionComparision_Marked.jpg" alt="Availability partition key comparision" width="800">
-
-
-### Right strategy to load reservation data
-**Requirement**:
-
-* Application needs to complete the reservation booking transaction with sub milli-second response - **Faster write operations.** 
-* End user should be able to review their reservations with low latency - **Read heavy operations.**  
-* Business support team needs to pull the reservation details to help the client request - **Read data based on the business location.**
-* Reservation transaction should update the avilability count - Need to provide **consistancy with multi-commit** or with less than 10 second delay. 
-* Business manager should be able to pull the total reservations per day analyze their business - **Get data based on the business location.** 
-
-Consider the advantages of loading the reservation data with customerId as the partition key vs loading the data with 
-Business location as the partition key.
-
-#### 3.4 Load the reservation data into a container with **customerId** as the partition key.
-
-* Expand 'Reservation_by_Customer' container and select 'items' section. 
-* Repeat the steps of 3.1 to load Rental Car and Hotel room reservation data 
-from the following files:
-	1) multi_tenent_car_reservations.json
-	2) multi_tenent_hotel_reservations.json
-	3) customerData.json
-
-#### 3.5 Load the reservation data into a container with **Business location (syntheticKey)** as the partition key. 
-
-* Expand 'Reservation_by_BizLocation' container and select 'items' section. 
-* Repeat the steps of 3.1 to load Rental Car and Hotel room reservation data 
-from the following files:
-	1) multi_tenent_car_reservations.json
-	2) multi_tenent_hotel_reservations.json
-	3) customerData.json
-
-#### Scale down the database throughput to save costs. Very critical and very important step! 
-Expand **SaaS_Multitenant_DB** database and select **Scale** section.
-Keep Autoscale option and set the Max RU/s to 4000 units.
-Select **Save** to complete the operation.
-
-#### 3.6 Analyze the query performance to satisfy read and write requirement.
-
-Expand **Reservation_by_Customer** container and select **Items** section.
-Create a new SQL Query window and paste the folowing query
-
-```
-select * from c where c.custId=3286
-
-```
-
-Execute the query from the options on the top section. 
-
-
-Execute the same query by creating a **Reservation_by_BizLocation** container's SQL Query window by following the 
-above steps.
-
-Evaluate **Request Charge** and **Query engine excution time** values based on customerId and Business location 
-partition keys. You would see the value of using the right partition key for the high volume queries. 
-
-
-<img src="./images/ReservationsByCustomerIdPartitionComparision_Marked.jpg" alt="Reservation Data partition key comparision " width="800">
+Database with Dedicated throughput 
 
 
 ## Challenge-4: Validate Cosmos DB features Auto failover, Autoscale and Low latency
