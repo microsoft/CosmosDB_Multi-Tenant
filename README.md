@@ -75,17 +75,18 @@ scale up to the max throughput for address unpredicted workloads and scale down 
     
 ## Business Scenario
 Fictitious ISV company called "Smart Booking Inc" has built an on-line reservation application called "EasyReserveApp" and 
-currently deployed as on-premises application to 7 customers in Car Rental and Hotel business industries. This application is a 
-hit in the industry and they want to convert as a SaaS application to meet the global demand. They are looking for a database to 
-handle unpredictable volume, maintain low latency response to users at any part of the world, optimized the costs based on the usage
-and maintain high availability & business continuity. 
+currently deployed as an on-premises application to 3 hotel chains. This application is a big hit in the industry and 
+they want to convert this application as a SaaS application to meet the global demand. They are looking for a database 
+to handle unpredictable volume, maintain low latency response time to users at any part of the world, maintain high 
+availability & business continuity with optimized cost based on the usage. 
 
 It currently has the following clients in Car Rental and Hotel Industry:
 
-<img src="./images/MulittenantCosmosDB_DataModel_Architecture.jpg" alt="Application Data Model Architecture" Width="600" Height="400">
+<img src="./images/MultiTenant_Hotel_Business_Model.jpg.jpg" alt="Application Data Model Architecture" Width="600" Height="400">
 
 
-This workshop covers how Azure Cosmos DB can be designed to support small, medium and large customers using this use case..  
+This workshop gives you handson experience on designing Azure Cosmos DB for small, medium and large multi-tenant 
+customers using this use case.  
 
 
 ## Architecture Solution Diagram
@@ -149,9 +150,9 @@ You have successfully deployed the required services to Azure. Congratulations f
 Let us review the object model for this application and plan the data model for SaaS application.
 
 ### Multi-Tenant Reservation System Object Model
-**Tenant** object stores all the business customer data.
+**Business_Entity** object stores all the business entity data.
 
-**Biz Locations** contains the tenant business locations address and contact info.
+**Tenant** contains the tenant location address and contact info.
 
 **Hotel_Room** contains catalog of rooms details for offering.
 **Rental_Car** contains catalog of cars details for offering.
@@ -161,7 +162,7 @@ Let us review the object model for this application and plan the data model for 
 **Car_Rental_Reservations** stores all the car rental reservations. 
 **Hotel_Reservations** stores all the hotel reservations. 
 
-<img src="./images/Multi-tenant-Reservation-system-object-model.jpg" alt="Multi-Tenant Reservation System Object Model" Width="600">
+<img src="./images/MultiTenant_Hotel_Business_Software_Object_Model.jpg" alt="Multi-Tenant Reservation System Object Model" Width="600">
 
 ### Access Patterns
 You would want to keep all the relevant data in one object based on the following common access patterns to write and read data.
