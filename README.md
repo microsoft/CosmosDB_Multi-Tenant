@@ -82,7 +82,7 @@ availability & business continuity with optimized cost based on the usage.
 
 It currently has the following clients in Car Rental and Hotel Industry:
 
-<img src="./images/MultiTenant_Hotel_Business_Model.jpg.jpg" alt="Application Data Model Architecture" Width="600" Height="400">
+<img src="./images/MultiTenant_Hotel_Business_Model.jpg" alt="Application Data Model Architecture" Width="600" Height="400">
 
 
 This workshop gives you handson experience on designing Azure Cosmos DB for small, medium and large multi-tenant 
