@@ -169,11 +169,6 @@ You would want to keep all the relevant data in one object based on the followin
 4) Business Owners and the support Team at each tenant location need to access the availability and 
 book/change reservation as per their customer request. 
 
-You may want to create two document models. One to keep Reservation info and the other one to keep availability info.
-
-* Customer searches for the availability using the availability_doc. 
-* Reservation data will be inserted as soon as customer completes the reservation booking. 
-* Customers, Hotel Managers, Hotel support team can access the reservation at anytime.
 
 <img src="./images/CosmosDB_MultiTenant_Hotel_Business_Data_Model.jpg" alt="Cosmos DB Document Model diagram" width="600">
 
@@ -184,8 +179,7 @@ Unzip the file into your local folder and you should see the following files.
 
 <img src="./images/Multi-Tenant_Reservation_System_Sample_Data.jpg" alt="Sample Data Objects" Width="600">
 
-Check out the CSV files and understand that the flat data does not work for SaaS model.
-Think about the ways to group the data into the two documents models you have identified. 
+Evaluate options to keep relavant data in one logical partition using partitioning key.
 
 
 ### Database Strategies to support small, medium and large customers
@@ -218,24 +212,14 @@ For example:
 * Offer the highest Gold tier, and provide a dedicated database account for the tenant, which also allows tenants to 
 select the geography for their deployment.
 
-
-### Right strategy to load availability data 
-**Requirement**:
-
-* Support the end user search by date, location and inventory type (Rental Car & Hotel Room Type) with low latency - **Reah Heavy operation.**
-* Customer support team from each business should be able to search for availability to help with reservations - **read data based on the business location.**
-* Customer manager should be able to load the availability data every month - **Write heavy operation.** 
-
-Consider the option of loading the hotel room availability and reservation data with tenantId as the parition key in 
-one container. Evaluate the option of creating availability data in one container and reservation data in another 
-container.   
-
-#### Best Practice: 
-Throttling is **NOT** bad. If your requests reaches the limit then it will put them in the queue and
-send the details in the header regarding how long you need to wait to retry. It is better to build applications with 
-a retry logic based on the wait time. **This is critical for SaaS applications.**
-
 ### 3.1 Partitioning Key Design
+Partition Key plays a major role to save costs and to provide sub millisecond response time. Make sure to have the partition key 
+as part of most frequent queries. Make use of the Document Type to keep relevant data in one container. 
+
+Multi-Tenant databases have unique set of data per each tenant in our use case Number of rooms, availability and reservations. It 
+would make sense to create TenantID as the partition key and collect room availabiity and reservation info using document type.
+
+You can also keep reference data such as Guest info and room type definitions in the same container. 
 
 ### 3.2 Number of containers per tenant
 
