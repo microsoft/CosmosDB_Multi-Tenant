@@ -130,13 +130,13 @@ Best practice is to keep resource group and Cosmos DB account in the same region
 
 <img src="./images/CosmosDB_AzureDeploymentOptions_Marked.jpg" alt="Azure Custom Depolyment Screen" Width="600">
 
-1.6 It completes the validation as the next step and click on 'create' button.
+1.9 It completes the validation as the next step and click on 'create' button.
 
 It will provision Azure Cosmos DB account in your subscription:
 
 It may take 2 to 5 minutes to create the services.
 
-1.7 Click on "Go to resource group" when the deployment is complete.
+1.10 Click on "Go to resource group" when the deployment is complete.
 
 <img src="./images/CosmosDB_AzureDeployment_Complete_Marked.jpg" alt="Deployment complete" Width="600">
 
@@ -204,27 +204,32 @@ It can be a good choice for building a pricing model that includes a free tier, 
 In general, by using shared containers, you achieve the highest density of tenants and therefore the lowest price 
 per tenant.
 
-3.1 Access Cosmos DB Service in Azure Portal.
-3.2 Select **Data Explorer** from the left panel.
-3.3 Select **SharedThroughputDB** database.
-3.4 Expand CasinoHotel container. 
-3.5 select **Settings**.
-3.6 You will see 'tenantId' as the partition key. It will create logical partitions per each tenant location. 
+#### 3.1 Create Cosmos DB Containers with shared throughput at the database level 
 
-3.7 Verify FamilyFunHotel Container for the partition key.
-3.8 Select **Scale** property under **SharedThroughputDB** database.
-3.9 It is set to use Autoscale upto 4,000 RUs and will share across all the containers (business entities). 
+* Access Cosmos DB Service in Azure Portal.
+* Select **Data Explorer** from the left panel.
+* Select **SharedThroughputDB** database.
+* Expand CasinoHotel container. 
+* select **Settings**.
+* You will see 'tenantId' as the partition key. It will create logical partitions per each tenant location. 
+
+* Verify FamilyFunHotel Container for the partition key.
+* Select **Scale** property under **SharedThroughputDB** database.
+* It is set to use Autoscale upto 4,000 RUs and will share across all the containers (business entities). 
 
 #### Dedicated throughput to avoid Noisy Neighbor
 Hiking Hotel is a medium size business entity and you can avoid noisy neighbor issue by providing a dedicated throughput at 
 the container level. Follow the steps to create a dedicated throughput.
-3.10 Select **New Container** from the top bar inside Data Explorer.
-3.11 Seelct **Use existing** database
-3.12 Type **HikingHotel** as the container name
-3.13 Type **/tenantId** as partition key.
-3.14 Select **Provision dedicated throughput for this container** option.
-3.15 Set the **Container Max RUs** as 2000.
-3.16 click **OK**
+
+#### 3.2 Create Cosmos DB container with dedicated throughput 
+
+* Select **New Container** from the top bar inside Data Explorer.
+* Seelct **Use existing** database
+* Type **HikingHotel** as the container name
+* Type **/tenantId** as partition key.
+* Select **Provision dedicated throughput for this container** option.
+* Set the **Container Max RUs** as 2000.
+* click **OK**
 
 This will use 2000 RUs from 4000 RUs allocated at the database level. 
 
@@ -233,10 +238,12 @@ You can provision dedicated containers for each business entity. This can work w
 throughput requirement and for providing dedicated capacity. It will provide guaranteed level of performance, serve medium size 
 customers.
 
-3.17 Select **DedicatedThroughputDB** database
-3.18 Expand **GoodFellas** container.
-3.19 Select **Scale & Settings** 
-3.20 It shows 1000 RUs as the Maximum RUs with Autoscale throughput option.
+#### 3.3 Create Cosmos DB Database to serve large customers
+
+* Select **DedicatedThroughputDB** database
+* Expand **GoodFellas** container.
+* Select **Scale & Settings** 
+* It shows 1000 RUs as the Maximum RUs with Autoscale throughput option.
 
 
 #### Account for tenant
