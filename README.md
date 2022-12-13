@@ -271,6 +271,9 @@ This will use 2000 RUs from 4000 RUs allocated at the database level.
 
 #### 3.4 Load Business data into containers
 
+Download the Workshop Data zip file (Multi-Tenant_CosmosDB_Workshop_data.zip) from Microsoft Teams chat window. 
+Unzip the file into your local folder and you should see the following files.
+
 
 ## Challenge-4: Validate Cosmos DB features Auto failover, Autoscale and Low latency
 
