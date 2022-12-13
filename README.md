@@ -75,7 +75,7 @@ scale up to the max throughput for address unpredicted workloads and scale down 
     
 ## Business Scenario
 Fictitious ISV company called "Smart Booking Inc" has built an on-line reservation application called "EasyReserveApp" and 
-currently deployed as an on-premises application to 3 hotel chains. This application is a big hit in the industry and 
+currently deployed as an on-premises application to 4 hotel chains. This application is a big hit in the industry and 
 they want to convert this application as a SaaS application to meet the global demand. They are looking for a database 
 to handle unpredictable volume, maintain low latency response time to users at any part of the world, maintain high 
 availability & business continuity with optimized cost based on the usage. 
@@ -162,15 +162,25 @@ Let us review the object model for this application and plan the data model for 
 <img src="./images/MultiTenant_Hotel_Business_Software_Object_Model.jpg" alt="Multi-Tenant Reservation System Object Model" Width="600">
 
 ### Access Patterns
-You would want to keep all the relevant data in one object based on the following common access patterns to write and read data.
-1) Hotel Room availability to support customer search based on location, dates and room/car types.
+
+1) Provide Hotel Room availability to support customer search based on location, dates and room types.
 2) Need to update availability after customer completes the reservation.
-3) Customer can review or change the reservation. 
-4) Business Owners and the support Team at each tenant location need to access the availability and 
+3) Customer will access the reservation to review, cancel or update. 
+4) Business owners and the support team at each tenant location will access the availability to 
 book/change reservation as per their customer request. 
 
+You would want to keep all the relevant data in one object based on the highly frequent access patterns to write and read data.
 
 <img src="./images/CosmosDB_MultiTenant_Hotel_Business_Data_Model.jpg" alt="Cosmos DB Document Model diagram" width="600">
+
+As per the above diagram, it make sense to keep all the organization (business entity) information such as customers and room types 
+along with tenant related data such as room inventory, availability and reservations in one Cosmos DB Container. 
+
+This challenge demonstrate how software object model transform to NoSQL database design model which completly different from SQL based
+databases. **Cosmos DB Data Model requires a different mindset and also requires the knowledge of highly frequent access patterns.**
+
+You have successfully completed challenge 2 by creating a Cosmos DB data model based on highly frequent access patterns!! Apply the 
+same methodology to migrate your legacy applications or to build new green field applications. 
 
 ## Challenge-3: Design Cosmos DB Account to serve small, medium and large customers
 
@@ -221,16 +231,17 @@ would make sense to create TenantID as the partition key and collect room availa
 
 You can also keep reference data such as Guest info and room type definitions in the same container. 
 
-### 3.2 Number of containers per tenant
-
-### 3.3 Throughput Design:
+### 3.2 Number of containers per database to share throughput
 
 Database with Shared throughput 
+It would be better to create one container per organization and share the throughput at the database level. This will avoid creating 
+one database per each customer and saves lot of money. This may cause noisy neighbor problem.
 
 Database with Shared & Isolated throughput 
+You can specify a dedicated throughput to high volume customer and share the rest throughput with small customers.
 
 Database with Dedicated throughput 
-
+You may want to create a new database to support enterprise level customers with dedicated throughput at the container level.
 
 ## Challenge-4: Validate Cosmos DB features Auto failover, Autoscale and Low latency
 
