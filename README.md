@@ -58,8 +58,7 @@ All the above use cases need a new mindset and special features. This workshop w
 - [Challenge-2: Model data to build SaaS applications](#Challenge-2-Model-data-to-build-SaaS-applications)
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
 - [Challenge-4: Validate Cosmos DB features Auto Failover, Autoscale and Low Latency](#Challenge-4-Validate-Cosmos-DB-features-Auto-failover-Autoscale-and-Low-latency)
-- [Challenge-5: Optimize costs and performance with Indexing Policy](#Challenge-5-Optimize-costs-and-performance-with-Indexing-Policy)
-- [Challenge-6: Build an application using Cosmos DB Emulator with no cost](#Challenge-6-Build-an-application-using-Azure-Cosmos-DB-with-no-cost)
+- [Challenge-5: Build an application using Cosmos DB Emulator with no cost](#Challenge-6-Build-an-application-using-Azure-Cosmos-DB-with-no-cost)
 
 ## Multi-Tenancy features for Software Companies 
 
@@ -357,56 +356,8 @@ SELECT * FROM c where c.custId=4691
 
 select "Query Stats" tab and check the Query execution time. It shows the sub millisecond response time.
 
-## Challenge-5: Optimize costs and performance with Indexing Policy
-The default indexing policy for newly created containers indexes every property of every item. 
-This allows you to get good query performance without having to think about indexing and index management upfront. 
-In some situations, you may want to override this automatic behavior to better suit your requirements.
 
-In Azure Cosmos DB, the total consumed storage is the combination of both the Data size and Index size. 
-By optimizing the number of paths that are indexed, you can substantially reduce the storage cost, the latency 
-and RU charge of write operations.
-
-Will walk you through the steps to include properties required for queries and exculde the rest.
-
-5.1 Expand 'Reservation_by_Customer' container and select 'Settings' section. It will show 'settings' 
-and 'indexing Policy' tabs. 
-
-Select 'indexingPolicy'. It will show you the default policy to index every property in the document.
-
-<img src="./images/CosmosDB_Indexing_default_view_Marked.jpg" alt="Indexing default view" width="800">
-
-
-
-5.2 Identify the properties you would be used most with your application queries. Let us consdier the following 
-for our use case:
-* custId
-* creaditCard
-* totalAmount
-* tenantId
-* tBizId
-* tBizLocId
-* bizName
-* tBizAddress/city
-* tBizAddress/zipcode
-
-5.3 Set the 'automatic' property value to 'false' and type "/*" as path property value in the excludeedPaths section 
-to exclude all the attributes. 
-
-Enter "/creditCard/?" as the value to the path property in the includedPath section. 
-
-enter "," and copy and paste the section below to enter all the indexing property names.
-
-Your indexing policy should look like the following picture when you complete.
-
-<img src="./images/CosmosDB_Indexing_include_path_view_Marked.jpg" alt="Modified indexing policy to index specific properties" width="800">
-
-5.4 Run the SQL query and check the Query Stats
-
-```
-SELECT * FROM c where c.custId=4691
-```
-
-## Challenge-6: Build an application using Azure Cosmos DB with no cost  
+## Challenge-5: Build an application using Azure Cosmos DB with no cost  
 Cosmos DB is a developer friendly database and supports SaaS applications with no schema and indexing to manage. 
 It also provides built in Cache for improved performance. It provides Cosmos DB Emulator tool to build your 
 applications using Cosmos DB in your development environment with no cost.
@@ -417,44 +368,44 @@ It will you programming language options .NET, Xamarin, Java, Node.js & Phython 
 
 Use the default .NET option.
 
-6.1 Select create 'Items' container button.
+5.1 Select create 'Items' container button.
 
 It creates an **Items** container in "ToDoList" database with 400 RU throughput capacity.
 
 <img src="./images/CosmosDB_QuickStart_AddContainer_Marked.jpg" alt="Quick Start Create Container" width="600">
 
-6.2 Select Download button to download .NET app to your laptop.
+5.2 Select Download button to download .NET app to your laptop.
 
 <img src="./images/CosmosDB_QuickStart_Download_App_Marked.jpg" alt="Download .NET app button" width="600">
 
-6.3 Extract all from 'DocumentDB-Quickstart-DotNet.zip' file and open "CosmosGettingStarted.sln" in sql-dotnot folder 
+5.3 Extract all from 'DocumentDB-Quickstart-DotNet.zip' file and open "CosmosGettingStarted.sln" in sql-dotnot folder 
 with Visual Studio 2022.
 
 <img src="./images/cosmosdb_dotnet_downloadzip_marked.jpg" alt="Download ZIP and open Visual Studio" width="600">
 
-6.4 Clean and rebuild the solution.
+5.4 Clean and rebuild the solution.
 
-6.5 Put a breakpoint in **GetStartedDemoAsync** method at  
+5.5 Put a breakpoint in **GetStartedDemoAsync** method at  
 ```
 this.ReplaceFamilyItemAsync();
 ``` 
 
 <img src="./images/cosmosdb_dotnet_app_breakpoint_marked.jpg" alt="create a breakpoint" width="800">
 
-6.6 run the debug program by selecting green start button.
+5.6 run the debug program by selecting green start button.
 
 <img src="./images/cosmosdb_dotnet_app_exec_output.jpg" alt="create a breakpoint" width="600">
 
 This application creates documents in the Cosmos DB Items container and stops at the breakpoint.
 
-6.7 Go back to Cosmos DB in Azure Portal and verify the data the application has created.
+5.7 Go back to Cosmos DB in Azure Portal and verify the data the application has created.
 
 <img src="./images/CosmosDB_QuickStart_Create_Items_Marked.jpg" alt="create a breakpoint" width="800">
 
-6.8 Come back to Visual Studio and continue the execution by selecting 'Continue' button.
+5.8 Come back to Visual Studio and continue the execution by selecting 'Continue' button.
 It will delete all the items it created in the Cosmos DB database.
 
-6.9 Go back to Cosmos DB in Azure Portal and verify if the application has deleted the database, container
+5.9 Go back to Cosmos DB in Azure Portal and verify if the application has deleted the database, container
 and items.
 
 You are successfully built an application to access Cosmos DB Service and to create database, container and 
@@ -480,7 +431,7 @@ execute such operations.
 Access [Azure Cosmos DB Emulator for local development and testing](https://learn.microsoft.com/en-us/azure/cosmos-db/local-emulator?tabs=ssl-netstd21#how-does-the-emulator-work) 
 for more details.
 
-6.10 Download Azure Cosmos DB Emulator
+5.10 Download Azure Cosmos DB Emulator
 
 [download](https://aka.ms/cosmosdb-emulator) and install the latest version of Azure Cosmos DB Emulator 
 on your local computer. 
@@ -492,24 +443,24 @@ Run a DOS window as an **administrator** and run the install by entering the ful
 <img src="./images/cosmos_emulator_install_admin_window_Marked.jpg" alt="Emulator install in admin window" width="600">
 
 
-6.11 Installer launches the emulator in a browser with the following screen.
+5.11 Installer launches the emulator in a browser with the following screen.
 
 <img src="./images/CosmosDB_Emulater_Start_Screen_Marked.jpg" alt="Emulator start screen" width="800">
 
-6.12 Copy the **URI** and **Primary key** to a notepad.
+5.12 Copy the **URI** and **Primary key** to a notepad.
 
-6.13 Open up Visual Studio Quick Start application and use the Solution Explorer to navigate to **App.config**.
+5.13 Open up Visual Studio Quick Start application and use the Solution Explorer to navigate to **App.config**.
 update **EndpointUri** and **PrimaryKey** which you copied from Cosmos DB Emulator.
 
 <img src="./images/cosmos_vs_app_config_change_Marked.jpg" alt="Visual Studio Config Change" width="800">
 
-6.14 Execute the application from Visual Studio with a breakpoint
+5.14 Execute the application from Visual Studio with a breakpoint
 
-6.15 Verify the data using the **Explorer** in the local Cosmos DB emulator tool
+5.15 Verify the data using the **Explorer** in the local Cosmos DB emulator tool
 
 <img src="./images/CosmosDB_Emulator_CreateItem_Marked.jpg" alt="Verify data in local Emulator tool" width="600">
 
-6.16 You can also run SQL queries to analyze the data using the **SQL Query window** similar to the tool you used 
+5.16 You can also run SQL queries to analyze the data using the **SQL Query window** similar to the tool you used 
 with Azure Cosmos DB Service. 
 
 **This is the best way to estimate your query costs and optimize your queries to save costs.** 
