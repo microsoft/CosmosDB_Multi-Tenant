@@ -179,8 +179,8 @@ along with tenant related data such as room inventory, availability and reservat
 This challenge demonstrate how software object model transform to NoSQL database design model which completly different from SQL based
 databases. **Cosmos DB Data Model requires a different mindset and also requires the knowledge of highly frequent access patterns.**
 
-You have successfully completed challenge 2 by creating a Cosmos DB data model based on highly frequent access patterns!! Apply the 
-same methodology to migrate your legacy applications or to build new green field applications. 
+Apply the same methodology to migrate your legacy applications or to build new green field applications. **You have successfully 
+completed challenge 2 by creating a Cosmos DB data model based on highly frequent access patterns!!**
 
 ## Challenge-3: Design Cosmos DB Account to serve small, medium and large customers
 
@@ -194,27 +194,59 @@ Evaluate options to keep relavant data in one logical partition using partitioni
 
 ### Database Strategies to support small, medium and large customers
 
-#### 1) Shared container with partition keys per tenant
-When you use a single container for multiple tenants, you can make use of Azure Cosmos DB partitioning support. 
-By using tenantId as the partition key, you can keep the data for each tenant in one logical partition and can perform 
-faster querys. This approach tends to work well when the amount of data stored for each tenant is small. It can be a 
-good choice for building a pricing model that includes a free tier, and for business-to-consumer (B2C) solutions. 
+#### Shared throughput for small business entities
+
+It would be better to create one container per organization and share the throughput at the database level. This will avoid 
+creating one database per each customer and saves lot of money. You will have to understand that it may cause noisy neighbor 
+problem.This approach tends to work well when the amount of data stored for each tenant is small. 
+
+It can be a good choice for building a pricing model that includes a free tier, and for business-to-consumer (B2C) solutions. 
 In general, by using shared containers, you achieve the highest density of tenants and therefore the lowest price 
 per tenant.
 
-#### 2) Container per tenant
-You can provision dedicated containers for each tenant. This can work well for isolating the customer tenant data.
-When using a container for each tenant, you can consider sharing throughput at the database level. You can provision dedicated 
-throughput for guaranteed level of performance, serve medium size customers, to avoid noisy neighbor problem. 
+3.1 Access Cosmos DB Service in Azure Portal.
+3.2 Select **Data Explorer** from the left panel.
+3.3 Select **SharedThroughputDB** database.
+3.4 Expand CasinoHotel container. 
+3.5 select **Settings**.
+3.6 You will see 'tenantId' as the partition key. It will create logical partitions per each tenant location. 
 
-#### 3) Account for tenant
+3.7 Verify FamilyFunHotel Container for the partition key.
+3.8 Select **Scale** property under **SharedThroughputDB** database.
+3.9 It is set to use Autoscale upto 4,000 RUs and will share across all the containers (business entities). 
+
+#### Dedicated throughput to avoid Noisy Neighbor
+Hiking Hotel is a medium size business entity and you can avoid noisy neighbor issue by providing a dedicated throughput at 
+the container level. Follow the steps to create a dedicated throughput.
+3.10 Select **New Container** from the top bar inside Data Explorer.
+3.11 Seelct **Use existing** database
+3.12 Type **HikingHotel** as the container name
+3.13 Type **/tenantId** as partition key.
+3.14 Select **Provision dedicated throughput for this container** option.
+3.15 Set the **Container Max RUs** as 2000.
+3.16 click **OK**
+
+This will use 2000 RUs from 4000 RUs allocated at the database level. 
+
+#### Database per business entity
+You can provision dedicated containers for each business entity. This can work well for isolating large customers with higher 
+throughput requirement and for providing dedicated capacity. It will provide guaranteed level of performance, serve medium size 
+customers.
+
+3.17 Select **DedicatedThroughputDB** database
+3.18 Expand **GoodFellas** container.
+3.19 Select **Scale & Settings** 
+3.20 It shows 1000 RUs as the Maximum RUs with Autoscale throughput option.
+
+
+#### Account for tenant
 You can provision separate database accounts for each tenant, which provides the highest level of isolation, 
 but the lowest density. A single database account is dedicated to a tenant, which means they are not subject to 
 the noisy neighbor problem. You can also configure the location of the container data via replication according to the 
 tenant's requirements, and you can tune the configuration of Azure Cosmos DB features, network access, backup policy, 
 geo-replication and customer-managed encryption keys, to suit each tenant's requirements.
 
-#### 4) Hybrid Approaches
+#### Hybrid Approaches
 You can consider a combination of the above approaches to suit different tenants' requirements and your pricing model. 
 For example:
 * Provision all free trial customers within a shared container, and use the tenant ID or a synthetic key partition key.
@@ -222,26 +254,22 @@ For example:
 * Offer the highest Gold tier, and provide a dedicated database account for the tenant, which also allows tenants to 
 select the geography for their deployment.
 
-### 3.1 Partitioning Key Design
-Partition Key plays a major role to save costs and to provide sub millisecond response time. Make sure to have the partition key 
-as part of most frequent queries. Make use of the Document Type to keep relevant data in one container. 
+### Partitioning Key Design
+
+To store multi-tenant data in a single container, Azure Cosmos DB provides **partition key** to distribute the data into logical
+partitions. By using tenantId as the partition key, Cosmos DB keeps the data for each tenant in one logical partition and will 
+perform faster querys with low cost. 
+
+Partition Key plays a major role to save costs and to provide sub millisecond response time. Make sure to keep the partition key 
+as part of most frequent queries. Cosmos DB also provides Document Type to keep relevant data in one container. 
 
 Multi-Tenant databases have unique set of data per each tenant in our use case Number of rooms, availability and reservations. It 
 would make sense to create TenantID as the partition key and collect room availabiity and reservation info using document type.
 
 You can also keep reference data such as Guest info and room type definitions in the same container. 
 
-### 3.2 Number of containers per database to share throughput
+#### Load Business data into containers
 
-Database with Shared throughput 
-It would be better to create one container per organization and share the throughput at the database level. This will avoid creating 
-one database per each customer and saves lot of money. This may cause noisy neighbor problem.
-
-Database with Shared & Isolated throughput 
-You can specify a dedicated throughput to high volume customer and share the rest throughput with small customers.
-
-Database with Dedicated throughput 
-You may want to create a new database to support enterprise level customers with dedicated throughput at the container level.
 
 ## Challenge-4: Validate Cosmos DB features Auto failover, Autoscale and Low latency
 
