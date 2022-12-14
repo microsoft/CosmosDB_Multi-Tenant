@@ -229,7 +229,7 @@ Follow the steps to provision a new container with a dedicated throughput in a s
 * Set the **Container Max RUs** as 2000.
 * click **OK**
 
-<img src="./images/create_SharedThroughputContainers_3d.jpg" alt="Create dedicated throughput container" width="400">
+<img src="./images/create_SharedThroughputContainers_3d.jpg" alt="Create dedicated throughput container" width="800">
 
 This container is dedicated to use 2000 RUs from 4000 RUs allocated at the database level. 
 
@@ -285,6 +285,7 @@ would make sense to create TenantID as the partition key and collect room availa
 
 You can also keep reference data such as Guest info and room type definitions in the same container. 
 
+##### 3.4.1 Load Room Availability and Reservation data into **CasinoHotel** Container. 
 * Expand **Casino Hotels** container under **SharedThroughputDB** database
 * select **items** section
 * Select **upload** to load the data files from the local foldder.
@@ -293,7 +294,17 @@ You can also keep reference data such as Guest info and room type definitions in
 * Click **Upload** button.
 <img src="./images/UploadMultiTenantData_3d.jpg" alt="Load Data into Casion Hotel Container" width="800" >
 
-Continue the same steps to loadd data into other containers.
+* Load Reservation data into the same container by selecting **CasinoHotel_Reservation.json** file.
+
+##### 3.4.2 Load Room Availability and Reservation data into **FamilyFunHotel** Container. 
+* Follow the above steps to load the data.
+
+##### 3.4.3 Load Room Availability and Reservation data into **HikingHotel** Container. 
+* Follow the above steps to load the data.
+
+##### 3.4.4 Load Room Availability and Reservation data into **GoodFellasHotel** Container. 
+* Follow the above steps to load the data.
+
 
 #### 3.5 Query Data using Data Explorer
 
@@ -309,7 +320,10 @@ You can query data using APIs and also can use Data Explorer for quick check.
 * Results tab will be display the results on the bottom.
 * Query Stats next to results tab will show RU cost, size of the document and Query Execution time.
 
-<img src="./images/cosmosdb-query-execution-3d.jpg" alt="Query data using Data Explorer" width="800" >
+<img src="./images/cosmosdb-query-execution-3d.jpg" alt="Query data using Data Explorer" width="600" >
+
+With this challenge you have gained a hands-on experience to create multi-tenant Cosmos DB database to support small, medium 
+and large customers. Congratulations!!
 
 
 ## Challenge-4: Validate Cosmos DB features Auto failover, Autoscale and Low latency
