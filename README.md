@@ -288,7 +288,7 @@ Unzip the file into your local folder and you should see the following files.
 * Select **CasinoHotel_RoomInventory.json** file from the local folder.
 * Select Open
 * Click **Upload** button.
-<img src="./images/UploadMultiTenantData_3d.jpg" alt="Load Data into Casion Hotel Container" width="600" >
+<img src="./images/UploadMultiTenantData_3d.jpg" alt="Load Data into Casion Hotel Container" width="800" >
 
 
 ## Challenge-4: Validate Cosmos DB features Auto failover, Autoscale and Low latency
