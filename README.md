@@ -391,19 +391,21 @@ Change Max RU/s back to '4000' and select save button if you have not already.
 
 It will change the throughput instantly without impacting the current workloads.
 
-<img src="./images/cosmosdb_autoscale_feature_marked.jpg" alt="Cosmos DB Autoscale feature" width="600">
+<img src="./images/DedicatedThroughputDB_3d.jpg" atl="dedicated database for large customers" width="800">
+
 
 ### Sub Millisecond Fast Response Time
-Select 'Data Explorer' from the left pane and expand 'SaaS_Multitenant_DB' database.
-Hover over 'Reservation_by_Customer' container and select three dots.
+Select 'Data Explorer' from the left pane and expand 'DedicatedThroughputDB' database.
+Hover over 'GoodFellasHotel' container and select three dots.
 It provide options to create SQL Query, Stored Procedure, UDF & Trigers. Select the 'New SQL Query' option. 
 
-<img src="./images/cosmosdb_queryTool_create_marked.jpg" alt="Cosmos DB Query Tool Start" width="600">
+<img src="./images/cosmosdb-query-execution-3d.jpg" alt="Query data using Data Explorer" width="600" >
 
 Type the following Query:
 
 ```
-SELECT * FROM c where c.custId=4691
+SELECT * FROM c where c.type='availability' and c.roomName='PremiumKingRoom' 
+and c.tntAddress.city='New York'
 ```
 
 select "Query Stats" tab and check the Query execution time. It shows the sub millisecond response time.
