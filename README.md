@@ -271,7 +271,7 @@ select the geography for their deployment.
 
 To store multi-tenant data in a single container, Azure Cosmos DB provides **partition key** to distribute the data into logical
 partitions. By using tenantId as the partition key, Cosmos DB keeps the data for each tenant in one logical partition and will 
-perform faster querys with low cost. 
+perform faster queries with low cost. 
 
 Partition Key plays a major role to save costs and to provide sub millisecond response time. Make sure to keep the partition key 
 as part of most frequent queries. Cosmos DB also provides Document Type to keep relevant data in one container. 
