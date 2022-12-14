@@ -237,7 +237,6 @@ Follow the steps to provision a new container with a dedicated throughput in a s
 
 <img src="./images/create_SharedThroughputContainers_3d.jpg" alt="Create dedicated throughput container" width="800">
 
-This container is dedicated to use 2000 RUs from 4000 RUs allocated at the database level. 
 
 #### Database per business entity
 You can provision dedicated containers for each business entity. This can work well for isolating large customers with higher 
@@ -394,7 +393,7 @@ Select 'Data Explorer' from the left pane and expand 'DedicatedThroughputDB' dat
 Expand **GoodFellasHotel** container.
 Select **Scale & Settings** setting.
 
-Change Max RU/s back to '4000' and select **save** button on the top bar. 
+Change Max RU/s back to '2000' and select **save** button on the top bar. 
 
 It will change the throughput instantly without impacting the current workloads.
 
