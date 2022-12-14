@@ -236,7 +236,7 @@ would make sense to create TenantID as the partition key and collect room availa
 
 You can also keep reference data such as Guest info and room type definitions in the same container. 
 
-#### 3.1 Create Cosmos DB Containers with shared throughput at the database level 
+#### 3.1 Create Cosmos DB Containers with shared database throughput
 
 * Access Cosmos DB Service in Azure Portal.
 * Select **Data Explorer** from the left panel.
@@ -249,15 +249,19 @@ You can also keep reference data such as Guest info and room type definitions in
 * Select **Scale** property under **SharedThroughputDB** database.
 * It is set to use Autoscale upto 4,000 RUs and will share across all the containers (business entities). 
 
-#### 3.2 Create Cosmos DB container with dedicated throughput 
+<img src="./images/sharedThroughputContainers_3d.jpg" alt="Shared Throughtput at Database level" width="600" >
+
+#### 3.2 Add Cosmos DB container with dedicated throughput under shared database throughput 
 
 * Select **New Container** from the top bar inside Data Explorer.
-* Seelct **Use existing** database
+* Seelct **ShardThroughputDB** under **Use existing** database dropdown 
 * Type **HikingHotel** as the container name
 * Type **/tenantId** as partition key.
 * Select **Provision dedicated throughput for this container** option.
 * Set the **Container Max RUs** as 2000.
 * click **OK**
+
+<img src="./images/CreateHikingHotel_DedicatedThroughput_3d.jpg" alt="Create dedicated throughput container" width="600">
 
 This will use 2000 RUs from 4000 RUs allocated at the database level. 
 
@@ -268,10 +272,24 @@ This will use 2000 RUs from 4000 RUs allocated at the database level.
 * Select **Scale & Settings** 
 * It shows 1000 RUs as the Maximum RUs with Autoscale throughput option.
 
+<img src="./images/DedicatedThroughputDB_3d.jpg" atl="dedicated database for large customers" width="600">
+
 #### 3.4 Load Business data into containers
 
-Download the Workshop Data zip file (Multi-Tenant_CosmosDB_Workshop_data.zip) from Microsoft Teams chat window. 
+<img src="./images/MultiTenant_dataFiles_3d.jpg" alt="DataFiles for the workshop" width="600">
+
+Download the Workshop Data zip file (Multi-Tenant_CosmosDB_Workshop_data.zip) from the provided github link data folder. 
 Unzip the file into your local folder and you should see the following files.
+
+<img src="./images/MultiTenant_dataFile_list_3d.jpg" alt="list of multi-tenant reservation and availability data" width="600" >
+
+* Expand **Casino Hotels** container under **SharedThroughputDB** database
+* select **items** section
+* Select **upload** to load the data files from the local foldder.
+* Select **CasinoHotel_RoomInventory.json** file from the local folder.
+* Select Open
+* Click **Upload** button.
+<img src="./images/UploadMultiTenantData_3d.jpg" alt="Load Data into Casion Hotel Container" width="600" >
 
 
 ## Challenge-4: Validate Cosmos DB features Auto failover, Autoscale and Low latency
