@@ -229,7 +229,7 @@ Follow the steps to provision a new container with a dedicated throughput in a s
 * Set the **Container Max RUs** as 2000.
 * click **OK**
 
-<img src="./images/CreateHikingHotel_DedicatedThroughput_3d.jpg" alt="Create dedicated throughput container" height="400" "width="400">
+<img src="./images/create_SharedThroughputContainers_3d.jpg" alt="Create dedicated throughput container" width="400">
 
 This container is dedicated to use 2000 RUs from 4000 RUs allocated at the database level. 
 
