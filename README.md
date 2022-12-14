@@ -219,6 +219,8 @@ the container level. Follow the steps to create a dedicated throughput.
 
 #### 3.2 Add Cosmos DB container with dedicated throughput under shared database throughput 
 
+Follow the steps to provision a new container with a dedicated throughput in a shared throughput database.  
+
 * Select **New Container** from the top bar inside Data Explorer.
 * Seelct **ShardThroughputDB** under **Use existing** database dropdown 
 * Type **HikingHotel** as the container name
@@ -227,9 +229,9 @@ the container level. Follow the steps to create a dedicated throughput.
 * Set the **Container Max RUs** as 2000.
 * click **OK**
 
-<img src="./images/CreateHikingHotel_DedicatedThroughput_3d.jpg" alt="Create dedicated throughput container" height=""400" "width="400">
+<img src="./images/CreateHikingHotel_DedicatedThroughput_3d.jpg" alt="Create dedicated throughput container" height="400" "width="400">
 
-This will use 2000 RUs from 4000 RUs allocated at the database level. 
+This container is dedicated to use 2000 RUs from 4000 RUs allocated at the database level. 
 
 #### Database per business entity
 You can provision dedicated containers for each business entity. This can work well for isolating large customers with higher 
@@ -243,7 +245,7 @@ customers.
 * Select **Scale & Settings** 
 * It shows 1000 RUs as the Maximum RUs with Autoscale throughput option.
 
-<img src="./images/DedicatedThroughputDB_3d.jpg" atl="dedicated database for large customers" width="600">
+<img src="./images/DedicatedThroughputDB_3d.jpg" atl="dedicated database for large customers" width="800">
 
 #### Account for tenant
 You can provision separate database accounts for each tenant, which provides the highest level of isolation, 
@@ -269,11 +271,6 @@ perform faster querys with low cost.
 Partition Key plays a major role to save costs and to provide sub millisecond response time. Make sure to keep the partition key 
 as part of most frequent queries. Cosmos DB also provides Document Type to keep relevant data in one container. 
 
-Multi-Tenant databases have unique set of data per each tenant in our use case Number of rooms, availability and reservations. It 
-would make sense to create TenantID as the partition key and collect room availabiity and reservation info using document type.
-
-You can also keep reference data such as Guest info and room type definitions in the same container. 
-
 
 #### 3.4 Load Business data into containers
 
@@ -281,6 +278,12 @@ Download the Workshop Data zip file (Multi-Tenant_CosmosDB_Workshop_data.zip) fr
 Unzip the file into your local folder and you should see the following files.
 
 <img src="./images/MultiTenant_dataFile_list_3d.jpg" alt="list of multi-tenant reservation and availability data" width="600" >
+
+
+Multi-Tenant databases have unique set of data per each tenant in our use case number of rooms, availability and reservations. It 
+would make sense to create TenantID as the partition key and collect room availabiity and reservation info using document type.
+
+You can also keep reference data such as Guest info and room type definitions in the same container. 
 
 * Expand **Casino Hotels** container under **SharedThroughputDB** database
 * select **items** section
