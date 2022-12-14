@@ -23,7 +23,7 @@ then one or more containers to store your data.
 <img src="./images/CosmosDB_ResourceModel.jpg" alt="Cosmos DB Resource Model" Width="600">
 
 #### Request Units: 
-Cost of database operations is normalized by Azure Cosmos DB and is experssed by Request Units (RU). It is a performance 
+Cost of database operations is normalized by Azure Cosmos DB and is expressed by Request Units (RU). It is a performance 
 currency abstracting the system resources such as CPU, IOPS and Memory to perform the database operations supported by 
 Azure Cosmos DB. You can examine the response header to track the number of RUs that are consumed by any database 
 operation.
@@ -42,7 +42,7 @@ Access [Azure Cosmos DB Documentation](https://learn.microsoft.com/azure/cosmos-
 
 ## Why Azure Cosmos DB?
 Here are the scenarios where Azure Cosmos DB can help:
-* Looking to modernize their monolithic onpremise applications as SaaS applications.
+* Looking to modernize their monolithic on-premise applications as SaaS applications.
 * scale up to the max throughput for addressing unpredicted workloads and scale down automatically.
 * Goals to expand globally with low latency and highly scalable throughput. 
 * Trying to reduce costs to support multiple customers with fluctuating throughput requirement.
@@ -106,7 +106,7 @@ We have developed an Azure Deployment script to provision the required Azure Ser
 	https://github.com/microsoft/CosmosDB_Multi-Tenant
 ```
 
-1.3 Click **Challenge-1** from Workshop Chalenge List. 
+1.3 Click **Challenge-1** from Workshop Challenge List. 
 
 1.4 Click the "Deploy to Azure" button
 
@@ -152,7 +152,7 @@ Let us review the object model for this application and plan the data model for 
 
 **Business_Entity** object contains all the business entity data.
 **Tenant** object contains the tenant location address and contact info.
-**Hotel_Room** object contains catalog of rooms with type, view, no.of.beds etc.
+**Hotel_Room** object contains catalog of rooms with type, view, number of beds etc.
 **Customers** object has all the customer profile data. 
 **Room_Inventory** object contains all the room numbers with room type in each tenant location.
 **Room_Availability** object contains available dates with rate info for each tenant location.
@@ -175,7 +175,7 @@ You would want to keep all the relevant data in one object based on the highly f
 As per the above diagram, it make sense to keep all the business entity information such as customers and room types 
 along with tenant related data such as room inventory, availability and reservations in one Cosmos DB Container. 
 
-This challenge demonstrate how software object model transform to NoSQL database design model which completly different from SQL based
+This challenge demonstrate how software object model transform to NoSQL database design model which completely different from SQL based
 databases. **Cosmos DB Data Model requires a different mindset and also requires the knowledge of highly frequent access patterns.**
 
 Apply the same methodology to migrate your legacy applications or to build new green field applications. **You have successfully 
@@ -183,7 +183,7 @@ completed challenge 2 by creating a Cosmos DB data model based on highly frequen
 
 ## Challenge-3: Design Cosmos DB Account to serve small, medium and large customers
 
-Evaluate options to keep relavant data in one logical partition using partitioning key.
+Evaluate options to keep relevant data in one logical partition using partitioning key.
 
 
 ### Database Strategies to support small, medium and large customers
@@ -192,7 +192,7 @@ Evaluate options to keep relavant data in one logical partition using partitioni
 
 It would be better to create one container per business entity and share the throughput at the database level. This will avoid 
 creating one database per each customer and saves lot of money. You will have to understand that it may cause noisy neighbor 
-problem.This approach tends to work well when the amount of data stored for each tenant is small. 
+problem. This approach tends to work well when the amount of data stored for each tenant is small. 
 
 It can be a good choice for building a pricing model that includes a free tier, and for business-to-consumer (B2C) solutions. 
 In general, by using shared containers, you achieve the highest density of tenants and therefore the lowest price 
@@ -203,19 +203,25 @@ per tenant.
 * Access Cosmos DB Service in Azure Portal.
 * Select **Data Explorer** from the left panel.
 * Select **SharedThroughputDB** database.
-* Expand CasinoHotel container. 
+* Expand **CasinoHotel** container. 
 * select **Settings**.
-* You will see 'tenantId' as the partition key. It will create logical partitions per each tenant location. 
+* You will see **tenantId** as the partition key. It will create logical partitions per each tenant location. 
 
 * Verify FamilyFunHotel Container for the partition key.
 * Select **Scale** property under **SharedThroughputDB** database.
-* It is set to use Autoscale upto 4,000 RUs and will share across all the containers (business entities). 
+* It is set to use Autoscale up to 4,000 RUs and will share across all the containers (business entities). 
+
+Autoscale will fall back to 400 RUs (10% of max RUs) when no activity. **This will save lot money since you don't have to allocate 
+the maximum capacity all the time.**
+
+**This database models serves multiple customers with multi-tenant data models with AutoScale capability to lower the costs and avoids 
+creating single database per customer.**
 
 <img src="./images/sharedThroughputContainers_3d.jpg" alt="Shared Throughtput at Database level" width="800" >
 
 #### Dedicated throughput to avoid Noisy Neighbor
 Hiking Hotel is a medium size business entity and you can avoid noisy neighbor issue by providing a dedicated throughput at 
-the container level. Follow the steps to create a dedicated throughput.
+the container level. Follow the steps to create a dedicated throughput as part of the shared throughput database.
 
 #### 3.2 Add Cosmos DB container with dedicated throughput under shared database throughput 
 
