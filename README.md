@@ -369,7 +369,7 @@ Cosmos DB provides continuous and periodic backup modes.
 It allows Azure Cosmos DB to fail over the write region of multi-region account. Region 
 failovers are detected and handled by Azure and do not require any changes from the application.
 
-Select "Service-Managed Failover" option to failover the database to read region at the time region outage.
+Select "Service-Managed Failover" option to failover the database to read region at the time of region outage.
 
 <img src="./images/Cosmosdb_feature_Automatic_Failover.jpg" alt="Auto failover feature" width="800">
 
@@ -377,7 +377,7 @@ Select the "On" button under "Enable Service-Managed Failover".
 
 <img src="./images/CosmosDB_feature_Service_Managed_Failover_TurnOn.jpg" alt="Auto failover feature" width="800" height="500">
 
-**No action is need for this lab.** It will take time to enable the failover option.
+**No action is needed for this lab.** It will take time to enable the failover option.
 
 
 ### 4.2 Autoscale for scalability
