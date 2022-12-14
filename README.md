@@ -293,6 +293,24 @@ You can also keep reference data such as Guest info and room type definitions in
 * Click **Upload** button.
 <img src="./images/UploadMultiTenantData_3d.jpg" alt="Load Data into Casion Hotel Container" width="800" >
 
+Continue the same steps to loadd data into other containers.
+
+#### 3.5 Query Data using Data Explorer
+
+You can query data using APIs and also can use Data Explorer for quick check.
+
+* Select **CasinoHotel** container.
+* Open Query window by selecting 'Folder with Search' icon from the top bar.
+* Type the following Query 
+
+`` SELECT count(1) FROM c where c.type='Reservation' ``
+
+* Select 'Execute Selection' from the top bar to execute the query
+* Results tab will be display the results on the bottom.
+* Query Stats next to results tab will show RU cost, size of the document and Query Execution time.
+
+<img src="./images/cosmosdb-query-execution-3d.jpg" alt="Query data using Data Explorer" width="800" >
+
 
 ## Challenge-4: Validate Cosmos DB features Auto failover, Autoscale and Low latency
 
