@@ -172,7 +172,7 @@ You would want to keep all the relevant data in one object based on the highly f
 
 <img src="./images/CosmosDB_MultiTenant_Hotel_Business_Data_Model.jpg" alt="Cosmos DB Document Model diagram" width="800">
 
-As per the above diagram, it make sense to keep all the organization (business entity) information such as customers and room types 
+As per the above diagram, it make sense to keep all the business entity information such as customers and room types 
 along with tenant related data such as room inventory, availability and reservations in one Cosmos DB Container. 
 
 This challenge demonstrate how software object model transform to NoSQL database design model which completly different from SQL based
@@ -190,7 +190,7 @@ Evaluate options to keep relavant data in one logical partition using partitioni
 
 #### Shared throughput for small business entities
 
-It would be better to create one container per organization and share the throughput at the database level. This will avoid 
+It would be better to create one container per business entity and share the throughput at the database level. This will avoid 
 creating one database per each customer and saves lot of money. You will have to understand that it may cause noisy neighbor 
 problem.This approach tends to work well when the amount of data stored for each tenant is small. 
 
@@ -198,14 +198,52 @@ It can be a good choice for building a pricing model that includes a free tier, 
 In general, by using shared containers, you achieve the highest density of tenants and therefore the lowest price 
 per tenant.
 
+#### 3.1 Create Cosmos DB Containers with shared database throughput
+
+* Access Cosmos DB Service in Azure Portal.
+* Select **Data Explorer** from the left panel.
+* Select **SharedThroughputDB** database.
+* Expand CasinoHotel container. 
+* select **Settings**.
+* You will see 'tenantId' as the partition key. It will create logical partitions per each tenant location. 
+
+* Verify FamilyFunHotel Container for the partition key.
+* Select **Scale** property under **SharedThroughputDB** database.
+* It is set to use Autoscale upto 4,000 RUs and will share across all the containers (business entities). 
+
+<img src="./images/sharedThroughputContainers_3d.jpg" alt="Shared Throughtput at Database level" width="800" >
+
 #### Dedicated throughput to avoid Noisy Neighbor
 Hiking Hotel is a medium size business entity and you can avoid noisy neighbor issue by providing a dedicated throughput at 
 the container level. Follow the steps to create a dedicated throughput.
+
+#### 3.2 Add Cosmos DB container with dedicated throughput under shared database throughput 
+
+* Select **New Container** from the top bar inside Data Explorer.
+* Seelct **ShardThroughputDB** under **Use existing** database dropdown 
+* Type **HikingHotel** as the container name
+* Type **/tenantId** as partition key.
+* Select **Provision dedicated throughput for this container** option.
+* Set the **Container Max RUs** as 2000.
+* click **OK**
+
+<img src="./images/CreateHikingHotel_DedicatedThroughput_3d.jpg" alt="Create dedicated throughput container" height=""400" "width="400">
+
+This will use 2000 RUs from 4000 RUs allocated at the database level. 
 
 #### Database per business entity
 You can provision dedicated containers for each business entity. This can work well for isolating large customers with higher 
 throughput requirement and for providing dedicated capacity. It will provide guaranteed level of performance, serve medium size 
 customers.
+
+#### 3.3 Create Cosmos DB Database to serve large customers
+
+* Select **DedicatedThroughputDB** database
+* Expand **GoodFellas** container.
+* Select **Scale & Settings** 
+* It shows 1000 RUs as the Maximum RUs with Autoscale throughput option.
+
+<img src="./images/DedicatedThroughputDB_3d.jpg" atl="dedicated database for large customers" width="600">
 
 #### Account for tenant
 You can provision separate database accounts for each tenant, which provides the highest level of isolation, 
@@ -236,47 +274,8 @@ would make sense to create TenantID as the partition key and collect room availa
 
 You can also keep reference data such as Guest info and room type definitions in the same container. 
 
-#### 3.1 Create Cosmos DB Containers with shared database throughput
-
-* Access Cosmos DB Service in Azure Portal.
-* Select **Data Explorer** from the left panel.
-* Select **SharedThroughputDB** database.
-* Expand CasinoHotel container. 
-* select **Settings**.
-* You will see 'tenantId' as the partition key. It will create logical partitions per each tenant location. 
-
-* Verify FamilyFunHotel Container for the partition key.
-* Select **Scale** property under **SharedThroughputDB** database.
-* It is set to use Autoscale upto 4,000 RUs and will share across all the containers (business entities). 
-
-<img src="./images/sharedThroughputContainers_3d.jpg" alt="Shared Throughtput at Database level" width="600" >
-
-#### 3.2 Add Cosmos DB container with dedicated throughput under shared database throughput 
-
-* Select **New Container** from the top bar inside Data Explorer.
-* Seelct **ShardThroughputDB** under **Use existing** database dropdown 
-* Type **HikingHotel** as the container name
-* Type **/tenantId** as partition key.
-* Select **Provision dedicated throughput for this container** option.
-* Set the **Container Max RUs** as 2000.
-* click **OK**
-
-<img src="./images/CreateHikingHotel_DedicatedThroughput_3d.jpg" alt="Create dedicated throughput container" width="600">
-
-This will use 2000 RUs from 4000 RUs allocated at the database level. 
-
-#### 3.3 Create Cosmos DB Database to serve large customers
-
-* Select **DedicatedThroughputDB** database
-* Expand **GoodFellas** container.
-* Select **Scale & Settings** 
-* It shows 1000 RUs as the Maximum RUs with Autoscale throughput option.
-
-<img src="./images/DedicatedThroughputDB_3d.jpg" atl="dedicated database for large customers" width="600">
 
 #### 3.4 Load Business data into containers
-
-<img src="./images/MultiTenant_dataFiles_3d.jpg" alt="DataFiles for the workshop" width="600">
 
 Download the Workshop Data zip file (Multi-Tenant_CosmosDB_Workshop_data.zip) from the provided github link data folder. 
 Unzip the file into your local folder and you should see the following files.
