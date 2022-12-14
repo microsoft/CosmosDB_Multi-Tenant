@@ -395,8 +395,8 @@ It will change the throughput instantly without impacting the current workloads.
 
 
 ### Sub Millisecond Fast Response Time
-Select 'Data Explorer' from the left pane and expand 'DedicatedThroughputDB' database.
-Hover over 'GoodFellasHotel' container and select three dots.
+Select 'Data Explorer' from the left pane and expand 'SharedThroughputDB' database.
+Hover over 'CasinoHotel' container and select three dots.
 It provide options to create SQL Query, Stored Procedure, UDF & Trigers. Select the 'New SQL Query' option. 
 
 <img src="./images/cosmosdb-query-execution-3d.jpg" alt="Query data using Data Explorer" width="600" >
@@ -404,8 +404,7 @@ It provide options to create SQL Query, Stored Procedure, UDF & Trigers. Select 
 Type the following Query:
 
 ```
-SELECT * FROM c where c.type='availability' and c.roomName='PremiumKingRoom' 
-and c.tntAddress.city='New York'
+SELECT * FROM c where c.type='Reservation' 
 ```
 
 select "Query Stats" tab and check the Query execution time. It shows the sub millisecond response time.
