@@ -287,7 +287,7 @@ Unzip the file into your local folder and you should see the following files.
 
 
 Multi-Tenant databases have unique set of data per each tenant in our use case number of rooms, availability and reservations. It 
-would make sense to create TenantID as the partition key and collect room availabiity and reservation info using document type.
+would make sense to create TenantID as the partition key and collect room availability and reservation info using document type.
 
 You can also keep reference data such as Guest info and room type definitions in the same container. 
 
@@ -320,7 +320,7 @@ You can query data using APIs and also can use Data Explorer for quick check.
 * Open Query window by selecting 'Folder with Search' icon from the top bar.
 * Type the following Query 
 
-`` SELECT count(1) FROM c where c.type='Reservation' ``
+``` SELECT count(1) FROM c where c.type='Reservation' ```
 
 * Select 'Execute Selection' from the top bar to execute the query
 * Results tab will be display the results on the bottom.
@@ -378,7 +378,7 @@ Select the "On" button under "Enable Service-Managed Failover".
 
 <img src="./images/CosmosDB_feature_Service_Managed_Failover_TurnOn.jpg" alt="Auto failover feature" width="800" height="500">
 
-**No action is need for this lab.** It will take sometime to enable the failover option.
+**No action is need for this lab.** It will take time to enable the failover option.
 
 
 ### 4.2 Autoscale for scalability
@@ -389,11 +389,12 @@ performance of the workload.
 Autoscale provisioned throughput is well suited for mission-critical workloads that have variable or unpredictable 
 traffic patterns, and require SLAs on high performance and scale.
 
-Select 'Data Explorer' from the left pane and expand 'SaaS_Multitenant_DB' database. 
+Select 'Data Explorer' from the left pane and expand 'DedicatedThroughputDB' database. 
 
-Select 'Scale' setting.
+Expand **GoodFellasHotel** container.
+Select **Scale & Settings** setting.
 
-Change Max RU/s back to '4000' and select save button if you have not already. 
+Change Max RU/s back to '4000' and select **save** button on the top bar. 
 
 It will change the throughput instantly without impacting the current workloads.
 
@@ -423,7 +424,7 @@ applications using Cosmos DB in your development environment with no cost.
 
 ### Quick Start
 You can test building an application from Cosmos DB service portal itself. Select 'Quick start' from the left panel.
-It will you programming language options .NET, Xamarin, Java, Node.js & Phython to choose.
+It will you programming language options .NET, Xamarin, Java, Node.js & Python to choose.
 
 Use the default .NET option.
 
@@ -445,6 +446,7 @@ with Visual Studio 2022.
 5.4 Clean and rebuild the solution.
 
 5.5 Put a breakpoint in **GetStartedDemoAsync** method at  
+
 ```
 this.ReplaceFamilyItemAsync();
 ``` 
