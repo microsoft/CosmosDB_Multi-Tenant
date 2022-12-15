@@ -58,7 +58,7 @@ All the above use cases need a new mindset and special features. This workshop w
 - [Challenge-2: Model data to build SaaS applications](#Challenge-2-Model-data-to-build-SaaS-applications)
 - [Challenge-3: Design Cosmos DB Account to serve small, medium and large customers](#Challenge-3-Design-Cosmos-DB-Account-to-serve-small-medium-and-large-customers)
 - [Challenge-4: Validate Cosmos DB features Auto Failover, Autoscale and Low Latency](#Challenge-4-Validate-Cosmos-DB-features-Auto-failover-Autoscale-and-Low-latency)
-- [Challenge-5: Build an application using Cosmos DB Emulator with no cost](#Challenge-5-Build-an-application-using-Azure-Cosmos-DB-with-no-cost)
+- [Challenge-5: Build an application using Cosmos DB Emulator at no cost](#Challenge-5-Build-an-application-using-Azure-Cosmos-DB-at-no-cost)
 
 ## Multi-Tenancy features for Software Companies 
 
@@ -416,7 +416,7 @@ SELECT * FROM c where c.type='Reservation'
 select "Query Stats" tab and check the Query execution time. It shows the sub millisecond response time.
 
 
-## Challenge-5: Build an application using Azure Cosmos DB with no cost  
+## Challenge-5: Build an application using Azure Cosmos DB at no cost  
 Cosmos DB is a developer friendly database and supports SaaS applications with no schema and indexing to manage. 
 It also provides built in Cache for improved performance. It provides Cosmos DB Emulator tool to build your 
 applications using Cosmos DB in your development environment with no cost.
