@@ -209,9 +209,9 @@ per tenant.
 
 * Verify FamilyFunHotel Container for the partition key.
 * Select **Scale** property under **SharedThroughputDB** database.
-* It is set to use Autoscale up to 4,000 RUs and will share across all the containers (business entities). 
+* It is set to use Autoscale up to 2,000 RUs and will share across all the containers (business entities). 
 
-Autoscale will fall back to 400 RUs (10% of max RUs) when no activity. **This will save lot money since you don't have to allocate 
+Autoscale will fall back to 200 RUs (10% of max RUs) when no activity. **This will save lot money since you don't have to allocate 
 the maximum capacity all the time.**
 
 **This database models serves multiple customers with multi-tenant data models with AutoScale capability to lower the costs and avoids 
