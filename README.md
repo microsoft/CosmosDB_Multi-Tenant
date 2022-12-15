@@ -228,7 +228,7 @@ the container level. Follow the steps to create a dedicated throughput as part o
 Follow the steps to provision a new container with a dedicated throughput in a shared throughput database.  
 
 * Select **New Container** from the top bar inside Data Explorer.
-* Seelct **ShardThroughputDB** under **Use existing** database dropdown 
+* Select **ShardThroughputDB** under **Use existing** database dropdown 
 * Type **HikingHotel** as the container name
 * Type **/tenantId** as partition key.
 * Select **Provision dedicated throughput for this container** option.
